@@ -88,7 +88,7 @@ def main():
     if not previous:                    # output the answer
         print("There is no such number.")
     else:                               # or a corresponding message
-        print("The the largest perfect number smaller than %i is %i"
+        print("The largest perfect number smaller than %i is %i."
               % (n, previous))
 
 
