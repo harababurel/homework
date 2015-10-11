@@ -18,13 +18,13 @@ def getInput():
         argCount = len(command) - 1
 
         if not argCount in [1, 2]:
-            raise(Exception("Error: <insert> command takes 1 or 2 arguments (%i given)." % argCount))
+            raise(Exception("Error: <insert> takes 1 or 2 arguments (%i given)." % argCount))
 
         try:
-            score = float(command[1])
-            assert(0.0 <= score and score <= 10.0)
+            score = int(command[1])
+            assert(0 <= score and score <= 100)
         except:
-            raise(Exception("Error: the score must be a real number between 0.0 and 10.0"))
+            raise(Exception("Error: the score must be an integer between 0 and 100."))
 
 
         position = None
@@ -45,7 +45,7 @@ def getInput():
         argCount = len(command) - 1
 
         if not argCount in [1, 2]:
-            raise(Exception("Error: <remove> command takes 1 or 2 arguments (%i given)." % argCount))
+            raise(Exception("Error: <remove> takes 1 or 2 arguments (%i given)." % argCount))
 
         try:
             left = int(command[1])
@@ -65,6 +65,30 @@ def getInput():
             remove(left, right)
         except:
             raise(Exception("Something went wrong :(. Could not erase participant%s." % ['', 's'][left != right]))
+
+    ### REPLACE
+    elif command[0] == 'replace':
+        argCount = len(command) - 1
+
+        if argCount != 2:
+            raise(Exception("Error: <replace> takes exactly 2 arguments (%i given)." % argCount))
+
+        try:
+            position = int(command[1])
+            assert(1 <= position and position <= len(v))
+        except:
+            raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
+
+        try:
+            score = int(command[2])
+            assert(0 <= score and score <= 100)
+        except:
+            raise(Exception("Error: the score must be an integer between 0 and 100."))
+
+        try:
+            replaceScore(position, score)
+        except:
+            raise(Exception("Something went wrong :(. Could not replace score."))
 
     ### HELP
     elif command[0] == 'help':
@@ -99,10 +123,17 @@ def remove(left, right):
 
     v[left-1:right] = []
 
+
+def replaceScore(position, score):
+    global v
+
+    v[position-1] = score
+
+
 def showList():
     global v
 
-    print("Participants:\n    %s" % "\n    ".join(["#%i: %.2f" % (i+1, x) for i, x in enumerate(v)]))
+    print("Participants:\n    %s" % "\n    ".join(["#%i: %i" % (i+1, x) for i, x in enumerate(v)]))
 
 
 def showHelp():
