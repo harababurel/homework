@@ -4,19 +4,19 @@ v = []
 
 def showPrompt():
     print("Please enter a command. Try \"help\".")
-    print("> ", end="")
 
 def getInput():
+    print("> ", end="")
     command = input().split()
 
     if len(command) == 0:
-        showPrompt()
+        #showPrompt()
         return
     if command[0] == 'insert':
         argCount = len(command) - 1
 
         if not argCount in [1, 2]:
-            print("Error: <insert> command takes 1 or 2 arguments (%i given)" % argCount)
+            raise(Exception("Error: <insert> command takes 1 or 2 arguments (%i given)" % argCount))
 
         try:
             score = float(command[1])
@@ -31,7 +31,7 @@ def getInput():
                 position = int(command[2])
                 assert(1 <= position) # TODO: position <= sizeOfList
             except:
-                raise(Exception("Error: if you want to pass a custom position, make sure it's an integer between 1 and the total number of participants"))
+                raise(Exception("Error: if you want to pass a custom position, make sure it's an integer between 1 and the total number of participants."))
 
         try:
             add(score, position)
@@ -39,12 +39,10 @@ def getInput():
             raise(Exception("Something went wrong :(. Could not add participant."))
     elif command[0] == 'help':
         showHelp()
-        showPrompt()
-    elif command[0] == '':
-        showPrompt()
     else:
         print("Command not recognized. Try \"help\".")
-        print("> ", end='')
+        #print("> ", end='')
+        return
 
 
 def add(score, position):
@@ -64,12 +62,16 @@ def showHelp():
     print("    remove X - removes participant at position X")
     print("    remove X Y - removes participants with positions between X and Y")
     print("    replace X Y - replaces the score of the participant at position X with the score Y")
+    print("    exit - saves the current state and closes the program")
 
 
 def main():
     showPrompt()
     while True:
-        getInput()
+        try:
+            getInput()
+        except Exception as e:
+            print(e)
 
 
 if __name__ == '__main__':
