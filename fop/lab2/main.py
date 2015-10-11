@@ -1,9 +1,39 @@
 import pickle
 
-v = []
+history = None
+participants = None
 
 def showPrompt():
     print("Please enter a command. Try \"help\".")
+
+
+def restoreSession():
+    global participants, history
+
+    print("Restoring previous session.")
+    try:
+        with open('data.bin', 'rb') as f:
+            history = pickle.load(f)
+            participants = history[-1]
+    except:
+        print("Could not restore session. Starting from scratch.")
+
+        participants = []
+        history = [[]]
+
+        saveSession()
+
+
+def saveSession():
+    global participants, history
+
+    print("Saving new session to disk.")
+    try:
+        with open('data.bin', 'wb') as g:
+            pickle.dump(history, g)
+        print("Session saved.")
+    except:
+        print("Could not save session to disk. Check file permissions.")
 
 
 def getInput():
@@ -31,7 +61,7 @@ def getInput():
         if argCount == 2:
             try:
                 position = int(command[2])
-                assert(1 <= position and position <= len(v))
+                assert(1 <= position and position <= len(participants))
             except:
                 raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -49,7 +79,7 @@ def getInput():
 
         try:
             left = int(command[1])
-            assert(1 <= left and left <= len(v))
+            assert(1 <= left and left <= len(participants))
         except:
             raise(Exception("Error: the position you entered is not valid."))
 
@@ -57,7 +87,7 @@ def getInput():
         if argCount == 2:
             try:
                 right = int(command[2])
-                assert(left <= right and right <= len(v))
+                assert(left <= right and right <= len(participants))
             except:
                 raise(Exception("Error: the interval you entered is not valid."))
 
@@ -75,7 +105,7 @@ def getInput():
 
         try:
             position = int(command[1])
-            assert(1 <= position and position <= len(v))
+            assert(1 <= position and position <= len(participants))
         except:
             raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -100,7 +130,7 @@ def getInput():
 
     ### EXIT
     elif command[0] == 'exit':
-        #TODO: save current state
+        saveSession()
         print("Exiting...")
         exit(0)
 
@@ -110,30 +140,30 @@ def getInput():
 
 
 def add(score, position):
-    global v
+    global participants
 
     if position:
-        v.insert(position-1, score)
+        participants.insert(position-1, score)
     else:
-        v.append(score)
+        participants.append(score)
 
 
 def remove(left, right):
-    global v
+    global participants
 
-    v[left-1:right] = []
+    participants[left-1:right] = []
 
 
 def replaceScore(position, score):
-    global v
+    global participants
 
-    v[position-1] = score
+    participants[position-1] = score
 
 
 def showList():
-    global v
+    global participants
 
-    print("Participants:\n    %s" % "\n    ".join(["#%i: %i" % (i+1, x) for i, x in enumerate(v)]))
+    print("Participants:\n    %s" % "\n    ".join(["#%i: %i" % (i+1, x) for i, x in enumerate(participants)]))
 
 
 def showHelp():
@@ -149,7 +179,9 @@ def showHelp():
 
 
 def main():
+    restoreSession()
     showPrompt()
+
     while True:
         try:
             getInput()
