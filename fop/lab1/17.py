@@ -46,6 +46,12 @@ def isPrime(x):
     """
     Checks whether or not x is a prime number
     in O(sqrt(x)).
+
+    x - int, the number to check for primality
+
+
+
+    ret true if x is pr false else
     """
     for i in range(2, int(sqrt(x))+1):  # if there is a divisor of x
         if x % i == 0:                  # then x is not prime
@@ -53,6 +59,7 @@ def isPrime(x):
 
     return True                         # otherwise, it is
 
+assert isPrime(1) == False
 
 def getNextPerfectNumber():
     """
