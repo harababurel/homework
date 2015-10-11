@@ -5,13 +5,15 @@ v = []
 def showPrompt():
     print("Please enter a command. Try \"help\".")
 
+
 def getInput():
     print("> ", end="")
     command = input().split()
 
     if len(command) == 0:
-        #showPrompt()
         return
+
+    ### INSERT ################################################################
     if command[0] == 'insert':
         argCount = len(command) - 1
 
@@ -29,20 +31,22 @@ def getInput():
         if argCount == 2:
             try:
                 position = int(command[2])
-                assert(1 <= position) # TODO: position <= sizeOfList
+                assert(1 <= position and position <= len(v))
             except:
-                raise(Exception("Error: if you want to pass a custom position, make sure it's an integer between 1 and the total number of participants."))
+                raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
         try:
             add(score, position)
         except:
             raise(Exception("Something went wrong :(. Could not add participant."))
+
+    ### HELP #################################################################
     elif command[0] == 'help':
         showHelp()
+
+    ### EVERYTHING ELSE ######################################################
     else:
-        print("Command not recognized. Try \"help\".")
-        #print("> ", end='')
-        return
+        raise(Exception(("Command not recognized. Try \"help\".")))
 
 
 def add(score, position):
