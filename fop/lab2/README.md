@@ -10,11 +10,11 @@ following functionalities (each functionality is exemplified):
 ## Feature list
 
 
-    Feature no.   | Description
-    ------------- |:--------------
-    1             | asdf
-    2             | ghjk
-    3             | mnop
+Feature no.   | Description
+:------------:|:--------------
+1             | asdf
+2             | ghjk
+3             | mnop
 
 
 
