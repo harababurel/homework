@@ -9,12 +9,20 @@ following functionalities (each functionality is exemplified):
 
 ## Feature list
 
-
 Feature no.   | Description
-:------------:|:--------------
-1             | asdf
-2             | ghjk
-3             | mnop
+:------------:|:------------------------------------------------------------
+1             | Add into the list the result of a new participant.
+2             | Modify the scores from the list.
+3             | Write the participants whose score has different properties.
+4             | Obtain different characteristics of participants.
+5             | Filter scores.
+6             | Undo the last operation.
 
+## Iteration plan
 
+Iteration no. | Planned features
+:------------:|:----------------
+1             | 1, 2
+2             | TBD
+3             | TBD
 
