@@ -1,4 +1,5 @@
 # Contest
+<hr>
 
 ## Problem statement
 At a ***programming contest***, after evaluating the existing solutions, the evaluation committee has
