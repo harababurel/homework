@@ -1,13 +1,18 @@
 import pickle
 
-history = None
-participants = None
+participants = None    # list of participants
+history = None         # all previous states of the participants list
+
 
 def showPrompt():
     print("Please enter a command. Try \"help\".")
 
 
 def restoreSession():
+    """
+    Method tries to open previously initiated session, saved on disk.
+    If there is none, then a new session is created from scratch.
+    """
     global participants, history
 
     print("Restoring previous session.")
@@ -20,11 +25,15 @@ def restoreSession():
 
         participants = []
         history = [[]]
-
         saveSession()
 
 
 def saveSession():
+    """
+    Method saves current state of the application to disk.
+    Objects that are saved: history.
+    If unable to do so, a message is displayed
+    """
     global participants, history
 
     print("Saving new session to disk.")
@@ -37,11 +46,16 @@ def saveSession():
 
 
 def getInput():
+    """
+    Method reads one command and processes it.
+    If valid, then its associated functionality is run.
+    Otherwise, an exception is raised.
+    """
     print("> ", end="")
     command = input().split()
 
-    if len(command) == 0:
-        return
+    if len(command) == 0:  # no command means
+        return             # nothing to do
 
     ### INSERT
     if command[0] == 'insert':
@@ -140,6 +154,10 @@ def getInput():
 
 
 def add(score, position):
+    """
+    Method takes the score and position of a new participant
+    and adds it to the list.
+    """
     global participants
 
     if position:
@@ -149,24 +167,38 @@ def add(score, position):
 
 
 def remove(left, right):
+    """
+    Method takes an interval of consecutive positions
+    and removes the participants contained in it.
+    """
     global participants
 
     participants[left-1:right] = []
 
 
 def replaceScore(position, score):
+    """
+    Method takes the position of a participant
+    and assigns a new score to it.
+    """
     global participants
 
     participants[position-1] = score
 
 
 def showList():
+    """
+    Method prints all participants and their positions.
+    """
     global participants
 
     print("Participants:\n    %s" % "\n    ".join(["#%i: %i" % (i+1, x) for i, x in enumerate(participants)]))
 
 
 def showHelp():
+    """
+    Method shows a prompt containing all valid commands.
+    """
     print("These are the possible commands:")
     print("    help - displays this prompt")
     print("    insert X - adds a new participant with score X")
