@@ -1,1 +1,2 @@
-fop/lab2/*.bin
+*.bin
+*.pyc

@@ -1,61 +1,22 @@
-import pickle
-
-participants = None    # list of participants
-history = None         # all previous states of the participants list
-
+from backend import *
+from persistence import *
 
 def showPrompt():
     print("Please enter a command. Try \"help\".")
 
 
-def restoreSession():
-    """
-    Method tries to open previously initiated session, saved on disk.
-    If there is none, then a new session is created from scratch.
-    """
-    global participants, history
-
-    print("Restoring previous session.")
-    try:
-        with open('data.bin', 'rb') as f:
-            history = pickle.load(f)
-            participants = history[-1]
-    except:
-        print("Could not restore session. Starting from scratch.")
-
-        participants = []
-        history = [[]]
-        saveSession()
-
-
-def saveSession():
-    """
-    Method saves current state of the application to disk.
-    Objects that are saved: history.
-    If unable to do so, a message is displayed
-    """
-    global participants, history
-
-    print("Saving new session to disk.")
-    try:
-        with open('data.bin', 'wb') as g:
-            pickle.dump(history, g)
-        print("Session saved.")
-    except:
-        print("Could not save session to disk. Check file permissions.")
-
-
-def getInput():
+def getInput(history):
     """
     Method reads one command and processes it.
-    If valid, then its associated functionality is run.
+    If valid, then its associated functionality is run
+    and the new history list is returned.
     Otherwise, an exception is raised.
     """
     print("> ", end="")
     command = input().split()
 
     if len(command) == 0:  # no command means
-        return             # nothing to do
+        return history     # nothing to do
 
     ### INSERT
     if command[0] == 'insert':
@@ -75,12 +36,12 @@ def getInput():
         if argCount == 2:
             try:
                 position = int(command[2])
-                assert(1 <= position and position <= len(participants))
+                assert(1 <= position and position <= len(history[-1]))
             except:
                 raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
         try:
-            add(score, position)
+            history = add(history, score, position)
         except:
             raise(Exception("Something went wrong :(. Could not add participant."))
 
@@ -93,7 +54,7 @@ def getInput():
 
         try:
             left = int(command[1])
-            assert(1 <= left and left <= len(participants))
+            assert(1 <= left and left <= len(history[-1]))
         except:
             raise(Exception("Error: the position you entered is not valid."))
 
@@ -101,12 +62,12 @@ def getInput():
         if argCount == 2:
             try:
                 right = int(command[2])
-                assert(left <= right and right <= len(participants))
+                assert(left <= right and right <= len(history[-1]))
             except:
                 raise(Exception("Error: the interval you entered is not valid."))
 
         try:
-            remove(left, right)
+            history = remove(history, left, right)
         except:
             raise(Exception("Something went wrong :(. Could not erase participant%s." % ['', 's'][left != right]))
 
@@ -119,7 +80,7 @@ def getInput():
 
         try:
             position = int(command[1])
-            assert(1 <= position and position <= len(participants))
+            assert(1 <= position and position <= len(history[-1]))
         except:
             raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -130,7 +91,7 @@ def getInput():
             raise(Exception("Error: the score must be an integer between 0 and 100."))
 
         try:
-            replaceScore(position, score)
+            history = replaceScore(history, position, score)
         except:
             raise(Exception("Something went wrong :(. Could not replace score."))
 
@@ -140,11 +101,11 @@ def getInput():
 
     ### LIST
     elif command[0] == 'list':
-        showList()
+        showList(history)
 
     ### EXIT
     elif command[0] == 'exit':
-        saveSession()
+        saveSession(history)
         print("Exiting...")
         exit(0)
 
@@ -152,51 +113,14 @@ def getInput():
     else:
         raise(Exception(("Command not recognized. Try \"help\".")))
 
-
-def add(score, position):
-    """
-    Method takes the score and position of a new participant
-    and adds it to the list.
-    """
-    global participants
-
-    if position:
-        participants.insert(position-1, score)
-    else:
-        participants.append(score)
-
-
-def remove(left, right):
-    """
-    Method takes an interval of consecutive positions
-    and removes the participants contained in it.
-    """
-    global participants
-
-    participants[left-1:right] = []
-
-
-def replaceScore(position, score):
-    """
-    Method takes the position of a participant
-    and assigns a new score to it.
-    """
-
-    participants[position-1] = score
-
-
-def showList():
-    """
-    Method prints all participants and their positions.
-    """
-
-    print("Participants:\n    %s" % "\n    ".join(["#%i: %i" % (i+1, x) for i, x in enumerate(participants)]))
+    return history # return the updated list
 
 
 def showHelp():
     """
     Method shows a prompt containing all valid commands.
     """
+
     print("These are the possible commands:")
     print("    help - displays this prompt")
     print("    insert X - adds a new participant with score X")
@@ -208,16 +132,9 @@ def showHelp():
     print("    exit - saves the current state and closes the program")
 
 
-def main():
-    restoreSession()
-    showPrompt()
+def showList(history):
+    """
+    Method prints all participants and their positions.
+    """
 
-    while True:
-        try:
-            getInput()
-        except Exception as e:
-            print(e)
-
-
-if __name__ == '__main__':
-    main()
+    print("Participants:\n    %s" % "\n    ".join(["#%i: %i" % (i+1, x) for i, x in enumerate(history[-1])]))
