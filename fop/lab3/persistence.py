@@ -1,3 +1,7 @@
+"""
+    Module provides methods that save the current data
+    state to disk, and retrieve it when necessary.
+"""
 import pickle
 
 def restoreSession():

@@ -1,3 +1,8 @@
+"""
+    Module imports everything and runs
+    the main loop of the application.
+"""
+
 from backend import *
 from interface import *
 from persistence import *

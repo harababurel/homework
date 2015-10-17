@@ -1,3 +1,10 @@
+"""
+    Module provides user interface methods
+    (that is, it processes user input and runs
+    the needed backend methods, and outputs
+    the results).
+"""
+
 from backend import *
 from persistence import *
 

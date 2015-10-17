@@ -1,3 +1,10 @@
+"""
+    Module provides the brains of the application.
+    Everything that operates on the user data is
+    located here.
+"""
+
+
 def add(history, score, position):
     """
     Parameters:
