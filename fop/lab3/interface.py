@@ -21,14 +21,14 @@ def getInput(history):
     """
     print("> ", end="")
     command = input().split()
+    argCount = len(command) - 1
 
+    ### NOTHING
     if len(command) == 0:  # no command means
         return history     # nothing to do
 
     ### INSERT
     if command[0] == 'insert':
-        argCount = len(command) - 1
-
         if not argCount in [1, 2]:
             raise(Exception("Error: <insert> takes 1 or 2 arguments (%i given)." % argCount))
 
@@ -54,8 +54,6 @@ def getInput(history):
 
     ### REMOVE
     elif command[0] == 'remove':
-        argCount = len(command) - 1
-
         if not argCount in [1, 2]:
             raise(Exception("Error: <remove> takes 1 or 2 arguments (%i given)." % argCount))
 
@@ -80,8 +78,6 @@ def getInput(history):
 
     ### REPLACE
     elif command[0] == 'replace':
-        argCount = len(command) - 1
-
         if argCount != 2:
             raise(Exception("Error: <replace> takes exactly 2 arguments (%i given)." % argCount))
 
@@ -108,7 +104,21 @@ def getInput(history):
 
     ### LIST
     elif command[0] == 'list':
-        showList(history)
+        showList(history, [True for i in range(0, len(history[-1]))]) # this mask corresponds to "show all"
+
+    ### LESS
+    elif command[0] == 'less':
+        if argCount != 1:
+            raise(Exception("Error: <less> takes exactly 1 argument (%i) given." % argCount))
+
+        try:
+            separator = int(command[1])
+        except:
+            raise(Exception("Error: the score must be an integer."))
+
+        mask = [x < separator for x in history[-1]]
+        showList(history, mask)
+
 
     ### EXIT
     elif command[0] == 'exit':
@@ -136,12 +146,15 @@ def showHelp():
     print("    remove X Y - removes participants with positions between X and Y")
     print("    replace X Y - replaces the score of the participant at position X with the score Y")
     print("    list - shows all participants")
+    print("    less X - shows participants with score lower than X")
+    print("    greater X - shows participants with score greater than X")
+    print("    sorted - shows participants in ascending score order")
     print("    exit - saves the current state and closes the program")
 
 
-def showList(history):
+def showList(history, mask):
     """
     Method prints all participants and their positions.
     """
 
-    print("Participants:\n    %s" % "\n    ".join(["#%i: %i" % (i+1, x) for i, x in enumerate(history[-1])]))
+    print("Participants:\n    %s" % "\n    ".join([["######", "#%i: %i" % (i+1, x)][mask[i]] for i, x in enumerate(history[-1])]))
