@@ -51,7 +51,7 @@ def getInput(history):
     if command[0] == 'insert':
         try:
             score = int(command[1])
-            assert(0 <= score and score <= 100)
+            assert 0 <= score and score <= 100
         except:
             raise(Exception("Error: the score must be an integer between 0 and 100."))
 
@@ -60,7 +60,7 @@ def getInput(history):
         if argCount == 2:
             try:
                 position = int(command[2])
-                assert(1 <= position and position <= len(history[-1]))
+                assert 1 <= position and position <= len(history[-1])
             except:
                 raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -73,7 +73,7 @@ def getInput(history):
     elif command[0] == 'remove':
         try:
             left = int(command[1])
-            assert(1 <= left and left <= len(history[-1]))
+            assert 1 <= left and left <= len(history[-1])
         except:
             raise(Exception("Error: the position you entered is not valid."))
 
@@ -81,7 +81,7 @@ def getInput(history):
         if argCount == 2:
             try:
                 right = int(command[2])
-                assert(left <= right and right <= len(history[-1]))
+                assert left <= right and right <= len(history[-1])
             except:
                 raise(Exception("Error: the interval you entered is not valid."))
 
@@ -94,13 +94,13 @@ def getInput(history):
     elif command[0] == 'replace':
         try:
             position = int(command[1])
-            assert(1 <= position and position <= len(history[-1]))
+            assert 1 <= position and position <= len(history[-1])
         except:
             raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
         try:
             score = int(command[2])
-            assert(0 <= score and score <= 100)
+            assert 0 <= score and score <= 100
         except:
             raise(Exception("Error: the score must be an integer between 0 and 100."))
 
@@ -141,7 +141,7 @@ def getInput(history):
         try:
             left = int(command[1])
             right = int(command[2])
-            assert(1 <= left and left <= right and right <= len(history[-1]))
+            assert 1 <= left and left <= right and right <= len(history[-1])
         except:
             raise(Exception("Error: the interval you provided is not valid."))
 
