@@ -23,15 +23,32 @@ def getInput(history):
     command = input().split()
     argCount = len(command) - 1
 
+    neededArgs = {
+            'insert':  [1, 2],
+            'remove':  [1, 2],
+            'replace': [2],
+            'help':    [0],
+            'list':    [0],
+            'less':    [1],
+            'greater': [1],
+            'sorted':  [0],
+            'average': [2],
+            'min':     [2],
+            'max':     [2],
+            'mul':     [3],
+            'exit':    [0]
+            }
+
     ### NOTHING
     if len(command) == 0:  # no command means
         return history     # nothing to do
 
+    if command[0] in neededArgs:
+        if not argCount in neededArgs[command[0]]:
+            raise(Exception("Error: <%s> takes %r arguments (%i provided)." % (command[0], neededArgs[command[0]], argCount)))
+
     ### INSERT
     if command[0] == 'insert':
-        if not argCount in [1, 2]:
-            raise(Exception("Error: <insert> takes 1 or 2 arguments (%i given)." % argCount))
-
         try:
             score = int(command[1])
             assert(0 <= score and score <= 100)
@@ -54,9 +71,6 @@ def getInput(history):
 
     ### REMOVE
     elif command[0] == 'remove':
-        if not argCount in [1, 2]:
-            raise(Exception("Error: <remove> takes 1 or 2 arguments (%i given)." % argCount))
-
         try:
             left = int(command[1])
             assert(1 <= left and left <= len(history[-1]))
@@ -78,9 +92,6 @@ def getInput(history):
 
     ### REPLACE
     elif command[0] == 'replace':
-        if argCount != 2:
-            raise(Exception("Error: <replace> takes exactly 2 arguments (%i given)." % argCount))
-
         try:
             position = int(command[1])
             assert(1 <= position and position <= len(history[-1]))
@@ -106,18 +117,58 @@ def getInput(history):
     elif command[0] == 'list':
         showList(history, [True for i in range(0, len(history[-1]))]) # this mask corresponds to "show all"
 
-    ### LESS
-    elif command[0] == 'less':
-        if argCount != 1:
-            raise(Exception("Error: <less> takes exactly 1 argument (%i) given." % argCount))
-
+    ### LESS or GREATER
+    elif command[0] in ['less', 'greater']:
         try:
             separator = int(command[1])
         except:
             raise(Exception("Error: the score must be an integer."))
 
-        mask = [x < separator for x in history[-1]]
+        if command[0] == 'less':
+            mask = [x < separator for x in history[-1]]
+        else:
+            mask = [x > separator for x in history[-1]]
+
         showList(history, mask)
+
+    ### SORTED
+    elif command[0] == 'sorted':
+        sortedParticipants = [sorted(history[-1])[::-1]]
+        showList(sortedParticipants, [True for x in sortedParticipants[0]])
+
+    ### AVERAGE, MIN, MAX
+    elif command[0] in ['average', 'min', 'max']:
+        try:
+            left = int(command[1])
+            right = int(command[2])
+            assert(1 <= left and left <= right and right <= len(history[-1]))
+        except:
+            raise(Exception("Error: the interval you provided is not valid."))
+
+        if command[0] == 'average':
+            print("The average score is %.2f." % getAverage(history, left, right))
+        elif command[0] == 'min':
+            print("The lowest score is %i." % getMinScore(history, left, right))
+        elif command[0] == 'max':
+            print("The highest score is %i." % getMaxScore(history, left, right))
+
+    ### MUL
+    elif command[0] == 'mul':
+        try:
+            k = int(command[1])
+            assert k > 0
+        except:
+            raise(Exception("Error: the first argument of <mul> must be an integer greater than 0."))
+
+        try:
+            left = int(command[2])
+            right = int(command[3])
+            assert 1 <= left and left <= right and right <= len(history[-1])
+        except:
+            raise(Exception("Error: the interval you provided is not valid."))
+
+        showList(history, getMulMask(history, k, left, right))
+
 
 
     ### EXIT
@@ -149,6 +200,10 @@ def showHelp():
     print("    less X - shows participants with score lower than X")
     print("    greater X - shows participants with score greater than X")
     print("    sorted - shows participants in ascending score order")
+    print("    average X Y - shows the average score of participants with positions between X and Y")
+    print("    min X Y - shows the lowest score of participants with positions between X and Y")
+    print("    max X Y - shows the highest score of participants with positions between X and Y")
+    print("    mul K X Y - shows scores that are a multiple of K, with positions between X and Y")
     print("    exit - saves the current state and closes the program")
 
 

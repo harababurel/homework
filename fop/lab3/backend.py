@@ -50,3 +50,56 @@ def replaceScore(history, position, score):
 
     history[-1][position-1] = score
     return history
+
+
+def getAverage(history, left, right):
+    """
+    Parameters:
+        - the participants history list
+        - an interval of positions
+    Method returns the average score of participants
+    in given interval.
+    """
+
+    candidates = history[-1][left-1:right]
+    average = sum(candidates) / len(candidates)
+
+    return average
+
+
+def getMinScore(history, left, right):
+    """
+    Parameters:
+        - the participants history list
+        - an interval of positions
+    Method returns the lowest score of a participant
+    in given interval.
+    """
+
+    return min(history[-1][left-1:right])
+
+
+def getMaxScore(history, left, right):
+    """
+    Parameters:
+        - the participants history list
+        - an interval of positions
+    Method returns the highest score of a participant
+    in given interval.
+    """
+
+    return max(history[-1][left-1:right])
+
+
+def getMulMask(history, k, left, right):
+    """
+    Parameters:
+        - the participants history list
+        - the "mul" command arguments
+    Method returns a mask that filters participants
+    which have positions between left and right, and
+    the score is a multiple of k.
+    """
+
+    mask = [left <= i+1 and i+1 <= right and history[-1][i] % k == 0 for i in range(0, len(history[-1]))]
+    return mask
