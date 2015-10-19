@@ -62,7 +62,10 @@ def getAverage(history, left, right):
     """
 
     candidates = history[-1][left-1:right]
-    average = sum(candidates) / len(candidates)
+    try:
+        average = sum(candidates) / len(candidates)
+    except:
+        raise(Exception('Error: could not compute average :('))
 
     return average
 

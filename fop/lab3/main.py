@@ -6,9 +6,18 @@
 from backend import *
 from interface import *
 from persistence import *
+from tests import *
 
 
 def main():
+    try:
+        testEverything()
+        print("All tests passed :).")
+    except Exception as e:
+        print(e)
+        print("Terminating execution.")
+        exit(0)
+
     history = restoreSession()
     showPrompt()
 
