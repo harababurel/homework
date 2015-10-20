@@ -15,7 +15,7 @@ Feature no.   | Description                                                  | C
 1             | Add into the list the result of a new participant.           | <ul><li><code>insert X</code></li><li><code>insert X Y</code></li></ul>
 2             | Modify the scores from the list.                             | <ul><li><code>remove X</code></li><li><code>remove X Y</code></li><li><code>replace X Y</code></li></ul>
 3             | Write the participants whose score has different properties. | <ul><li><code>less X</code></li><li><code>greater X</code></li><li><code>sorted</code></li><li><code>list</code></li></ul>
-4             | Obtain different characteristics of participants.            | <ul><li><code>avg X Y</code></li><li><code>min X Y</code></li><li><code>mul X Y Z</code></li></ul>
+4             | Obtain different characteristics of participants.            | <ul><li><code>average X Y</code></li><li><code>min X Y</code></li><li><code>mul K X Y</code></li></ul>
 5             | Filter scores.                                               | <ul><li><code>filter mul X</code></li><li><code>filter greater X</code></li></ul>
 6             | Undo the last operation.                                     | <ul><li><code>undo</code></li></ul>
 7             | Save state to disk and close program.                        | <ul><li><code>exit</code></li></ul>
@@ -137,12 +137,30 @@ Iteration no. | Planned features
         </tr>
         <tr>
             <td>11</td>
+            <td><code>mul 10 1 3</code></td>
+            <td></td>
+            <td>User requests all multiples of 10.</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td></td>
+            <td>Participants:<br>
+                <ul>
+                    <li>######</li>
+                    <li>#2: 100</li>
+                    <li>#3: 50</li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>13</td>
             <td><code>exit</code></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <td>12</td>
+            <td>14</td>
             <td></td>
             <td>Saving new session to disk.<br>
                 Session saved.<br>
