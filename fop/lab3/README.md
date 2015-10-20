@@ -147,20 +147,50 @@ Iteration no. | Planned features
             <td>Participants:<br>
                 <ul>
                     <li>######</li>
-                    <li>#2: 100</li>
-                    <li>#3: 50</li>
+                    <li>2: 100</li>
+                    <li>3: 50</li>
                 </ul>
             </td>
             <td></td>
         </tr>
         <tr>
             <td>13</td>
+            <td><code>average 1 3</code></td>
+            <td></td>
+            <td>User requests the average score of all participants.</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td></td>
+            <td>The average score is 64.00.</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td><code>greater 50</code></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td></td>
+            <td>Participants:<br>
+                <ul>
+                    <li>######</li>
+                    <li>2: 100</li>
+                    <li>######</li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>17</td>
             <td><code>exit</code></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <td>14</td>
+            <td>18</td>
             <td></td>
             <td>Saving new session to disk.<br>
                 Session saved.<br>

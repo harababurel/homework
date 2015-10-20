@@ -212,4 +212,4 @@ def showList(history, mask):
     Method prints all participants and their positions.
     """
 
-    print("Participants:\n    %s" % "\n    ".join([["######", "#%i: %i" % (i+1, x)][mask[i]] for i, x in enumerate(history[-1])]))
+    print("Participants:\n    %s" % "\n    ".join([["#######", "#%i: %i" % (i+1, x)][mask[i]] for i, x in enumerate(history[-1])]))
