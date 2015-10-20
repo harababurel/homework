@@ -19,18 +19,19 @@ Feature no.   | Description                                                  | C
 5             | Filter scores.                                               | <ul><li><code>filter mul X</code></li><li><code>filter greater X</code></li></ul>
 6             | Undo the last operation.                                     | <ul><li><code>undo</code></li></ul>
 7             | Save state to disk and close program.                        | <ul><li><code>exit</code></li></ul>
+8             | Redo the last undone operation.                              | <ul><li><code>redo</code></li></ul>
 
 ## Iteration plan
 
 Iteration no. | Planned features
 :------------:|:----------------
 1             | 1, 2, 7
-2             | TBD
+2             | 3, 4
 3             | TBD
 
 ## Running scenarios
 
-### Iteration 1
+### Iteration 2
 
 <table>
     <thead>
@@ -45,7 +46,8 @@ Iteration no. | Planned features
         <tr>
             <td>1</td>
             <td></td>
-            <td>Restoring previous session.<br>
+            <td>All tests passed :).<br>
+                Restoring previous session.<br>
                 Could not restore session. Starting from scratch.<br>
                 Saving new session to disk.<br>
                 Session saved.<br>
@@ -85,6 +87,13 @@ Iteration no. | Planned features
                     <li><code>remove X Y</code> - removes participants with positions between X and Y</li>
                     <li><code>replace X Y</code> - replaces the score of the participant at position X with the score Y</li>
                     <li><code>list</code> - shows all participants</li>
+                    <li><code>less X</code> - shows participants with score lower than X</li>
+                    <li><code>greater X</code> - shows participants with score greater than X</li>
+                    <li><code>sorted</code> - shows participants in ascending score order</li>
+                    <li><code>average X Y</code> - shows the average score of participants with positions between X and Y</li>
+                    <li><code>min X Y</code> - shows the lowest score of participants with positions between X and Y</li>
+                    <li><code>max X Y</code> - shows the highest score of participants with positions between X and Y</li>
+                    <li><code>mul K X Y</code> - shows scores that are a multiple of K, with positions between X and Y</li>
                     <li><code>exit</code> - saves the current state and closes the program</li>
                 </ul>
             </td>
