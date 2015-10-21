@@ -11,16 +11,19 @@ def testAdd():
 
     try: # some invalid commands
         add([[]], 5, 9)
+        assert False
     except:
         pass
 
     try:
         add([[]], -5)
+        assert False
     except:
         pass
 
     try:
         add([[0]], 'asdf')
+        assert False
     except:
         pass
 
@@ -32,16 +35,19 @@ def testRemove():
 
     try:
         remove([[1, 2, 3, 4]], 5, 100)
+        assert False
     except:
         pass
 
     try:
         remove([[]], 1, 1)
+        assert False
     except:
         pass
 
     try:
         remove([[], [], []], 'lica', 'samadaul')
+        assert False
     except:
         pass
 
@@ -53,16 +59,19 @@ def testReplaceScore():
 
     try:
         replaceScore([[]], 1, 13)
+        assert False
     except:
         pass
 
     try:
         replaceScore([[1, 23]], 3, 100)
+        assert False
     except:
         pass
 
     try:
         replaceScore([[100]], 1, 101)
+        assert False
     except:
         pass
 
@@ -74,16 +83,19 @@ def testGetAverage():
 
     try:
         getAverage([[]], 1, 1)
+        assert False
     except:
         pass
 
     try:
         getAverage([[1]], 'mama', 'tata')
+        assert False
     except:
         pass
 
     try:
         getAverage([[1, 2, 3, 4, 5, 6]], 1, 7)
+        assert False
     except:
         pass
 
@@ -95,11 +107,13 @@ def testGetMinScore():
 
     try:
         getMinScore([[]], 1, 1)
+        assert False
     except:
         pass
 
     try:
         getMinScore([[1, 2, 3]], 0, 2)
+        assert False
     except:
         pass
 
@@ -111,11 +125,13 @@ def testGetMaxScore():
 
     try:
         getMaxScore([[]], 1, 1)
+        assert False
     except:
         pass
 
     try:
         getMaxScore([[1, 2, 3]], 0, 2)
+        assert False
     except:
         pass
 
