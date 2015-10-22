@@ -1,5 +1,5 @@
-tasm /zi 3u.asm
+tasm /zi %1.asm
 pause
-tlink /v 3u.obj
+tlink /v %1.obj
 pause
-td 3u.exe
+td %1.exe
