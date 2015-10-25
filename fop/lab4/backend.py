@@ -183,3 +183,17 @@ def prepareFuture(history):
     history['now'] = len(history['states']) - 1     # set the present time
 
     return history
+
+
+def filterList(history, mask):
+    """
+    Method applies a mask to the history
+    and keeps only the values that are not masked.
+    Returns updated history.
+    """
+
+    history = forgetFuture(history)
+    history = prepareFuture(history)
+
+    history['states'][history['now']] = [x for i, x in enumerate(history['states'][history['now']]) if mask[i]]
+    return history

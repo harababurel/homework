@@ -24,20 +24,23 @@ def getInput(history):
     argCount = len(command) - 1
 
     neededArgs = {
-            'insert':  [1, 2],
-            'remove':  [1, 2],
-            'replace': [2],
-            'help':    [0],
-            'list':    [0],
-            'less':    [1],
-            'greater': [1],
-            'sorted':  [0],
-            'average': [2],
-            'min':     [2],
-            'max':     [2],
-            'mul':     [3],
-            'undo':    [0, 1],
-            'exit':    [0]
+            'insert':        [1, 2],
+            'remove':        [1, 2],
+            'replace':       [2],
+            'help':          [0],
+            'list':          [0],
+            'less':          [1],
+            'greater':       [1],
+            'sorted':        [0],
+            'average':       [2],
+            'min':           [2],
+            'max':           [2],
+            'mul':           [3],
+            'filterless':    [1],
+            'filtergreater': [1],
+            'filtermul':     [1],
+            'undo':          [0, 1],
+            'exit':          [0]
             }
 
     ### NOTHING
@@ -61,7 +64,7 @@ def getInput(history):
         if argCount == 2:
             try:
                 position = int(command[2])
-                assert 1 <= position and position <= len(history['states'][-1])
+                assert 1 <= position and position <= len(history['states'][history['now']])
             except:
                 raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -74,7 +77,7 @@ def getInput(history):
     elif command[0] == 'remove':
         try:
             left = int(command[1])
-            assert 1 <= left and left <= len(history['states'][-1])
+            assert 1 <= left and left <= len(history['states'][history['now']])
         except:
             raise(Exception("Error: the position you entered is not valid."))
 
@@ -82,7 +85,7 @@ def getInput(history):
         if argCount == 2:
             try:
                 right = int(command[2])
-                assert left <= right and right <= len(history['states'][-1])
+                assert left <= right and right <= len(history['states'][history['now']])
             except:
                 raise(Exception("Error: the interval you entered is not valid."))
 
@@ -95,7 +98,7 @@ def getInput(history):
     elif command[0] == 'replace':
         try:
             position = int(command[1])
-            assert 1 <= position and position <= len(history['states'][-1])
+            assert 1 <= position and position <= len(history['states'][history['now']])
         except:
             raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -118,23 +121,27 @@ def getInput(history):
     elif command[0] == 'list':
         showList(history, [True for i in range(0, len(history['states'][history['now']]))]) # this mask corresponds to "show all"
 
-    ### LESS or GREATER
-    elif command[0] in ['less', 'greater']:
+    ### LESS or GREATER (FILTERLESS or FILTERGREATER)
+    elif command[0] in ['less', 'greater', 'filterless', 'filtergreater']:
         try:
             separator = int(command[1])
         except:
             raise(Exception("Error: the score must be an integer."))
 
-        if command[0] == 'less':
+        if command[0] in ['less', 'filterless']:
             mask = getLessMask(history, separator)
         else:
             mask = getGreaterMask(history, separator)
 
-        showList(history, mask)
+        if command[0] in ['less', 'greater']:
+            showList(history, mask)
+        else:
+            history = filterList(history, mask)
+
 
     ### SORTED
     elif command[0] == 'sorted':
-        sortedParticipants = [sorted(history['states'][-1])[::-1]]
+        sortedParticipants = [sorted(history['states'][history['now']])[::-1]]
         showList(sortedParticipants, [True for x in sortedParticipants[0]])
 
     ### AVERAGE, MIN, MAX
@@ -142,7 +149,7 @@ def getInput(history):
         try:
             left = int(command[1])
             right = int(command[2])
-            assert 1 <= left and left <= right and right <= len(history['states'][-1])
+            assert 1 <= left and left <= right and right <= len(history['states'][history['now']])
         except:
             raise(Exception("Error: the interval you provided is not valid."))
 
@@ -164,11 +171,27 @@ def getInput(history):
         try:
             left = int(command[2])
             right = int(command[3])
-            assert 1 <= left and left <= right and right <= len(history['states'][-1])
+            assert 1 <= left and left <= right and right <= len(history['states'][history['now']])
         except:
             raise(Exception("Error: the interval you provided is not valid."))
 
         showList(history, getMulMask(history, k, left, right))
+
+    ### FILTERMUL
+    elif command[0] == 'filtermul':
+        try:
+            k = int(command[1])
+            assert k > 0
+        except:
+            raise(Exception("Error: the argument must be an integer greater than 0."))
+
+        try:
+            mask = getMulMask(history, k, 1, len(history['states'][history['now']]))
+            history = filterList(history, mask)
+        except Exception as e:
+            print(e)
+            raise(Exception("Error: something went wrong. Could not filter multiples of %i." % k))
+
 
     ### UNDO
     elif command[0] == 'undo':
