@@ -36,6 +36,7 @@ def getInput(history):
             'min':     [2],
             'max':     [2],
             'mul':     [3],
+            'undo':    [0, 1],
             'exit':    [0]
             }
 
@@ -60,7 +61,7 @@ def getInput(history):
         if argCount == 2:
             try:
                 position = int(command[2])
-                assert 1 <= position and position <= len(history[-1])
+                assert 1 <= position and position <= len(history['states'][-1])
             except:
                 raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -73,7 +74,7 @@ def getInput(history):
     elif command[0] == 'remove':
         try:
             left = int(command[1])
-            assert 1 <= left and left <= len(history[-1])
+            assert 1 <= left and left <= len(history['states'][-1])
         except:
             raise(Exception("Error: the position you entered is not valid."))
 
@@ -81,7 +82,7 @@ def getInput(history):
         if argCount == 2:
             try:
                 right = int(command[2])
-                assert left <= right and right <= len(history[-1])
+                assert left <= right and right <= len(history['states'][-1])
             except:
                 raise(Exception("Error: the interval you entered is not valid."))
 
@@ -94,7 +95,7 @@ def getInput(history):
     elif command[0] == 'replace':
         try:
             position = int(command[1])
-            assert 1 <= position and position <= len(history[-1])
+            assert 1 <= position and position <= len(history['states'][-1])
         except:
             raise(Exception("Error: position must be an integer between 1 and the total number of participants."))
 
@@ -115,7 +116,7 @@ def getInput(history):
 
     ### LIST
     elif command[0] == 'list':
-        showList(history, [True for i in range(0, len(history[-1]))]) # this mask corresponds to "show all"
+        showList(history, [True for i in range(0, len(history['states'][history['now']]))]) # this mask corresponds to "show all"
 
     ### LESS or GREATER
     elif command[0] in ['less', 'greater']:
@@ -125,15 +126,15 @@ def getInput(history):
             raise(Exception("Error: the score must be an integer."))
 
         if command[0] == 'less':
-            mask = [x < separator for x in history[-1]]
+            mask = getLessMask(history, separator)
         else:
-            mask = [x > separator for x in history[-1]]
+            mask = getGreaterMask(history, separator)
 
         showList(history, mask)
 
     ### SORTED
     elif command[0] == 'sorted':
-        sortedParticipants = [sorted(history[-1])[::-1]]
+        sortedParticipants = [sorted(history['states'][-1])[::-1]]
         showList(sortedParticipants, [True for x in sortedParticipants[0]])
 
     ### AVERAGE, MIN, MAX
@@ -141,7 +142,7 @@ def getInput(history):
         try:
             left = int(command[1])
             right = int(command[2])
-            assert 1 <= left and left <= right and right <= len(history[-1])
+            assert 1 <= left and left <= right and right <= len(history['states'][-1])
         except:
             raise(Exception("Error: the interval you provided is not valid."))
 
@@ -163,12 +164,34 @@ def getInput(history):
         try:
             left = int(command[2])
             right = int(command[3])
-            assert 1 <= left and left <= right and right <= len(history[-1])
+            assert 1 <= left and left <= right and right <= len(history['states'][-1])
         except:
             raise(Exception("Error: the interval you provided is not valid."))
 
         showList(history, getMulMask(history, k, left, right))
 
+    ### UNDO
+    elif command[0] == 'undo':
+        steps = 1
+
+        if argCount == 1:
+            try:
+                steps = int(command[1])
+                assert steps > 0
+            except:
+                raise(Exception("Error: you need to go back at least one step."))
+
+        try:
+            history = undo(history, steps)
+        except:
+            raise(Exception("Error: something went wrong, could not undo operations."))
+
+    ### REDO
+    elif command[0] == 'redo':
+        try:
+            history = redo(history)
+        except:
+            raise(Exception("Error: something went wrong, could not redo operations."))
 
 
     ### EXIT
@@ -204,6 +227,8 @@ def showHelp():
     print("    min X Y - shows the lowest score of participants with positions between X and Y")
     print("    max X Y - shows the highest score of participants with positions between X and Y")
     print("    mul K X Y - shows scores that are a multiple of K, with positions between X and Y")
+    print("    undo - reverts most recent operation")
+    print("    undo X - reverts most recent X operations")
     print("    exit - saves the current state and closes the program")
 
 
@@ -212,4 +237,4 @@ def showList(history, mask):
     Method prints all participants and their positions.
     """
 
-    print("Participants:\n    %s" % "\n    ".join([["#######", "#%i: %i" % (i+1, x)][mask[i]] for i, x in enumerate(history[-1])]))
+    print("Participants:\n    %s" % "\n    ".join([["#######", "#%i: %i" % (i+1, x)][mask[i]] for i, x in enumerate(history['states'][history['now']])]))

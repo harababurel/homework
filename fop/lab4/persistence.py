@@ -20,7 +20,10 @@ def restoreSession():
     except:
         print("Could not restore session. Starting from scratch.")
 
-        history = [[]]
+        history = {
+                'states': [[]],
+                'now': 0
+                }
         saveSession(history)
 
     return history

@@ -17,7 +17,7 @@ Feature no.   | Description                                                  | C
 3             | Write the participants whose score has different properties. | <ul><li><code>less X</code></li><li><code>greater X</code></li><li><code>sorted</code></li><li><code>list</code></li></ul>
 4             | Obtain different characteristics of participants.            | <ul><li><code>average X Y</code></li><li><code>min X Y</code></li><li><code>mul K X Y</code></li></ul>
 5             | Filter scores.                                               | <ul><li><code>filter mul X</code></li><li><code>filter greater X</code></li></ul>
-6             | Undo the last operation.                                     | <ul><li><code>undo</code></li></ul>
+6             | Undo the last X operations.                                  | <ul><li><code>undo X</code></li></ul>
 7             | Save state to disk and close program.                        | <ul><li><code>exit</code></li></ul>
 8             | Redo the last undone operation.                              | <ul><li><code>redo</code></li></ul>
 

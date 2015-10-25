@@ -16,10 +16,13 @@ def add(history, score, position):
     the new history.
     """
 
+    history = forgetFuture(history)  # a parallel universe is created
+    history = prepareFuture(history) # and time moves forward
+
     if position:
-        history[-1].insert(position-1, score)
+        history['states'][-1].insert(position-1, score)
     else:
-        history[-1].append(score)
+        history['states'][-1].append(score)
 
     return history
 
@@ -34,7 +37,10 @@ def remove(history, left, right):
     history.
     """
 
-    history[-1][left-1:right] = []
+    history = forgetFuture(history)  # a parallel universe is created
+    history = prepareFuture(history) # and time moves forward
+
+    history['states'][-1][left-1:right] = []
     return history
 
 
@@ -48,7 +54,10 @@ def replaceScore(history, position, score):
     and returns the new history list.
     """
 
-    history[-1][position-1] = score
+    history = forgetFuture(history)  # a parallel universe is created
+    history = prepareFuture(history) # and time moves forward
+
+    history['states'][-1][position-1] = score
     return history
 
 
@@ -61,7 +70,7 @@ def getAverage(history, left, right):
     in given interval.
     """
 
-    candidates = history[-1][left-1:right]
+    candidates = history['states'][-1][left-1:right]
     try:
         average = sum(candidates) / len(candidates)
     except:
@@ -79,7 +88,7 @@ def getMinScore(history, left, right):
     in given interval.
     """
 
-    return min(history[-1][left-1:right])
+    return min(history['states'][-1][left-1:right])
 
 
 def getMaxScore(history, left, right):
@@ -91,7 +100,7 @@ def getMaxScore(history, left, right):
     in given interval.
     """
 
-    return max(history[-1][left-1:right])
+    return max(history['states'][-1][left-1:right])
 
 
 def getMulMask(history, k, left, right):
@@ -104,5 +113,73 @@ def getMulMask(history, k, left, right):
     the score is a multiple of k.
     """
 
-    mask = [left <= i+1 and i+1 <= right and history[-1][i] % k == 0 for i in range(0, len(history[-1]))]
+    mask = [left <= i+1 and i+1 <= right and history['states'][history['now']][i] % k == 0 for i in range(0, len(history['states'][history['now']]))]
     return mask
+
+
+def getLessMask(history, separator):
+    """
+    Method returns a mask that filters participants
+    which have a score lower than <separator>.
+    """
+    mask = [x < separator for x in history['states'][history['now']]]
+    return mask
+
+
+def getGreaterMask(history, separator):
+    """
+    Same as above.
+    """
+    mask = [x > separator for x in history['states'][history['now']]]
+    return mask
+
+
+def undo(history, steps):
+    """
+    Method reverts the last <steps> number of operations
+    applied to the participants list.
+    Returns new history (which is basically same history
+    but has an updated "now" field)
+    """
+
+    history['now'] = max(0, history['now'] - steps)
+    return history
+
+
+def redo(history):
+    """
+    Method reapplies the action that cronologically succeeds
+    the current state of the application.
+    """
+
+    if history['now'] == len(history['states'])-1:
+        print("Already at most recent state.")
+    else:
+        history['now'] += 1
+
+    return history
+
+
+def forgetFuture(history):
+    """
+    Method erases all states that exist after the currently indicated one.
+    This reduces the history tree to a history chain.
+    """
+
+    history['states'] = history['states'][:history['now']+1]
+    return history
+
+
+def prepareFuture(history):
+    """
+    Method prepares the history for a new state.
+    That is, it duplicates the current state,
+    and pushes present time one step forward.
+    """
+
+    clone = [x for x in history['states'][-1]]
+
+    history['states'].append(clone) # duplicate current state
+    history['now'] = len(history['states']) - 1     # set the present time
+
+    return history
