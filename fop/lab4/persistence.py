@@ -36,7 +36,7 @@ def saveSession(history):
     If unable to do so, a message is displayed.
     """
 
-    print("Saving new session to disk.")
+    print("Saving session to disk.")
     try:
         with open('data.bin', 'wb') as g:
             pickle.dump(history, g)
