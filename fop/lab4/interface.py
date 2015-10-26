@@ -250,8 +250,12 @@ def showHelp():
     print("    min X Y - shows the lowest score of participants with positions between X and Y")
     print("    max X Y - shows the highest score of participants with positions between X and Y")
     print("    mul K X Y - shows scores that are a multiple of K, with positions between X and Y")
+    print("    filterless X - keeps the participants with scores less than X")
+    print("    filtergreater X - keeps the participants with scores greater than X")
+    print("    filtermul K - keeps the participants with scores multiple of K")
     print("    undo - reverts most recent operation")
     print("    undo X - reverts most recent X operations")
+    print("    redo - reapplies the the closest operation that was reverted")
     print("    exit - saves the current state and closes the program")
 
 
