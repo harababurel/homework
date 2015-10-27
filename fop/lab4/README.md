@@ -191,12 +191,34 @@ Iteration no. | Planned features
         </tr>
         <tr>
             <td>17</td>
-            <td><code>exit</code></td>
+            <td><code>undo</code></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
             <td>18</td>
+            <td><code>list</code></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td>Participants:<br>
+                <ul>
+                    <li>1: 100</li>
+                    <li>2: 50</li>
+                </ul>
+            </td>
+            <td>The insertion of 42 was reverted.</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td><code>exit</code></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>21</td>
             <td></td>
             <td>Saving new session to disk.<br>
                 Session saved.<br>
