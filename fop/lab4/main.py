@@ -10,7 +10,6 @@ from tests import *
 
 
 def main():
-    '''
     try:
         testEverything()
         print("All tests passed :).")
@@ -18,7 +17,6 @@ def main():
         print(e)
         print("Terminating execution.")
         exit(0)
-    '''
 
     history = restoreSession()
     showPrompt()

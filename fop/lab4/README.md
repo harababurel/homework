@@ -31,7 +31,7 @@ Iteration no. | Planned features
 
 ## Running scenarios
 
-### Iteration 2
+### Iteration 3
 
 <table>
     <thead>
@@ -94,6 +94,12 @@ Iteration no. | Planned features
                     <li><code>min X Y</code> - shows the lowest score of participants with positions between X and Y</li>
                     <li><code>max X Y</code> - shows the highest score of participants with positions between X and Y</li>
                     <li><code>mul K X Y</code> - shows scores that are a multiple of K, with positions between X and Y</li>
+                    <li><code>filterless X - keeps the participants with scores less than X</code></li>
+                    <li><code>filtergreater X - keeps the participants with scores greater than X</code></li>
+                    <li><code>filtermul K - keeps the participants with scores multiple of K</code></li>
+                    <li><code>undo - reverts most recent operation</code></li>
+                    <li><code>undo X - reverts most recent X operations</code></li>
+                    <li><code>redo - reapplies the the closest operation that was reverted</code></li>
                     <li><code>exit</code> - saves the current state and closes the program</li>
                 </ul>
             </td>
