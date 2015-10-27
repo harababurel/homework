@@ -203,6 +203,7 @@ Iteration no. | Planned features
         </tr>
         <tr>
             <td>19</td>
+            <td></td>
             <td>Participants:<br>
                 <ul>
                     <li>1: 100</li>
