@@ -5,9 +5,9 @@
 from backend import *
 
 def testAdd():
-    assert add([[]], 5, None) == [[5]]
-    assert add([[100, 54], [100, 54, 32]], 1, 2) == [[100, 54], [100, 1, 54, 32]]
-    assert add([[1, 2, 3, 4]], 5, 4) == [[1, 2, 3, 5, 4]]
+    assert add({'states': [[]], 'now': 0}, 5, None) == {'states': [[], [5]], 'now': 1}
+    assert add({'states': [[100, 54], [100, 54, 32]], 'now': 1}, 1, 2) == {'states': [[100, 54], [100, 54, 32], [100, 1, 54, 32]], 'now': 2}
+    assert add({'states': [[1, 2, 3, 4]], 'now': 0}, 5, 4) == {'states': [[1, 2, 3, 4], [1, 2, 3, 5, 4]], 'now': 1}
 
     try: # some invalid commands
         add([[]], 5, 9)
@@ -145,14 +145,12 @@ def testGetMulMask():
 def testEverything():
     problem = None
 
-    return # temporary bypass
-
     try:
         testAdd()
     except:
         print("<add> method failed tests :(")
         problem = True
-
+    return # temporary bypass
 
     try:
         testRemove()
