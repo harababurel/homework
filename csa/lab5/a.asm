@@ -19,7 +19,7 @@ start:
     ;bits 10-15 of word C take the invert value of bits 3-8 of word B
 
     ;bit 15  14  13  12  11  10   9   8   7   6   5   4   3   2   1   0
-    ;c =!b8 !b7 !b6 !b5 !b4 !b3 a14 a13 a12 a11   0   1   0  a2  b1  a0
+    ;c =!b8 !b7 !b6 !b5 !b4 !b3 a14 a13 a12 a11   0   1   0  a1  b1  a0
 
     mov dx,0                          ;dx is where we will construct the value of c
     mov ax,a                          ;ax is where we alter the bits needed
