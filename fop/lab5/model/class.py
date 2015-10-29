@@ -27,8 +27,27 @@ class Class():
 
         return message
 
+    # SET STUFF
+    def setGraduationYear(self, newGraduationYear):
+        self.graduationYear = newGraduationYear
 
+    def setStudents(self, students):
+        self.studends = students
 
+    def setAssignments(self, assignments):
+        self.assignments = assignments
 
+    def addStudent(self, student):
+        if checkStudentExists(self):
+            return "Student with id #%i already exists in this class." % student.studentID
+        self.students.append(student)
 
+    # GET STUFF
+    def getGraduationYear(self):
+        return self.graduationYear
 
+    def getStudents(self):
+        return self.students
+
+    def getAssignments(self):
+        return self.assignments
