@@ -25,3 +25,12 @@ class FacultyController():
         # do something
         pass
 
+    def exitApplication(self):
+        try:
+            self.repository.saveSession()
+            print("Session saved :).")
+        except IOError:
+            print("Could not save session. Your work will be lost :(.")
+
+        print("Exiting.")
+        exit(0)

@@ -1,5 +1,7 @@
 """
     The brains of the application.
+    Module creates an instance of the application
+    and runs it.
 """
 
 from ui.FacultyApplication import FacultyApplication
