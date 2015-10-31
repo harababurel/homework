@@ -60,7 +60,7 @@ class FacultyApplication():
 
 
     def showPrompt(self):
-        print('> ', end='')
+        print('%s> ' % getAbsoluteLocation(getFilename()), end='')
 
     def getInput(self):
         return input()
