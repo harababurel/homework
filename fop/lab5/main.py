@@ -7,6 +7,7 @@
 from ui.FacultyApplication import FacultyApplication
 from models import *
 
+
 def main():
     app = FacultyApplication()
     app.run()

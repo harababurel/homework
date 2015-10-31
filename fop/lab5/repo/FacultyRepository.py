@@ -5,12 +5,13 @@
 """
 import pickle
 
+
 class FacultyRepository():
     def __init__(self):
         self.now = 0
-        self.states = [ ([], []) ]
-        #                ^   ^
-        #         students   assignments
+        self.states = [([], [])]
+        #               ^   ^
+        #        students   assignments
 
     def restoreSession(self):
         try:
@@ -25,4 +26,3 @@ class FacultyRepository():
                 pickle.dump(self, g)
         except:
             raise IOError("Could not open the data file for writing.")
-

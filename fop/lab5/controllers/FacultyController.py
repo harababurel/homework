@@ -4,6 +4,7 @@
 """
 from repo.FacultyRepository import FacultyRepository
 
+
 class FacultyController():
     def __init__(self):
         self.repository = FacultyRepository()
@@ -19,7 +20,8 @@ class FacultyController():
                 self.repository.saveSession()
                 print("New session saved :).")
             except IOError:
-                print("Could not save new session. Your work will be lost once you close the application :(.")
+                print("Could not save new session.", end='')
+                print("Your work will be lost once you close the application :(.")
 
     def addStudent(self, student):
         # do something
