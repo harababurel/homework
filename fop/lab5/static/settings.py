@@ -6,11 +6,15 @@
 SETTINGS = {
         'validCommands': [
             'help',
+            'add',
+            'list',
             'clear',
             'exit'
             ],
         'neededArgs': {
             'help': [0],
+            'add': [0],
+            'list': [0],
             'clear': [0],
             'exit': [0]
             }

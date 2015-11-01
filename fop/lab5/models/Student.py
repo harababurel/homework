@@ -11,7 +11,7 @@ class Student():
             - name <string>
             - group <int>
     """
-    def __init__(self, studentID, name, group):
+    def __init__(self, studentID=None, name=None, group=None):
         self.studentID = studentID
         self.name = name
         self.group = group

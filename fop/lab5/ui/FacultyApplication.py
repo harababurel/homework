@@ -7,6 +7,10 @@ from controllers.FacultyController import FacultyController
 from static.settings import SETTINGS
 from static.strings import STRINGS
 from util.utilities import *
+from models.Student import *
+from models.Assignment import *
+from models.Faculty import *
+
 
 class FacultyApplication():
     def __init__(self):
@@ -20,8 +24,7 @@ class FacultyApplication():
             does what it's told.
         """
         while True:
-            self.showPrompt()
-            self.command = self.getInput()
+            self.command = self.getInput('> ')
 
             # NULL COMMAND
             if self.command == '':
@@ -50,6 +53,15 @@ class FacultyApplication():
             if self.command == 'help':
                 print(STRINGS['helpPrompt'])
 
+            # ADD
+            elif self.command == 'add':
+                self.showAddSubmenu()
+
+            # LIST
+            elif self.command == 'list':
+                for x in self.controller.getCurrentStudents():
+                    print(x)
+
             # CLEAR
             elif self.command == 'clear':
                 clear()
@@ -58,9 +70,52 @@ class FacultyApplication():
             elif self.command == 'exit':
                 self.controller.exitApplication()
 
+    def getInput(self, prompt=None):
+        return input(prompt if prompt else '')
 
-    def showPrompt(self):
-        print('%s> ' % getAbsoluteLocation(getFilename()), end='')
+    def showAddSubmenu(self):
+        while True:
+            try:
+                self.addType = self.getInput("Student or Assignment? ")
+                assert self.addType.lower() in ['student', 'assignment', 's', 'a']
 
-    def getInput(self):
-        return input()
+                if self.addType.lower() in ['student', 's']:
+                    self.showAddStudentSubmenu()
+                else:
+                    self.showAddAssignmentSubmenu()
+                return
+
+            except AssertionError:
+                continue
+
+    def showAddStudentSubmenu(self):
+        print("You chose to add a student.")
+
+        while True:
+            try:
+                self.newStudentID = int(self.getInput("ID: "))
+                assert 0 < self.newStudentID
+                break
+            except:
+                continue
+
+        self.newStudentName = self.getInput("Name: ")
+
+        while True:
+            try:
+                self.newStudentGroup = int(self.getInput("Group: "))
+                assert 0 < self.newStudentGroup
+                break
+            except:
+                continue
+
+        self.controller.addStudent(
+                Student(
+                    self.newStudentID,
+                    self.newStudentName,
+                    self.newStudentGroup)
+                )
+
+    def showAddAssignmentSubmenu(self):
+        print("You chose to add an assignment.")
+

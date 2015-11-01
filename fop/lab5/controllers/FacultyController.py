@@ -23,11 +23,34 @@ class FacultyController():
                 print("Could not save new session.", end='')
                 print("Your work will be lost once you close the application :(.")
 
-    def addStudent(self, student):
-        # do something
-        pass
+    def getCurrentFaculty(self):
+        return self.repository.states[self.repository.now]
+
+    def getCurrentStudents(self):
+        return self.getCurrentFaculty().students
+
+    def getCurrentAssignments(self):
+        return self.getCurrentFaculty().assignments
+
+    def studentExists(self, student):
+        return student.studentID in [x.studentID for x in self.getCurrentStudents()]
+
+
+    def addStudent(self, who):
+        if self.studentExists(who):
+            print("Student %i already exists." % who.studentID)
+        else:
+            self.repository.prepare()
+            #self.getCurrentStudents().append(who)
+            # ^hopefully this works as expected
+            self.repository.states[self.repository.now].addStudent(who)
+
 
     def exitApplication(self):
+        """
+            Method saves current session and then exits
+            with an exit-code of 0.
+        """
         try:
             self.repository.saveSession()
             print("Session saved :).")

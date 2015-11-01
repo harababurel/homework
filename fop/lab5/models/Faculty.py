@@ -7,17 +7,15 @@ class Faculty():
     """
         Class that models a generation of students as an object.
         Each generation is identified by:
-            - graduationYear - <int>
             - students - <list of Student()>
             - assignments - <list of Assignment()>
     """
-    def __init__(self, graduationYear, students, assignments):
-        self.graduationYear = graduationYear
-        self.students = students
-        self.assignments = assignments
+    def __init__(self, students=None, assignments=None):
+        self.students = [] if students is None else students
+        self.assignments = [] if assignments is None else assignments
 
     def __repr__(self):
-        message = "The class of %i contains the following students:\n" % self.graduationYear
+        message = "The faculty contains the following students:\n"
         for student in students:
             message += "\t%r\n" % student
 
@@ -38,14 +36,9 @@ class Faculty():
         self.assignments = assignments
 
     def addStudent(self, student):
-        if checkStudentExists(self):
-            return "Student with id #%i already exists in this class." % student.studentID
         self.students.append(student)
 
     # GET STUFF
-    def getGraduationYear(self):
-        return self.graduationYear
-
     def getStudents(self):
         return self.students
 
