@@ -25,7 +25,7 @@ class FacultyApplication:
             does what it's told.
         """
         while True:
-            print(self.controller.repository)
+            # print(self.controller.repository)
             self.command = self.getInput(bold('> '))
 
             # NULL COMMAND
