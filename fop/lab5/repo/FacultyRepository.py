@@ -4,23 +4,37 @@
     and assignments, as well as different temporal states.
 """
 import pickle
+import copy
 from models.Faculty import *
 
 
-class FacultyRepository():
+class FacultyRepository:
     """
         Structure of the repository:
             - now <int> - the current position in the list of states
-            - states [int] - the application states timeline
+            - states [faculties] - the application states timeline
     """
     def __init__(self):
-        self.now = 0
-        self.states = [Faculty()]
+        try:
+            self.restoreSession()
+        except:
+            self.now = 0
+            self.states = [Faculty()]
+
+    def __repr__(self):
+        message = "Repository (now = %i):\n" % self.now
+        for i, x in enumerate(self.states):
+            message += "State %i:\n" % i
+            message += "%r\n" % x
+
+        return message
 
     def restoreSession(self):
         try:
             with open("data.bin", "rb") as f:
-                self = pickle.load(f)
+                savedRepo = pickle.load(f)
+                self.now = savedRepo.now
+                self.states = savedRepo.states
         except:
             raise IOError("Could not open the data file for reading.")
 
@@ -43,7 +57,7 @@ class FacultyRepository():
             Method creates a duplicate of the current state,
             which can be altered in the future.
         """
-        self.states.append(self.states[self.now])
+        self.states.append(copy.deepcopy(self.states[self.now]))
         self.now += 1
 
     def prepare(self):

@@ -8,6 +8,8 @@ SETTINGS = {
             'help',
             'add',
             'list',
+            'undo',
+            'redo',
             'clear',
             'exit'
             ],
@@ -15,6 +17,8 @@ SETTINGS = {
             'help': [0],
             'add': [0],
             'list': [0],
+            'undo': [0],
+            'redo': [0],
             'clear': [0],
             'exit': [0]
             }

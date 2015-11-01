@@ -1,9 +1,10 @@
 """
     Module implements the Faculty class.
 """
+from models.Student import *
+from models.Assignment import *
 
-
-class Faculty():
+class Faculty:
     """
         Class that models a generation of students as an object.
         Each generation is identified by:
@@ -15,13 +16,12 @@ class Faculty():
         self.assignments = [] if assignments is None else assignments
 
     def __repr__(self):
-        message = "The faculty contains the following students:\n"
-        for student in students:
-            message += "\t%r\n" % student
+        message = ''
+        for student in self.students:
+            message += "%r\n" % student
 
-        message += "\nAnd assignments:\n"
-        for assignment in assignments:
-            message += "\t%r\n" % assignment
+        for assignment in self.assignments:
+            message += "%r\n" % assignment
 
         return message
 
@@ -30,7 +30,7 @@ class Faculty():
         self.graduationYear = newGraduationYear
 
     def setStudents(self, students):
-        self.studends = students
+        self.students = students
 
     def setAssignments(self, assignments):
         self.assignments = assignments

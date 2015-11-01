@@ -5,7 +5,7 @@
 from repo.FacultyRepository import FacultyRepository
 
 
-class FacultyController():
+class FacultyController:
     def __init__(self):
         self.repository = FacultyRepository()
 
@@ -45,6 +45,17 @@ class FacultyController():
             # ^hopefully this works as expected
             self.repository.states[self.repository.now].addStudent(who)
 
+    def undo(self):
+        if self.repository.now == 0:
+            print("Already at oldest state.")
+        else:
+            self.repository.now -= 1
+
+    def redo(self):
+        if self.repository.now + 1 == len(self.repository.states):
+            print("Already at most recent state.")
+        else:
+            self.repository.now += 1
 
     def exitApplication(self):
         """

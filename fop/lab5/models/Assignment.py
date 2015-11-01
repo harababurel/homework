@@ -3,7 +3,7 @@
 """
 
 
-class Assignment():
+class Assignment:
     """
         Class that models assignments as objects.
         Each assignment is identified by 4 fields:

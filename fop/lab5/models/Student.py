@@ -3,7 +3,7 @@
 """
 
 
-class Student():
+class Student:
     """
         Class that models students as objects.
         Each student is identified by 3 fields:

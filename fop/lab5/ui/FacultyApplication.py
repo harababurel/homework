@@ -7,12 +7,13 @@ from controllers.FacultyController import FacultyController
 from static.settings import SETTINGS
 from static.strings import STRINGS
 from util.utilities import *
+from util.Color import *
 from models.Student import *
 from models.Assignment import *
 from models.Faculty import *
 
 
-class FacultyApplication():
+class FacultyApplication:
     def __init__(self):
         self.controller = FacultyController()
 
@@ -24,7 +25,8 @@ class FacultyApplication():
             does what it's told.
         """
         while True:
-            self.command = self.getInput('> ')
+            print(self.controller.repository)
+            self.command = self.getInput(bold('> '))
 
             # NULL COMMAND
             if self.command == '':
@@ -35,16 +37,17 @@ class FacultyApplication():
 
             # UNRECOGNIZED COMMAND
             if not self.command in SETTINGS['validCommands']:
-                print("%s: command not found. Try 'help'." % self.command)
+                print("%s: command not found. Try '%s'." % (self.command, bold('help')))
                 continue
 
             # ARGUMENT COUNT CHECK
             if not len(self.commandArgs) in SETTINGS['neededArgs'][self.command]:
-                print("Error: <%s> takes %r arguments (%i provided)." %
+                print("%s: <%s> takes %s arguments (%s provided)." %
                         (
-                            self.command,
-                            SETTINGS['neededArgs'][self.command],
-                            len(self.commandArgs)
+                            error("Error"),
+                            bold(self.command),
+                            bold(SETTINGS['neededArgs'][self.command]),
+                            bold(len(self.commandArgs))
                             )
                         )
                 continue
@@ -61,6 +64,14 @@ class FacultyApplication():
             elif self.command == 'list':
                 for x in self.controller.getCurrentStudents():
                     print(x)
+
+            # UNDO
+            elif self.command == 'undo':
+                self.controller.undo()
+
+            # REDO
+            elif self.command == 'redo':
+                self.controller.redo()
 
             # CLEAR
             elif self.command == 'clear':
