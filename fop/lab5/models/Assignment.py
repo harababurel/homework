@@ -9,10 +9,10 @@ class Assignment:
         Each assignment is identified by 4 fields:
             - studentID <int> - aka numar matricol
             - description <string>
-            - deadline <datetime.datetime>
+            - deadline <string>
             - grade <float>
     """
-    def __init__(self, studentID, description, deadline, grade):
+    def __init__(self, studentID, description=None, deadline=None, grade=None):
         self.studentID = studentID
         self.description = description
         self.deadline = deadline

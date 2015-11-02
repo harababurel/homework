@@ -38,6 +38,9 @@ class Faculty:
     def addStudent(self, student):
         self.students.append(student)
 
+    def addAssignment(self, assignment):
+        self.assignments.append(assignment)
+
     # GET STUFF
     def getStudents(self):
         return self.students

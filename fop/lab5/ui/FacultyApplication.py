@@ -62,7 +62,12 @@ class FacultyApplication:
 
             # LIST
             elif self.command == 'list':
+                print(bold('Students:'))
                 for x in self.controller.getCurrentStudents():
+                    print(x)
+
+                print('\n%s' % bold('Assignments:'))
+                for x in self.controller.getCurrentAssignments():
                     print(x)
 
             # UNDO
@@ -110,7 +115,13 @@ class FacultyApplication:
             except:
                 continue
 
-        self.newStudentName = self.getInput("Name: ")
+        while True:
+            try:
+                self.newStudentName = self.getInput("Name: ")
+                assert self.newStudentName != ''
+                break
+            except:
+                continue
 
         while True:
             try:
@@ -124,9 +135,47 @@ class FacultyApplication:
                 Student(
                     self.newStudentID,
                     self.newStudentName,
-                    self.newStudentGroup)
+                    self.newStudentGroup
+                    )
                 )
 
     def showAddAssignmentSubmenu(self):
         print("You chose to add an assignment.")
 
+        while True:
+            try:
+                self.newAssignmentStudentID = int(self.getInput("ID: "))
+                assert self.controller.studentIDExists(self.newAssignmentStudentID)
+                break
+            except AssertionError:
+                print("%s: the assignment must be assigned to an existing user." % error("Error"))
+            except:
+                continue
+
+        self.newAssignmentDescription = self.getInput("Description: ")
+        self.newAssignmentDeadline = self.getInput("Deadline: ")
+
+        while True:
+            try:
+                self.newAssignmentGrade = float(self.getInput("Grade: "))
+                assert 1.0 <= self.newAssignmentGrade and self.newAssignmentGrade <= 10.0
+                break
+            except AssertionError:
+                print("%s: the grade must be between %s and %s." % 
+                        (
+                            error("Error"),
+                            bold("1.0"),
+                            bold("10.0")
+                            )
+                        )
+            except:
+                continue
+
+        self.controller.addAssignment(
+            Assignment(
+                self.newAssignmentStudentID,
+                self.newAssignmentDescription,
+                self.newAssignmentDeadline,
+                self.newAssignmentGrade
+                )
+            )

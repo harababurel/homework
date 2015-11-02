@@ -17,10 +17,10 @@ class Student:
         self.group = group
 
     def __repr__(self):
-        return "Student <%s> from group %i has the ID #%i" % (
+        return "#%i: %s from group %i." % (
+                self.studentID,
                 self.name,
-                self.group,
-                self.studentID
+                self.group
                 )
 
     # SET STUFF

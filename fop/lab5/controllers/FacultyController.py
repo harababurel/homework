@@ -32,18 +32,20 @@ class FacultyController:
     def getCurrentAssignments(self):
         return self.getCurrentFaculty().assignments
 
-    def studentExists(self, student):
-        return student.studentID in [x.studentID for x in self.getCurrentStudents()]
+    def studentIDExists(self, studentID):
+        return studentID in [x.studentID for x in self.getCurrentStudents()]
 
 
     def addStudent(self, who):
-        if self.studentExists(who):
-            print("Student %i already exists." % who.studentID)
+        if self.studentIDExists(who.studentID):
+            print("Student #%i already exists." % who.studentID)
         else:
             self.repository.prepare()
-            #self.getCurrentStudents().append(who)
-            # ^hopefully this works as expected
             self.repository.states[self.repository.now].addStudent(who)
+
+    def addAssignment(self, what):
+        self.repository.prepare()
+        self.repository.states[self.repository.now].addAssignment(what)
 
     def undo(self):
         if self.repository.now == 0:
