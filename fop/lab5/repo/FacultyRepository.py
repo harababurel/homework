@@ -14,7 +14,11 @@ class FacultyRepository:
             - now <int> - the current position in the list of states
             - states [faculties] - the application states timeline
     """
-    def __init__(self):
+    def __init__(self, fromScratch=None):
+        if fromScratch:
+            self.now = 0
+            self.states = [Faculty()]
+            return
         try:
             self.restoreSession()
         except:
@@ -28,6 +32,9 @@ class FacultyRepository:
             message += "%r\n" % x
 
         return message
+
+    def getStates(self):
+        return self.states
 
     def restoreSession(self):
         try:

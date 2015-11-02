@@ -5,10 +5,13 @@
 """
 
 from ui.FacultyApplication import FacultyApplication
+from tests.Test import *
 from models import *
 
 
 def main():
+    Test().testEverything()
+
     app = FacultyApplication()
     app.run()
 

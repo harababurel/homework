@@ -26,9 +26,6 @@ class Faculty:
         return message
 
     # SET STUFF
-    def setGraduationYear(self, newGraduationYear):
-        self.graduationYear = newGraduationYear
-
     def setStudents(self, students):
         self.students = students
 
