@@ -74,7 +74,7 @@ Iteration no. | Planned features
         <tr>
             <td>3</td>
             <td></td>
-            <td>salut: command not found. Try '<b>help</b>'.</td>
+            <td><code>salut</code>: command not found. Try '<b>help</b>'.</td>
             <td>Program guides user in the right direction.</td>
         </tr>
         <tr>
