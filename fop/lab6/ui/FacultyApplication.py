@@ -26,7 +26,7 @@ class FacultyApplication:
         """
         while True:
             # print(self.controller.repository)
-            self.command = self.getInput(bold('> '))
+            self.command = self.getInput(Color.bold('> '))
 
             # NULL COMMAND
             if self.command == '':
@@ -37,17 +37,17 @@ class FacultyApplication:
 
             # UNRECOGNIZED COMMAND
             if not self.command in SETTINGS['validCommands']:
-                print("%s: command not found. Try '%s'." % (self.command, bold('help')))
+                print("%s: command not found. Try '%s'." % (self.command, Color.bold('help')))
                 continue
 
             # ARGUMENT COUNT CHECK
             if not len(self.commandArgs) in SETTINGS['neededArgs'][self.command]:
                 print("%s: <%s> takes %s arguments (%s provided)." %
                         (
-                            error("Error"),
-                            bold(self.command),
-                            bold(SETTINGS['neededArgs'][self.command]),
-                            bold(len(self.commandArgs))
+                            Color.error("Error"),
+                            Color.bold(self.command),
+                            Color.bold(SETTINGS['neededArgs'][self.command]),
+                            Color.bold(len(self.commandArgs))
                             )
                         )
                 continue
@@ -60,15 +60,13 @@ class FacultyApplication:
             elif self.command == 'add':
                 self.showAddSubmenu()
 
+            # REMOVE
+            elif self.command == 'remove':
+                self.showRemoveSubmenu()
+
             # LIST
             elif self.command == 'list':
-                print(bold('Students:'))
-                for x in self.controller.getCurrentStudents():
-                    print(x)
-
-                print('\n%s' % bold('Assignments:'))
-                for x in self.controller.getCurrentAssignments():
-                    print(x)
+                self.listEverything()
 
             # UNDO
             elif self.command == 'undo':
@@ -89,16 +87,45 @@ class FacultyApplication:
     def getInput(self, prompt=None):
         return input(prompt if prompt else '')
 
+    def listStudents(self):
+        print(Color.bold('Students:'))
+        for i, x in enumerate(self.controller.getCurrentStudents()):
+            print("%i: %r" % (i, x))
+
+    def listAssignments(self):
+        print('\n%s' % Color.bold('Assignments:'))
+        for i, x in enumerate(self.controller.getCurrentAssignments()):
+            print("%i: %r" % (i, x))
+
+    def listEverything(self):
+        self.listStudents()
+        self.listAssignments()
+
     def showAddSubmenu(self):
         while True:
             try:
-                self.addType = self.getInput("Student or Assignment? ")
+                self.addType = self.getInput("%student or %sssignment? " % (Color.bold('S'), Color.bold('A')))
                 assert self.addType.lower() in ['student', 'assignment', 's', 'a']
 
                 if self.addType.lower() in ['student', 's']:
                     self.showAddStudentSubmenu()
                 else:
                     self.showAddAssignmentSubmenu()
+                return
+
+            except AssertionError:
+                continue
+
+    def showRemoveSubmenu(self):
+        while True:
+            try:
+                self.removeType = self.getInput("%student or %sssignment? " % (Color.bold('S'), Color.bold('A')))
+                assert self.removeType.lower() in ['student', 'assignment', 's', 'a']
+
+                if self.removeType.lower() in ['student', 's']:
+                    self.showRemoveStudentSubmenu()
+                else:
+                    self.showRemoveAssignmentSubmenu()
                 return
 
             except AssertionError:
@@ -139,6 +166,20 @@ class FacultyApplication:
                     )
                 )
 
+    def showRemoveStudentSubmenu(self):
+        print("You chose to remove a student.")
+        self.listStudents()
+
+        while True:
+            try:
+                self.studentID = int(self.getInput("ID: "))
+                assert 0 < self.studentID
+                break
+            except:
+                continue
+
+        self.controller.removeStudent(self.studentID)
+
     def showAddAssignmentSubmenu(self):
         print("You chose to add an assignment.")
 
@@ -148,7 +189,8 @@ class FacultyApplication:
                 assert self.controller.studentIDExists(self.newAssignmentStudentID)
                 break
             except AssertionError:
-                print("%s: the assignment must be assigned to an existing user." % error("Error"))
+                print("%s: the assignment must be assigned to an existing student." % Color.error("Error"))
+                self.listStudents()
             except:
                 continue
 
@@ -164,8 +206,8 @@ class FacultyApplication:
                 print("%s: the grade must be between %s and %s." % 
                         (
                             error("Error"),
-                            bold("1.0"),
-                            bold("10.0")
+                            Color.bold("1.0"),
+                            Color.bold("10.0")
                             )
                         )
             except:
@@ -179,3 +221,7 @@ class FacultyApplication:
                 self.newAssignmentGrade
                 )
             )
+
+    def showRemoveAssignmentSubmenu(self):
+        print("You chose to remove an assignment.")
+        listAssignments()

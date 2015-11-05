@@ -7,6 +7,7 @@ SETTINGS = {
         'validCommands': [
             'help',
             'add',
+            'remove',
             'list',
             'undo',
             'redo',
@@ -14,12 +15,13 @@ SETTINGS = {
             'exit'
             ],
         'neededArgs': {
-            'help': [0],
-            'add': [0],
-            'list': [0],
-            'undo': [0],
-            'redo': [0],
-            'clear': [0],
-            'exit': [0]
+            'help':   [0],
+            'add':    [0],
+            'remove': [0],
+            'list':   [0],
+            'undo':   [0],
+            'redo':   [0],
+            'clear':  [0],
+            'exit':   [0]
             }
         }

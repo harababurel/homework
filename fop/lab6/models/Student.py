@@ -1,6 +1,7 @@
 """
     Module implements the Student class.
 """
+from util.Color import *
 
 
 class Student:
@@ -17,10 +18,10 @@ class Student:
         self.group = group
 
     def __repr__(self):
-        return "#%i: %s from group %i." % (
-                self.studentID,
-                self.name,
-                self.group
+        return "ID=%s: %s from group %s." % (
+                Color.strong(self.studentID),
+                Color.bold(self.name),
+                Color.strong(self.group)
                 )
 
     # SET STUFF

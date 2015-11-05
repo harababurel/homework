@@ -1,6 +1,7 @@
 """
     Module implements the Assignment class.
 """
+from util.Color import *
 
 
 class Assignment:
@@ -19,17 +20,11 @@ class Assignment:
         self.grade = grade
 
     def __repr__(self):
-        message = "Student #%i has the following assignment:\n"
-        message += "\tDescription: %s\n"
-        message += "\tDeadline: %r\n"
-        message += "\tGrade: %.2f\n"
+        message = "Student with ID=%s has the following assignment:\n" % Color.strong(self.studentID)
+        message += "\t%s: %s\n" % (Color.bold("Description"), self.description)
+        message += "\t%s: %s\n" % (Color.bold("Deadline"), self.deadline)
+        message += "\t%s: %.2f\n" % (Color.bold("Grade"), self.grade)
 
-        message %= (
-                self.studentID,
-                self.description,
-                self.deadline,
-                self.grade
-                )
         return message
 
     # SET STUFF
