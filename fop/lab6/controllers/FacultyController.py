@@ -32,6 +32,12 @@ class FacultyController:
     def getCurrentAssignments(self):
         return self.getCurrentFaculty().assignments
 
+    def getCurrentStudentCount(self):
+        return len(self.getCurrentStudents())
+
+    def getCurrentAssignmentCount(self):
+        return len(self.getCurrentAssignments())
+
     def studentIDExists(self, studentID):
         return studentID in [x.studentID for x in self.getCurrentStudents()]
 

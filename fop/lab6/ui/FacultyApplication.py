@@ -224,4 +224,22 @@ class FacultyApplication:
 
     def showRemoveAssignmentSubmenu(self):
         print("You chose to remove an assignment.")
-        listAssignments()
+        self.listAssignments()
+
+        while True:
+            try:
+                self.assignmentID = int(self.getInput("Enter the ID of the assignment: "))
+                assert 0 <= self.assignmentID and self.assignmentID < self.controller.getCurrentAssignmentCount()
+                print("The assignment should be removed now.")
+                break
+            except ValueError:
+                print("Numbers please.")
+            except AssertionError:
+                print("The assignment you chose does not exist.")
+
+
+
+
+
+
+

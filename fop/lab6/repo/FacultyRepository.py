@@ -6,6 +6,7 @@
 import pickle
 import copy
 from models.Faculty import *
+from util.utilities import *
 
 class FacultyRepository:
     """
@@ -35,9 +36,22 @@ class FacultyRepository:
     def getStates(self):
         return self.states
 
+    def getDataFileLocation(self):
+        """
+            The data file should always be saved in the
+            same directory as main.py, not in the directory
+            that the script is run from.
+            This method returns the data file's full path.
+        """
+        motherFile = getFilename()                           # hopefully, this is the location of main.py
+        motherFileLocation = getAbsoluteLocation(motherFile) # and this is the full path to the directory
+
+        dataFileLocation = '%s/data.bin' % motherFileLocation
+        return dataFileLocation
+
     def restoreSession(self):
         try:
-            with open("data.bin", "rb") as f:
+            with open(self.getDataFileLocation(), 'rb') as f:
                 savedRepo = pickle.load(f)
                 self.now = savedRepo.now
                 self.states = savedRepo.states
@@ -46,7 +60,7 @@ class FacultyRepository:
 
     def saveSession(self):
         try:
-            with open("data.bin", "wb") as g:
+            with open(self.getDataFileLocation(), 'wb') as g:
                 pickle.dump(self, g)
         except:
             raise IOError("Could not open the data file for writing.")
