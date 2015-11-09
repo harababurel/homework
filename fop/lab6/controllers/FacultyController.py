@@ -51,7 +51,15 @@ class FacultyController:
 
     def addAssignment(self, what):
         self.repository.prepare()
-        self.repository.states[self.repository.now].addAssignment(what)
+        self.getCurrentFaculty().addAssignment(what)
+
+    def removeStudent(self, studentID):
+        self.repository.prepare()
+        self.getCurrentFaculty().removeStudent(studentID)
+
+    def removeAssignment(self, assignmentID):
+        self.repository.prepare()
+        self.getCurrentFaculty().removeAssignment(assignmentID)
 
     def undo(self):
         if self.repository.now == 0:

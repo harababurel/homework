@@ -173,8 +173,12 @@ class FacultyApplication:
         while True:
             try:
                 self.studentID = int(self.getInput("ID: "))
-                assert 0 < self.studentID
+                assert self.controller.studentIDExists(self.studentID)
                 break
+            except ValueError:
+                print("%s: the student ID should be a positive integer." % Color.error("Error"))
+            except AssertionError:
+                print("%s: there is no such student in the faculty." % Color.error("Error"))
             except:
                 continue
 
@@ -230,12 +234,13 @@ class FacultyApplication:
             try:
                 self.assignmentID = int(self.getInput("Enter the ID of the assignment: "))
                 assert 0 <= self.assignmentID and self.assignmentID < self.controller.getCurrentAssignmentCount()
-                print("The assignment should be removed now.")
                 break
             except ValueError:
-                print("Numbers please.")
+                print("%s: integers please." % Color.error("Error"))
             except AssertionError:
-                print("The assignment you chose does not exist.")
+                print("%s: there is no such asssignment in the faculty." % Color.error("Error"))
+
+        self.controller.removeAssignment(self.assignmentID)
 
 
 

@@ -44,3 +44,9 @@ class Faculty:
 
     def getAssignments(self):
         return self.assignments
+
+    def removeStudent(self, studentID):
+        self.students = [x for x in self.students if x.studentID != studentID]
+
+    def removeAssignment(self, assignmentID):
+        del self.assignments[assignmentID]
