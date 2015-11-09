@@ -33,12 +33,14 @@ Feature no.   | Description                                                  | C
 4             | Go forward to the next application state.                    | <code>redo</code>
 5             | Clear the application screen.                                | <code>clear</code>
 6             | Save state to disk and close the application.                | <code>exit</code>
+7             | Remove an existing student or assignment.                    | <code>remove</code>
 
 ## Iteration plan
 
 Iteration no. | Planned features
 :------------:|:----------------
 1             | 1-6
+2             | 7
 
 ## Running scenario
 

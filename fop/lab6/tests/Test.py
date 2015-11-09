@@ -20,7 +20,7 @@ class Test:
         """
             Method tests the Student class.
         """
-        who = Student()
+        who = Student(666)
 
         who.setStudentID(1)
         who.setStudentName("Decebal")
