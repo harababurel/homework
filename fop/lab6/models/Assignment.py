@@ -14,6 +14,10 @@ class Assignment:
             - grade <float>
     """
     def __init__(self, studentID, description=None, deadline=None, grade=None):
+        """
+            studentID is the only mandatory field.
+            Everything else is optional.
+        """
         self.studentID = studentID
         self.description = description
         self.deadline = deadline
@@ -29,26 +33,50 @@ class Assignment:
 
     # SET STUFF
     def setStudentID(self, newStudentID):
+        """
+            Method sets the studentID of the current assignment.
+        """
         self.studentID = newStudentID
 
     def setDescription(self, newDescription):
+        """
+            Method sets the description of the current assignment.
+        """
         self.description = newDescription
 
     def setDeadline(self, newDeadline):
+        """
+            Method sets the deadline of the current assignment.
+        """
         self.deadline = newDeadline
 
     def setGrade(self, newGrade):
+        """
+            Method sets the grade of the current assignment.
+        """
         self.grade = newGrade
 
     # GET STUFF
     def getStudentID(self):
+        """
+            Method returns the studentID of the current assignment.
+        """
         return self.studentID
 
     def getDescription(self):
+        """
+            Method returns the description of the current assignment.
+        """
         return self.description
 
     def getDeadline(self):
+        """
+            Method returns the deadline of the current assignment.
+        """
         return self.deadline
 
     def getGrade(self):
+        """
+            Method returns the grade of the current assignment.
+        """
         return self.grade

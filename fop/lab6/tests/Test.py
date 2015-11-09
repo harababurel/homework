@@ -17,6 +17,9 @@ class Test:
         pass
 
     def testStudent(self):
+        """
+            Method tests the Student class.
+        """
         who = Student()
 
         who.setStudentID(1)
@@ -28,6 +31,9 @@ class Test:
         assert who.getStudentGroup() == "Dacia"
 
     def testAssignment(self):
+        """
+            Method tests the Assignment class.
+        """
         what = Assignment(123)
 
         what.setDescription("aerobic in aer liber")
@@ -40,6 +46,9 @@ class Test:
         assert what.getGrade() == 5.1231231231231231231231231
 
     def testFaculty(self):
+        """
+            Method tests the Faculty class.
+        """
         fac = Faculty()
 
         decebal = Student(1, "Decebal", "Dacia")
@@ -52,17 +61,24 @@ class Test:
         assert fac.getStudents() == [decebal, burebista]
 
     def testRepo(self):
+        """
+            Method tests the Repository class.
+        """
         repo = FacultyRepository(True)
         repo.duplicateCurrentState()
 
         assert len(repo.getStates()) == 2
 
     def testEverything(self):
-        self.testRepo()
+        """
+            Method tests everything implemented using
+            the other methods implemented in this class.
+        """
         try:
             self.testStudent()
             self.testAssignment()
             self.testFaculty()
+            self.testRepo()
             print("All tests passed :).")
         except:
             print("Some tests failed :(. Terminating execution")

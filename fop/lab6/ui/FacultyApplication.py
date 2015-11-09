@@ -85,23 +85,40 @@ class FacultyApplication:
                 self.controller.exitApplication()
 
     def getInput(self, prompt=None):
+        """
+            Method requests user input, displaying an optional prompt message.
+        """
         return input(prompt if prompt else '')
 
     def listStudents(self):
+        """
+            Method prints all students in the current faculty.
+        """
         print(Color.bold('Students:'))
         for i, x in enumerate(self.controller.getCurrentStudents()):
             print("%i: %r" % (i, x))
 
     def listAssignments(self):
+        """
+            Method prints all assignments in the current faculty.
+        """
         print('\n%s' % Color.bold('Assignments:'))
         for i, x in enumerate(self.controller.getCurrentAssignments()):
             print("%i: %r" % (i, x))
 
     def listEverything(self):
+        """
+            Method prints both students and assignments in the current faculty.
+        """
         self.listStudents()
         self.listAssignments()
 
     def showAddSubmenu(self):
+        """
+            Method implements the menu shown when using the 'add' command.
+            This will split furtherly on two paths, based on the object
+            added (student or assignment).
+        """
         while True:
             try:
                 self.addType = self.getInput("%student or %sssignment? " % (Color.bold('S'), Color.bold('A')))
@@ -117,6 +134,11 @@ class FacultyApplication:
                 continue
 
     def showRemoveSubmenu(self):
+        """
+            Method implements the menu shown when using the 'remove' command.
+            This will split furtherly on two paths, based on the object
+            removed (student or assignment).
+        """
         while True:
             try:
                 self.removeType = self.getInput("%student or %sssignment? " % (Color.bold('S'), Color.bold('A')))
@@ -132,6 +154,9 @@ class FacultyApplication:
                 continue
 
     def showAddStudentSubmenu(self):
+        """
+            Method implements the menu shown when adding a new student.
+        """
         print("You chose to add a student.")
 
         while True:
@@ -167,6 +192,9 @@ class FacultyApplication:
                 )
 
     def showRemoveStudentSubmenu(self):
+        """
+            Method implements the menu shown when removing an existing student.
+        """
         print("You chose to remove a student.")
         self.listStudents()
 
@@ -185,6 +213,9 @@ class FacultyApplication:
         self.controller.removeStudent(self.studentID)
 
     def showAddAssignmentSubmenu(self):
+        """
+            Method implements the menu shown when adding a new assingment.
+        """
         print("You chose to add an assignment.")
 
         while True:
@@ -227,6 +258,9 @@ class FacultyApplication:
             )
 
     def showRemoveAssignmentSubmenu(self):
+        """
+            Method implements the menu shown when removing an existing assingment.
+        """
         print("You chose to remove an assignment.")
         self.listAssignments()
 
@@ -241,10 +275,3 @@ class FacultyApplication:
                 print("%s: there is no such asssignment in the faculty." % Color.error("Error"))
 
         self.controller.removeAssignment(self.assignmentID)
-
-
-
-
-
-
-

@@ -6,6 +6,10 @@ from random import sample, choice
 
 
 class Color:
+    """
+        Class implements some special strings
+        that correspond to color output + others.
+    """
     colors = {
             'PURPLE': '\033[95m',
             'CYAN': '\033[96m',
@@ -22,33 +26,32 @@ class Color:
         }
 
     def getColorList():
+        """
+            Method returns the list of available color names.
+        """
         return [x for x in Color.colors]
 
     def bold(s):
         """
-            Method takes a string and
-            makes it bold.
+            Method takes a string and returns its bold equivalent.
         """
         return '%s%s%s' % (Color.specials['BOLD'], str(s), Color.specials['END'])
 
     def error(s):
         """
-            Method takes a string and
-            makes it bold and red.
+            Method takes a string and returns its bold and red equivalent.
         """
         return '%s%s%s' % (Color.colors['RED'], Color.bold(s), Color.specials['END'])
 
     def strong(s):
         """
-            Method takes a string and
-            makes it bold and blue.
+            Method takes a string and returns its bold and blue equivalent.
         """
         return '%s%s%s' % (Color.colors['BLUE'], Color.bold(s), Color.specials['END'])
 
     def colorize(s):
         """
-            Method takes a string and
-            paints it randomly.
+            Method takes a string and paints it randomly.
         """
         chosenColor = choice(Color.getColorList())
         return '%s%s%s' % (Color.colors[chosenColor], str(s), Color.specials['END'])

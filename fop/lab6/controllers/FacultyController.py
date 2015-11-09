@@ -7,6 +7,11 @@ from repo.FacultyRepository import FacultyRepository
 
 class FacultyController:
     def __init__(self):
+        """
+            The controller initializes with a brand new repository.
+            If, however, it is able to restore an older repository
+            that was saved to disk, it does so.
+        """
         self.repository = FacultyRepository()
 
         print("Restoring previous session.")
@@ -24,25 +29,51 @@ class FacultyController:
                 print("Your work will be lost once you close the application :(.")
 
     def getCurrentFaculty(self):
+        """
+            Method returns the faculty corresponding to the
+            present time.
+        """
         return self.repository.states[self.repository.now]
 
     def getCurrentStudents(self):
+        """
+            Method returns the current faculty's students.
+        """
         return self.getCurrentFaculty().students
 
     def getCurrentAssignments(self):
+        """
+            Method returns the current faculty's assignments.
+        """
         return self.getCurrentFaculty().assignments
 
     def getCurrentStudentCount(self):
+        """
+            Method returns the number of students in the current
+            faculty.
+        """
         return len(self.getCurrentStudents())
 
     def getCurrentAssignmentCount(self):
+        """
+            Method returns the number of assignments in the current
+            faculty.
+        """
         return len(self.getCurrentAssignments())
 
     def studentIDExists(self, studentID):
+        """
+            Method checks whether a student with a specific studentID
+            exists or not.
+        """
         return studentID in [x.studentID for x in self.getCurrentStudents()]
 
-
     def addStudent(self, who):
+        """
+            Method adds a new student to the faculty.
+            If the student already exists (someone with the same studentID),
+            then nothing happens.
+        """
         if self.studentIDExists(who.studentID):
             print("Student #%i already exists." % who.studentID)
         else:
@@ -50,24 +81,42 @@ class FacultyController:
             self.repository.states[self.repository.now].addStudent(who)
 
     def addAssignment(self, what):
+        """
+            Method adds a new assignment to the faculty.
+        """
         self.repository.prepare()
         self.getCurrentFaculty().addAssignment(what)
 
     def removeStudent(self, studentID):
+        """
+            Method removes an existing student (identified by
+            their studentID) from the faculty.
+        """
         self.repository.prepare()
         self.getCurrentFaculty().removeStudent(studentID)
 
     def removeAssignment(self, assignmentID):
+        """
+            Method removes an existing assignment (identified
+            by its position in the list of assignments) from
+            the faculty.
+        """
         self.repository.prepare()
         self.getCurrentFaculty().removeAssignment(assignmentID)
 
     def undo(self):
+        """
+            Method goes back in time one step.
+        """
         if self.repository.now == 0:
             print("Already at oldest state.")
         else:
             self.repository.now -= 1
 
     def redo(self):
+        """
+            Method goes forward in time one step.
+        """
         if self.repository.now + 1 == len(self.repository.states):
             print("Already at most recent state.")
         else:

@@ -12,9 +12,15 @@ class FacultyRepository:
     """
         Structure of the repository:
             - now <int> - the current position in the list of states
-            - states [faculties] - the application states timeline
+            - states [list of Faculty()] - the application states timeline
     """
     def __init__(self, fromScratch=None):
+        """
+            The repository tries to restore a saved state
+            when initializing. If this fails, then it uses
+            the default values for its fields (this can also
+            be requested via the fromScratch parameter).
+        """
         if fromScratch:
             self.now = 0
             self.states = [Faculty()]
@@ -34,6 +40,10 @@ class FacultyRepository:
         return message
 
     def getStates(self):
+        """
+            Method returns the states (list of faculties) of
+            the repository.
+        """
         return self.states
 
     def getDataFileLocation(self):
@@ -50,6 +60,11 @@ class FacultyRepository:
         return dataFileLocation
 
     def restoreSession(self):
+        """
+            Method tries to unpickle the object saved in data.bin,
+            and use it as the current repo.
+            If this fails, an IOError is raised.
+        """
         try:
             with open(self.getDataFileLocation(), 'rb') as f:
                 savedRepo = pickle.load(f)
@@ -59,6 +74,11 @@ class FacultyRepository:
             raise IOError("Could not open the data file for reading.")
 
     def saveSession(self):
+        """
+            Method tries to pickle the current repository in data.bin,
+            for later use.
+            If this fails, an IOError is raised.
+        """
         try:
             with open(self.getDataFileLocation(), 'wb') as g:
                 pickle.dump(self, g)
@@ -83,7 +103,8 @@ class FacultyRepository:
     def prepare(self):
         """
             Method prepares the structure for abiding a future
-            user alteration. Should be executed before each command.
+            user alteration. Should be executed before each user
+            command that alters the repository.
         """
         self.forgetFuture()
         self.duplicateCurrentState()
