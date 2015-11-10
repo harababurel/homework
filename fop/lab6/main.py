@@ -5,6 +5,8 @@
 """
 
 from ui.FacultyApplication import FacultyApplication
+from controllers.FacultyController import FacultyController
+from repo.FacultyRepository import FacultyRepository
 from tests.Test import *
 from models import *
 
@@ -12,7 +14,9 @@ from models import *
 def main():
     Test().testEverything()
 
-    app = FacultyApplication()
+    repo = FacultyRepository()
+    controller = FacultyController(repo)
+    app = FacultyApplication(controller)
     app.run()
 
 if __name__ == '__main__':

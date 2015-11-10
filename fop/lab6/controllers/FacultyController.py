@@ -6,13 +6,13 @@ from repo.FacultyRepository import FacultyRepository
 
 
 class FacultyController:
-    def __init__(self):
+    def __init__(self, repository):
         """
             The controller initializes with a brand new repository.
             If, however, it is able to restore an older repository
             that was saved to disk, it does so.
         """
-        self.repository = FacultyRepository()
+        self.repository = repository
 
         print("Restoring previous session.")
         try:
@@ -75,10 +75,11 @@ class FacultyController:
             then nothing happens.
         """
         if self.studentIDExists(who.studentID):
-            print("Student #%i already exists." % who.studentID)
+            return "Student #%i already exists." % who.studentID
         else:
             self.repository.prepare()
             self.repository.states[self.repository.now].addStudent(who)
+            return "Added student."
 
     def addAssignment(self, what):
         """

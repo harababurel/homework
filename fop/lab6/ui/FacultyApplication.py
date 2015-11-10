@@ -14,8 +14,8 @@ from models.Faculty import *
 
 
 class FacultyApplication:
-    def __init__(self):
-        self.controller = FacultyController()
+    def __init__(self, controller):
+        self.controller = controller
 
     def run(self):
         """
@@ -24,6 +24,7 @@ class FacultyApplication:
             for the user input. It then validates it and sometimes
             does what it's told.
         """
+
         while True:
             # print(self.controller.repository)
             self.command = self.getInput(Color.bold('> '))
@@ -183,12 +184,13 @@ class FacultyApplication:
             except:
                 continue
 
-        self.controller.addStudent(
+        print(self.controller.addStudent(
                 Student(
                     self.newStudentID,
                     self.newStudentName,
                     self.newStudentGroup
                     )
+                )
                 )
 
     def showRemoveStudentSubmenu(self):

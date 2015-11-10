@@ -32,12 +32,6 @@ class Assignment:
         return message
 
     # SET STUFF
-    def setStudentID(self, newStudentID):
-        """
-            Method sets the studentID of the current assignment.
-        """
-        self.studentID = newStudentID
-
     def setDescription(self, newDescription):
         """
             Method sets the description of the current assignment.
