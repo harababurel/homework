@@ -198,6 +198,10 @@ class FacultyApplication:
         print("You chose to remove a student.")
         self.listStudents()
 
+        if self.controller.getCurrentStudentCount() == 0:
+            print("There are no students.")
+            return
+
         while True:
             try:
                 self.studentID = int(self.getInput("ID: "))
@@ -263,6 +267,10 @@ class FacultyApplication:
         """
         print("You chose to remove an assignment.")
         self.listAssignments()
+
+        if self.controller.getCurrentAssignmentCount() == 0:
+            print("There are no assignments.")
+            return
 
         while True:
             try:
