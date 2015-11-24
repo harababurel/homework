@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="controllers.html"><font color="#ffffff">controllers</font></a>.FacultyController</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/sergiu/work/homework/fop/lab6/controllers/FacultyController.py">/home/sergiu/work/homework/fop/lab6/controllers/FacultyController.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/sergiu/work/homework/fop/lab8/controllers/FacultyController.py">/home/sergiu/work/homework/fop/lab8/controllers/FacultyController.py</a></font></td></tr></table>
     <p><tt>The&nbsp;<a href="#FacultyController">FacultyController</a>&nbsp;class&nbsp;implements&nbsp;methods&nbsp;for<br>
 managing&nbsp;the&nbsp;students&nbsp;and&nbsp;assignments&nbsp;of&nbsp;a&nbsp;faculty.</tt></p>
 <p>
@@ -34,7 +34,7 @@ managing&nbsp;the&nbsp;students&nbsp;and&nbsp;assignments&nbsp;of&nbsp;a&nbsp;fa
     
 <tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="FacultyController-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>The&nbsp;controller&nbsp;initializes&nbsp;with&nbsp;a&nbsp;brand&nbsp;new&nbsp;repository.<br>
+<dl><dt><a name="FacultyController-__init__"><strong>__init__</strong></a>(self, repository)</dt><dd><tt>The&nbsp;controller&nbsp;initializes&nbsp;with&nbsp;a&nbsp;brand&nbsp;new&nbsp;repository.<br>
 If,&nbsp;however,&nbsp;it&nbsp;is&nbsp;able&nbsp;to&nbsp;restore&nbsp;an&nbsp;older&nbsp;repository<br>
 that&nbsp;was&nbsp;saved&nbsp;to&nbsp;disk,&nbsp;it&nbsp;does&nbsp;so.</tt></dd></dl>
 
@@ -59,6 +59,11 @@ present&nbsp;time.</tt></dd></dl>
 faculty.</tt></dd></dl>
 
 <dl><dt><a name="FacultyController-getCurrentStudents"><strong>getCurrentStudents</strong></a>(self)</dt><dd><tt>Method&nbsp;returns&nbsp;the&nbsp;current&nbsp;faculty's&nbsp;students.</tt></dd></dl>
+
+<dl><dt><a name="FacultyController-getStatistics"><strong>getStatistics</strong></a>(self, assignmentID)</dt><dd><tt>Method&nbsp;returns&nbsp;a&nbsp;human-readable&nbsp;string&nbsp;that&nbsp;contains<br>
+some&nbsp;nice&nbsp;faculty&nbsp;statistics&nbsp;for&nbsp;a&nbsp;certain&nbsp;assignment.</tt></dd></dl>
+
+<dl><dt><a name="FacultyController-getStudentNameFromID"><strong>getStudentNameFromID</strong></a>(self, studentID)</dt></dl>
 
 <dl><dt><a name="FacultyController-redo"><strong>redo</strong></a>(self)</dt><dd><tt>Method&nbsp;goes&nbsp;forward&nbsp;in&nbsp;time&nbsp;one&nbsp;step.</tt></dd></dl>
 
