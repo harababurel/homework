@@ -2,6 +2,7 @@ assume cs:code, ds:data
 data segment
     a dw 1234
     base db ?
+    stivaSize db 0
     basePrompt db 0ah,0dh,'baza (z)ece sau (d)oi? $'
     zeceConfirm db 0ah,0dh,'ai ales baza zece. $'
     doiConfirm db 0ah,0dh,'ai ales baza doi. $'
@@ -26,7 +27,7 @@ start:
         cmp al,'d'
         je chosenDoi
 
-    loop baseLoop
+    jmp baseLoop
 
 
     chosenZece:
@@ -35,7 +36,8 @@ start:
         int 21h
 
         mov base,10
-        jmp sfarsit
+        jmp imparteli
+
 
     chosenDoi:
         mov ax,0900h
@@ -43,9 +45,37 @@ start:
         int 21h
 
         mov base,2
-        jmp sfarsit
+        jmp imparteli
 
     imparteli:
+        cmp a,0
+        je tiparitoareStiva
+
+        mov al,stivaSize
+        inc al
+        mov stivaSize,al
+
+        mov dx,0
+        mov ax,a
+
+        mov bh,0
+        mov bl,base
+
+        div bx
+
+        push dx
+        mov a,ax
+    jmp imparteli
+
+    mov ch,0
+    mov cl,stivaSize
+    tiparitoareStiva:
+        pop dx
+        add dl,'0'
+
+        mov ah,02h
+        int 21h
+    loop tiparitoareStiva
 
     sfarsit:
         mov ax,4c00h
