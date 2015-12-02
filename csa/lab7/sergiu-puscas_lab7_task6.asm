@@ -15,44 +15,44 @@ start:
     mov ds,ax
 
     mov si,offset s
-    add si,(dimS-1)*2    ;now ds:si should point to the last element of s
+    add si,(dimS-1)*2      ;now ds:si should point to the last element of s
 
-    std				;the direction flag is 1, so right to left
+    std                    ;the direction flag is 1, so right to left
 
-    mov cx,dimS     ;prepare the loop counter
-    jcxz sfarsit    ;if cx is 0, don't execute the loop
+    mov cx,dimS            ;prepare the loop counter
+    jcxz sfarsit           ;if cx is 0, don't execute the loop
     bucla:
-        lodsw       ;ax = the current element of s  
-       
+        lodsw              ;ax = the current element of s
+
         imparteli:
-            mov dx,0    ;extend ax to a doubleword
+            mov dx,0       ;extend ax to a doubleword
             cmp ax,0
-		 je sfarsitImparteli
+         je sfarsitImparteli
 
             mov bx,10
-		 div bx	;now ax=quotient, dx=last digit
+         div bx            ;now ax=quotient, dx=last digit
 
-		 push dx   ;push the last digit onto the stack
+         push dx           ;push the last digit onto the stack
             inc stackSize
-	   jmp imparteli
+       jmp imparteli
 
         sfarsitImparteli:
     loop bucla
 
     mov ch,0
-    mov cl,stackSize  ;prepare the loop counter
+    mov cl,stackSize       ;prepare the loop counter
     mov si,offset newS
     tiparitoareStiva:
         pop dx
 
-        mov newS[si],dl	;create the new string
+        mov newS[si],dl    ;create the new string
         inc si
 
-        add dl,'0'		;also print it to stdout
-        mov ah,2           ;for debugging   
+        add dl,'0'         ;also print it to stdout
+        mov ah,2           ;for debugging
         int 21h
     loop tiparitoareStiva
-    
+
 
     sfarsit:
         mov ax,4C00h
