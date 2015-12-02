@@ -7,7 +7,7 @@
 assume cs:code, ds:data
 
 data segment
-    s db '14248211'     ;the original string
+    s db '14248211abcabc'     ;the original string
     l equ $-s           ;the number of elements
     frq db 255 dup(0)   ;the frequency of every ascii character
     d db l dup(0)       ;the final string
