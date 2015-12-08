@@ -19,3 +19,13 @@ class RouteController:
 
     def saveChanges(self):
         self.__repo.saveChanges()
+
+    def increaseBusyRoutes(self):
+        for route in self.getRoutes():
+            if route.getUsage() > 85:
+                route.increaseBusCount()
+
+    def removeAlmostVacantRoutes(self):
+        remainingRoutes = [route for route in self.getRoutes() if route.getUsage() >= 20]
+        self.__repo.setRoutes(remainingRoutes)
+

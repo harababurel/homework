@@ -15,9 +15,9 @@ class Console:
 
         while True:
 
-            print("Current routes:")
+            print("\n> Current routes:")
             for route in self.controller.getRoutes():
-                print("\t%r" % route)
+                print(">\t%r" % route)
             print()
             print(menu)
 
@@ -37,6 +37,16 @@ class Console:
                 self.showRemoveMenu()
 
             elif command == 'exit':
+                print("Saving changes to disk.")
+
+                try:
+                    self.controller.saveChanges()
+                    print("Changes have been saved :).")
+                except:
+                    print("Could not save changes to disk. Maybe check file permissions? :(")
+
+                print("Exiting.")
+
                 exit(0)
 
             else:
@@ -53,7 +63,7 @@ class Console:
             except ValueError:
                 print("The ID must be an integer.")
             except AssertionError:
-                print("\n### There is no route with this ID. ###\n")
+                print("\n(*) There is no route with this ID.")
                 return
 
         while True:
@@ -100,6 +110,10 @@ class Console:
 
     def showIncreaseMenu(self):
         print("You chose to increase the bus count on all busy routes.")
+        self.controller.increaseBusyRoutes()
+        print("Each route with >85% usage now has an extra bus :).")
 
     def showRemoveMenu(self):
         print("You chose to remove all almost-vacant routes.")
+        self.controller.removeAlmostVacantRoutes()
+        print("All routes with <20% usage have been removed :).")

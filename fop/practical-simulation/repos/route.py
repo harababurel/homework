@@ -21,22 +21,20 @@ class RouteRepository:
         for line in f:
             v = line.split(',')
 
-            print("Reading a line from routes.in.")
-
             try:
                 newRoute = Route(v[0], v[1], v[2], v[3])
                 self.addRoute(newRoute)
 
-                print("Added route to repo :).")
-
             except Exception as e:
                 # the current route from the file is not valid
                 print(e)
-            print()
         f.close()
 
     def getRoutes(self):
         return self.__routes
+
+    def setRoutes(self, routes):
+        self.__routes = routes
 
     def idExists(self, ID):
         return ID in [route.getID() for route in self.getRoutes()]

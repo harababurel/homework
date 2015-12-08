@@ -53,3 +53,6 @@ class Route:
 
     def setBusCount(self, newBusCount):
         self.__busCount = newBusCount
+
+    def increaseBusCount(self):
+        self.setBusCount(self.getBusCount() + 1)
