@@ -1,7 +1,9 @@
 class Route:
     """
     Class models a bus route as a real world object.
+
     A bus route is defined by:
+
         self.__ID       (int): the unique ID of the route.
         self.__code     (str): the unique code of the route (<= 3 characters).
         self.__usage    (int): the percentage that indicates the route's usage.
@@ -9,10 +11,21 @@ class Route:
     """
 
     def __init__(self, ID, code, usage, busCount):
+
+        try:
+            ID = int(ID)
+            assert 0 < len(code) and len(code) <= 3
+            usage = int(usage)
+            assert 0 <= usage and usage <= 100
+            busCount = int(busCount)
+        except:
+            raise Exception("Could not create Route. Check the parameters.")
+
         self.__ID = ID
         self.__code = code
         self.__usage = usage
         self.__busCount = busCount
+
 
     def __repr__(self):
         return("ID: %i, code: %s, usage: %i, busCount: %i" % (self.getID(), self.getCode(), self.getUsage(), self.getBusCount()))

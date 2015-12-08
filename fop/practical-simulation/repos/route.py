@@ -13,27 +13,27 @@ class RouteRepository:
         self.__routes = []
 
         try:
-            with open('routes.in', 'r') as f:
-                for line in f:
-                    v = line.split(',')
-
-                    print("reading a line")
-
-                    newRoute = Route(int(v[0]), v[1], int(v[2]), int(v[3]))
-                    self.addRoute(newRoute)
-                    try:
-                        newRoute = Route(int(v[0]), v[1], int(v[2]), int(v[3]))
-                        self.addRoute(newRoute)
-
-                        print("added route")
-
-                    except Exception as e:
-                        # the current route from the file is not valid
-                        print(e)
-
+            f = open('routes.in', 'r')
 
         except:
             raise IOError("Could not open routes.in for reading.")
+
+        for line in f:
+            v = line.split(',')
+
+            print("Reading a line from routes.in.")
+
+            try:
+                newRoute = Route(v[0], v[1], v[2], v[3])
+                self.addRoute(newRoute)
+
+                print("Added route to repo :).")
+
+            except Exception as e:
+                # the current route from the file is not valid
+                print(e)
+            print()
+        f.close()
 
     def getRoutes(self):
         return self.__routes
