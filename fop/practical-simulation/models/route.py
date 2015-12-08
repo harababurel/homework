@@ -11,7 +11,6 @@ class Route:
     """
 
     def __init__(self, ID, code, usage, busCount):
-
         try:
             ID = int(ID)
             assert 0 < len(code) and len(code) <= 3
@@ -55,4 +54,7 @@ class Route:
         self.__busCount = newBusCount
 
     def increaseBusCount(self):
+        """
+        Method increments the bus count for the current route.
+        """
         self.setBusCount(self.getBusCount() + 1)

@@ -9,12 +9,10 @@ class RouteRepository:
     """
 
     def __init__(self):
-
         self.__routes = []
 
         try:
             f = open('routes.in', 'r')
-
         except:
             raise IOError("Could not open routes.in for reading.")
 
@@ -43,6 +41,10 @@ class RouteRepository:
         return code in [route.getCode() for route in self.getRoutes()]
 
     def addRoute(self, route):
+        """
+        Method tries to add a route to the repository.
+        If the route exists (ID or code), then nothing happens.
+        """
         try:
             assert not self.idExists(route.getID())
             assert not self.codeExists(route.getCode())
@@ -50,10 +52,12 @@ class RouteRepository:
         except AssertionError:
             # either the ID or the code already exist,
             # so there is nothing to be done.
-            print("some assertion error here")
             pass
 
     def saveChanges(self):
+        """
+        Method writes the current list of routes to the file routes.in.
+        """
         try:
             with open('routes.in', 'w') as g:
                 for route in self.__routes:
