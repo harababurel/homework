@@ -55,7 +55,7 @@ class RouteRepository:
             print("some assertion error here")
             pass
 
-    def updateFile(self):
+    def saveChanges(self):
         try:
             with open('routes.in', 'w') as g:
                 for route in self.__routes:
