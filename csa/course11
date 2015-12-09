@@ -9,3 +9,5 @@ Addr(IHR(1)) - at 0000:0004
 Addr(IHR(2)) - at 0000:0008
 ---------------------------
 Addr(IHR(k)) - at 0000:(k*4)
+
+^ specific to MS-DOS and Windows. *NIX provides a list of callable functions instead of a table of IHR addresses (which can be modified).
