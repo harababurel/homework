@@ -8,7 +8,7 @@ Loaded at OS loading time, in the first 1024 bytes of RAM.
 
 **IHR** - Interrupt Handling Routine
 
-```
+```asm
 Addr(IHR(0)) - at 0000:0000
 Addr(IHR(1)) - at 0000:0004
 Addr(IHR(2)) - at 0000:0008
