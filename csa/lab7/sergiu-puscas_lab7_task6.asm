@@ -4,7 +4,7 @@
 
 assume cs:code, ds:data
 data segment
-    s         dw  12345,20778,4596
+    s         dw  12345,20778,4596,1280
     dimS      equ ($-s)/2
     newS      db  14 dup(0)
     stackSize db  0
