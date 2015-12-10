@@ -1,7 +1,7 @@
         extern printf
 
         section .data
-n:      equ 1000
+n:      equ 100000000
 three:  dd  3
 five:   dd  5
 fmt:    db "%ld", 10, 0
