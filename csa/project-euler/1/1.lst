@@ -1,0 +1,24 @@
+     1                                          extern printf
+     2                                  
+     3                                          section .data
+     4 00000000 68656C6C6F20776F72-     sol:    db "hello world", 0
+     5 00000009 6C6400             
+     6 0000000C 25730A00                fmt:    db "%s", 10, 0          ;the printf format, "\n", '0'
+     7                                  
+     8                                  
+     9                                          section .text
+    10                                          global main
+    11                                  main:
+    12 00000000 55                              push rbp
+    13                                  
+    14 00000001 48BF-                           mov rdi,fmt
+    15 00000003 [0C00000000000000] 
+    16 0000000B 48BE-                           mov rsi,sol
+    17 0000000D [0000000000000000] 
+    18 00000015 B800000000                      mov rax,0
+    19 0000001A E8(00000000)                    call printf
+    20                                  
+    21 0000001F 5D                              pop rbp
+    22                                  
+    23 00000020 B800000000                      mov rax,0
+    24                                          return
