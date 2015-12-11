@@ -119,3 +119,21 @@ Most well-known **hardware** interrupts (`INT 0` to `INT 15`):
         ```
 
 ### Software interrupts (11th of December)
+
+* Classified in:
+    * `BIOS` interrupts.
+    * `DOS` interrupts.
+    * Other interrupts (user defined).
+* The main `BIOS` interrupts are (some of them):
+    * `11h` - Returns the list of the `BIOS` devices installed in the CS.
+    * `12h` - Returns the size of the `RAM`.
+    * `16h` - Keyboard management services.
+    * `17h` - Printer management.
+    * `19h` - OS load services. Similar to `Ctrl-Alt-Del`.
+    * `1Ch` - Called `18.2` times/second by `INT 8`. The corresponding `IHR` does not do anything specific, letting the user define their own routine.
+* The main `DOS` interrupts are:
+    * `20h` - Program termination. As a result, memory is freed.
+    * `27h` - Terminate and stay resident. Ends the execution of the current program letting it (or a part of it) resident in memory.
+    * `2Eh` - `DOS` Execute Command. *Undocumented*. Runs a `DOS` command.
+
+
