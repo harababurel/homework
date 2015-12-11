@@ -131,9 +131,71 @@ Most well-known **hardware** interrupts (`INT 0` to `INT 15`):
     * `17h` - Printer management.
     * `19h` - OS load services. Similar to `Ctrl-Alt-Del`.
     * `1Ch` - Called `18.2` times/second by `INT 8`. The corresponding `IHR` does not do anything specific, letting the user define their own routine.
-* The main `DOS` interrupts are:
+* The main `DOS` **interrupts** are:
     * `20h` - Program termination. As a result, memory is freed.
     * `27h` - Terminate and stay resident. Ends the execution of the current program letting it (or a part of it) resident in memory.
     * `2Eh` - `DOS` Execute Command. *Undocumented*. Runs a `DOS` command.
+    * `33h` - The mouse interrupt. Groups all the functions necessary when working with the mouse.
+* The main `DOS` **functions** are:
+    * Memory management functions
+        * `48h` - Allocate a memory block and returns a pointer to its beginning.
+        * `49h` - Frees a memory area
+    * Process management functions
+        * `4Ch` - Quite with exit-code (EXIT). Returns an error level set in `al`.
+    * Disk functions
+        * `19h` - Get default disk number.
+    * Functions for files and directories
+        * TODO
+    * I/O with character peripheral devices
+        * `01h` - Reads a character from `STDIN` and displays it to the `STDOUT`.
+        * `02h` - Displays a character to the `STDOUT`.
+    * Other functions
+        * `25h` - Set interrupt vector. Modifies the address of a `IHR`. Useful for defining custom routines.
+        * `35h` - Get interrupt vector. Obtains the address of an `IHR` (`segment:offset`).
+
+**Note** the difference between:
+
+```asm
+mov ah, 4ch     |      mov ax, 4c00h
+int 21h         |      int 21h
+```
+
+Difference: the code in the `al` register is considered to be the exit-code of the application.
+
+What the `INT` instruction does:
+
+```asm
+jmp
+call ~= jmp  + return address
+int  ~= call + save flags
+```
+
+`(!)` An interrupt handling routine is a **critical session**, because it can't be further interrupted by some other `IHR.`
+
+`(!)` Any `IHR` must end with an `IRET` instruction (restores the `FLAGS` registers from the stack and transfers the control to the instruction whose `FAR` address is found on top of the stack).
 
 
+### Structure of PSP (Program Segment Prefix) - in memory
+
+Offset  |Length|Semantics
+:------:|:----:|:--------------------------------------------------------------------
+`00h`   |2     |Code of `INT 20h` - program termination
+`02h`   |2     |Memory size in paragraphs (the end of memory occupied by the program)
+`04h`   |1     |Reserved
+`05h`   |1     |Code of `INT 21h` - `DOS` functions
+`...`   |`...` |`...`
+`81h`   |127   |Command line - so it is possible to access command line parameters.
+
+
+The `PSP` has a **fixed** size (256 bytes).
+
+The `PSP` is useful for:
+* Restoring the context in case of a program execution that goes wrong (*not sure*).
+* Accessing the command line parameters in an assembly program.
+
+### Structure of an EXE Header - on disk
+
+* The validity of an EXE file is determined (by the OS) using two criteria:
+    * the EXE signature, located at the beginning of the header, should always be `5A4Dh` = `'MZ'` (the initials of the designer of the file format, Mark Zbikowski),
+    * the checksum.
+* The EXE Header has a variable size.
