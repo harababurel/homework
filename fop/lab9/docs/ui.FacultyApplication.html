@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module ui.FacultyApplication</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="ui.html"><font color="#ffffff">ui</font></a>.FacultyApplication</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/sergiu/work/homework/fop/lab8/ui/FacultyApplication.py">/home/sergiu/work/homework/fop/lab8/ui/FacultyApplication.py</a></font></td></tr></table>
+    <p><tt>The&nbsp;<a href="#FacultyApplication">FacultyApplication</a>&nbsp;class&nbsp;implements&nbsp;the&nbsp;user&nbsp;interface<br>
+which&nbsp;makes&nbsp;use&nbsp;of&nbsp;FacultyController&nbsp;in&nbsp;order&nbsp;to&nbsp;manage&nbsp;the<br>
+students&nbsp;and&nbsp;assignments&nbsp;of&nbsp;a&nbsp;faculty.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="ui.FacultyApplication.html#FacultyApplication">FacultyApplication</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="FacultyApplication">class <strong>FacultyApplication</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="FacultyApplication-__init__"><strong>__init__</strong></a>(self, controller)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-getInput"><strong>getInput</strong></a>(self, prompt=None)</dt><dd><tt>Method&nbsp;requests&nbsp;user&nbsp;input,&nbsp;displaying&nbsp;an&nbsp;optional&nbsp;prompt&nbsp;message.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-listAssignments"><strong>listAssignments</strong></a>(self)</dt><dd><tt>Method&nbsp;prints&nbsp;all&nbsp;assignments&nbsp;in&nbsp;the&nbsp;current&nbsp;faculty.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-listEverything"><strong>listEverything</strong></a>(self)</dt><dd><tt>Method&nbsp;prints&nbsp;both&nbsp;students&nbsp;and&nbsp;assignments&nbsp;in&nbsp;the&nbsp;current&nbsp;faculty.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-listStudents"><strong>listStudents</strong></a>(self)</dt><dd><tt>Method&nbsp;prints&nbsp;all&nbsp;students&nbsp;in&nbsp;the&nbsp;current&nbsp;faculty.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-run"><strong>run</strong></a>(self)</dt><dd><tt>Method&nbsp;runs&nbsp;the&nbsp;main&nbsp;loop&nbsp;of&nbsp;the&nbsp;application.<br>
+In&nbsp;each&nbsp;iteration,&nbsp;it&nbsp;provides&nbsp;a&nbsp;prompt&nbsp;and&nbsp;waits<br>
+for&nbsp;the&nbsp;user&nbsp;input.&nbsp;It&nbsp;then&nbsp;validates&nbsp;it&nbsp;and&nbsp;sometimes<br>
+does&nbsp;what&nbsp;it's&nbsp;told.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-showAddAssignmentSubmenu"><strong>showAddAssignmentSubmenu</strong></a>(self)</dt><dd><tt>Method&nbsp;implements&nbsp;the&nbsp;menu&nbsp;shown&nbsp;when&nbsp;adding&nbsp;a&nbsp;new&nbsp;assingment.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-showAddStudentSubmenu"><strong>showAddStudentSubmenu</strong></a>(self)</dt><dd><tt>Method&nbsp;implements&nbsp;the&nbsp;menu&nbsp;shown&nbsp;when&nbsp;adding&nbsp;a&nbsp;new&nbsp;student.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-showAddSubmenu"><strong>showAddSubmenu</strong></a>(self)</dt><dd><tt>Method&nbsp;implements&nbsp;the&nbsp;menu&nbsp;shown&nbsp;when&nbsp;using&nbsp;the&nbsp;'add'&nbsp;command.<br>
+This&nbsp;will&nbsp;split&nbsp;furtherly&nbsp;on&nbsp;two&nbsp;paths,&nbsp;based&nbsp;on&nbsp;the&nbsp;<a href="builtins.html#object">object</a><br>
+added&nbsp;(student&nbsp;or&nbsp;assignment).</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-showRemoveAssignmentSubmenu"><strong>showRemoveAssignmentSubmenu</strong></a>(self)</dt><dd><tt>Method&nbsp;implements&nbsp;the&nbsp;menu&nbsp;shown&nbsp;when&nbsp;removing&nbsp;an&nbsp;existing&nbsp;assignment.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-showRemoveStudentSubmenu"><strong>showRemoveStudentSubmenu</strong></a>(self)</dt><dd><tt>Method&nbsp;implements&nbsp;the&nbsp;menu&nbsp;shown&nbsp;when&nbsp;removing&nbsp;an&nbsp;existing&nbsp;student.</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-showRemoveSubmenu"><strong>showRemoveSubmenu</strong></a>(self)</dt><dd><tt>Method&nbsp;implements&nbsp;the&nbsp;menu&nbsp;shown&nbsp;when&nbsp;using&nbsp;the&nbsp;'remove'&nbsp;command.<br>
+This&nbsp;will&nbsp;split&nbsp;furtherly&nbsp;on&nbsp;two&nbsp;paths,&nbsp;based&nbsp;on&nbsp;the&nbsp;<a href="builtins.html#object">object</a><br>
+removed&nbsp;(student&nbsp;or&nbsp;assignment).</tt></dd></dl>
+
+<dl><dt><a name="FacultyApplication-showStatsSubmenu"><strong>showStatsSubmenu</strong></a>(self)</dt><dd><tt>Method&nbsp;implements&nbsp;the&nbsp;menu&nbsp;shown&nbsp;when&nbsp;displaying&nbsp;faculty&nbsp;statistics.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>SETTINGS</strong> = {'neededArgs': {'add': [0], 'clear': [0], 'exit': [0], 'help': [0], 'list': [0], 'redo': [0], 'remove': [0], 'stats': [0], 'undo': [0]}, 'validCommands': ['help', 'add', 'remove', 'list', 'undo', 'redo', 'stats', 'clear', 'exit']}<br>
+<strong>STRINGS</strong> = {'helpPrompt': 'Commands:<font color="#c040c0">\n\t\x1b</font>[94m<font color="#c040c0">\x1b</font>[1mhelp<font color="#c040c0">\x1b</font>[0m<font color="#c040c0">\x1b</font>[0m   - displays th...saves the work session and exits the application.'}</td></tr></table>
+</body></html>
