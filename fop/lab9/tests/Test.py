@@ -28,7 +28,7 @@ class Test(unittest.TestCase):
         who.setStudentName("Decebal")
         who.setStudentGroup("Dacia")
 
-        assert who.getStudentID() == 1
+        self.assertEquals(who.getStudentID(), 1)
         assert who.getStudentName() == "Decebal"
         assert who.getStudentGroup() == "Dacia"
 

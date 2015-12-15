@@ -16,19 +16,19 @@ class FacultyController:
         self.repository = repository
 
         if self.repository.persistent:
-            print("Restoring previous session.")
+            # print("Restoring previous session.")
             try:
                 self.repository.restoreSession()
-                print("Previous session restored :).")
+                #print("Previous session restored :).")
             except IOError:
-                print("No saved session exists.")
-                print("Starting a new session.")
+                #print("No saved session exists.")
+                #print("Starting a new session.")
                 try:
                     self.repository.saveSession()
-                    print("New session saved :).")
+                    #print("New session saved :).")
                 except IOError:
-                    print("Could not save new session.", end='')
-                    print("Your work will be lost once you close the application :(.")
+                    #print("Could not save new session.", end='')
+                    #print("Your work will be lost once you close the application :(.")
 
     def getCurrentFaculty(self):
         """
