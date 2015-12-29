@@ -10,16 +10,16 @@ data segment public
 data ends
 
 code segment public
-extrn   ComputeExpr: proc
+extrn   ComputeExpr: proc           ; this will be imported from the other module
 public  ReadInteger
 
 ReadInteger:
         ; reads a string
-        ; and pushes its integer value onto the stack
-        ; does not modify registers
+        ; and computes its integer value
+        ; returns the value into ax
+        ; does not modify registers, except for ax
 
-        push ax
-        push bx
+        push bx                     ; save the registers
         push cx
         push dx
         push si
@@ -45,15 +45,10 @@ ReadInteger:
             adc ah, 0
             loop reconstruct
 
-        mov sol, ax
-
         pop si
         pop dx
         pop cx
         pop bx
-        pop ax
-
-        push sol
 
         ret
 
@@ -61,7 +56,7 @@ start:
         push data
         pop ds
 
-        call ReadInteger
+        call ComputeExpr
 
         mov ax, 4c00h
         int 21h

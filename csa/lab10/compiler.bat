@@ -1,4 +1,4 @@
-tasm /zi a-main.asm
-tasm /zi a-prin~2
-tlink /v a-main a-prin~2
-a-main.exe
+tasm /zi b-m1
+tasm /zi b-m2
+tlink /v b-m1 b-m2
+b-m1.exe
