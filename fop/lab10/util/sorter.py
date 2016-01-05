@@ -6,7 +6,9 @@ def sorter(xs, compare):
     According to the relation given by the comparison function.
 
     Algorithm: patience sorting.
-    Runtime complexity: O(n log n) worst case.
+
+    Runtime complexity: O(n^2) with current implementation
+                        O(n log n) with the k-merge optimization.
     """
 
     piles = []                                                # no piles initially
@@ -37,6 +39,11 @@ def sorter(xs, compare):
     return ys
 
 def filterer(xs, isBueno):
+    """
+    Method takes a list xs and a validation method isBueno.
+    Returns a new list that contains the elements of xs
+    that are valid according to the given method.
+    """
     return [x for x in xs if isBueno(x)]
 
 
@@ -56,5 +63,3 @@ for test in range(100):
     assert sorter(xs, lambda x, y: x <= y) == sorted(xs)
     print("Testcase #%i: OK" % test)
 """
-
-
