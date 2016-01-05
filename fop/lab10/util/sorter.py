@@ -43,7 +43,7 @@ print(sorter([6, 4, 3, 8, 0, 1, 7, 5], lambda x, y: x <= y))
 print(filterer([6, 4, 3, 8, 0, 1, 7, 5], lambda x: x % 2 == 1))
 
 for test in range(100):
-    n = randint(10000, 100000)
+    n = randint(1000, 10000)
     xs = []
 
     print("Generating test #%i" % test)
