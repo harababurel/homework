@@ -39,6 +39,8 @@ def sorter(xs, compare):
 def filterer(xs, isBueno):
     return [x for x in xs if isBueno(x)]
 
+
+"""
 print(sorter([6, 4, 3, 8, 0, 1, 7, 5], lambda x, y: x <= y))
 print(filterer([6, 4, 3, 8, 0, 1, 7, 5], lambda x: x % 2 == 1))
 
@@ -53,6 +55,6 @@ for test in range(100):
     print("Testing #%i" % test)
     assert sorter(xs, lambda x, y: x <= y) == sorted(xs)
     print("Testcase #%i: OK" % test)
-
+"""
 
 

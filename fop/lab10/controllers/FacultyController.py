@@ -4,6 +4,7 @@
 """
 from repo.FacultyRepository import FacultyRepository
 from util.Color import *
+from util.sorter import sorter
 
 
 class FacultyController:
@@ -155,9 +156,9 @@ class FacultyController:
 
         assignments = [x for x in assignments if x.getDescription() == targetAssignment.getDescription()]
 
-        alphabetically = '\n\t'.join([self.getStudentNameFromID(x.getStudentID()) for x in sorted(assignments, key=lambda x: self.getStudentNameFromID(x.getStudentID()))])
-        byGrade = '\n\t'.join(["%s - %.2f" % (self.getStudentNameFromID(x.getStudentID()), x.getGrade()) for x in sorted(assignments, key=lambda x: x.getGrade(), reverse=True)])
-        corigenti = '\n\t'.join(["%s - %.2f" % (self.getStudentNameFromID(x.getStudentID()), x.getGrade()) for x in sorted(assignments, key=lambda x: x.getStudentID()) if x.getGrade() < 5.0])
+        alphabetically = '\n\t'.join([self.getStudentNameFromID(x.getStudentID()) for x in sorter(assignments, lambda x: self.getStudentNameFromID(x.getStudentID()))])
+        byGrade = '\n\t'.join(["%s - %.2f" % (self.getStudentNameFromID(x.getStudentID()), x.getGrade()) for x in sorter(assignments, lambda x: x.getGrade())[::-1]])
+        corigenti = '\n\t'.join(["%s - %.2f" % (self.getStudentNameFromID(x.getStudentID()), x.getGrade()) for x in sorter(assignments, lambda x: x.getStudentID()) if x.getGrade() < 5.0])
 
         out = 'Students with this assignment:\n\n'
         out += '%s:\n\t%s\n\n' % (Color.strong('Alphabetically'), alphabetically)
