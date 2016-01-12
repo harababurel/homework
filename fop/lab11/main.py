@@ -8,17 +8,22 @@ from random import randint
 from copy import deepcopy
 
 def valid(stack, x):
+    """
+    Method checks whether an element `x` can be appended to a
+    partial solution `stack`. It checks for
+        1) increasing order in the sequence
+        2) common digits with the last element
+    """
     if len(stack) == 0:             # any element can be added
         return True                 # to an empty list
 
-    if x <= stack[-1]:              # increasing order
+    if x <= stack[-1]:
         return False
 
     if len([digit for digit in str(x) if digit in str(stack[-1])]) == 0:
-        return False                # at least one common digit
+        return False
 
     return True
-
 
 def back(v, level, stack):
     if level == len(v):             # reached the end of the given list
@@ -26,13 +31,10 @@ def back(v, level, stack):
 
     for x in v:
         if valid(stack, x):
-            stack.append(x)
+            if len(stack + [deepcopy(x)]) >= 2:
+                print('\t', stack + [deepcopy(x)])
 
-            if len(stack) >= 2:
-                print('\t', stack)
-
-            back(v, level+1, stack)
-            stack.pop()
+            back(v, level+1, stack + [deepcopy(x)])
 
 def backIter(v, level, stack):
     S = [(v, level, stack)]
@@ -46,16 +48,16 @@ def backIter(v, level, stack):
 
         for x in v:
             if valid(stack, x):
-                stack.append(deepcopy(x))
+                if len(stack + [deepcopy(x)]) >= 2:
+                    print('\t', stack + [deepcopy(x)])
 
-                if len(stack) >= 2:
-                    print('\t', stack)
-
-                S.append((deepcopy(v), level+1, deepcopy(stack)))
-                stack.pop()
-
+                S.append((v, level+1, stack + [deepcopy(x)]))
 
 def tester():
+    """
+    Method generates random testcases and runs both the recursive and
+    the iterative backtracking algorithms on them.
+    """
     print("Rec:")
     back([2346, 654920, 2342, 1511, 654], 0, [])
     print("Iter:")
