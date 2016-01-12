@@ -1,0 +1,82 @@
+Turbo Assembler	 Version 3.1	    01/12/16 17:21:57	    Page 1
+main.ASM
+
+
+
+      1				     assume cs:code, ds:data
+      2
+      3	0000			     data segment
+      4	0000  6E 65 77 64 69 72	00	     dirname db	'newdir', 0
+      5	0007  50 61 74 68 20 6E	6F+	     error3  db	'Path not found.$'
+      6	      74 20 66 6F 75 6E	64+
+      7	      2E 24
+      8	0017  41 63 63 65 73 73	20+	     error5  db	'Access	denied,	or pathname already exists.$'
+      9	      64 65 6E 69 65 64	2C+
+     10	      20 6F 72 20 70 61	74+
+     11	      68 6E 61 6D 65 20	61+
+     12	      6C 72 65 61 64 79	20+
+     13	      65 78 69 73 74 73	2E+
+     14	      24
+     15	0042			     data ends
+     16
+     17	0000			     code segment
+     18	0000			     start:
+     19	0000  50 55 8B EC C7 46	02+	     push data
+     20	      0000s 5D
+     21	000A  1F			     pop ds
+     22
+     23	000B  BA 0000r			     lea dx, dirname
+     24	000E  B4 39			     mov ah, 39h
+     25	0010  CD 21			     int 21h
+     26
+     27	0012  73 19			     jnc fin
+     28
+     29	0014  3D 0003			     cmp ax, 3
+     30	0017  75 0A			     jne access_denied
+     31
+     32	0019			     path_not_found:
+     33	0019  BA 0007r			     lea dx, error3
+     34	001C  B4 09			     mov ah, 09h
+     35	001E  CD 21			     int 21h
+     36	0020  EB 0B 90			     jmp fin
+     37
+     38	0023			     access_denied:
+     39	0023  BA 0017r			     lea dx, error5
+     40	0026  B4 09			     mov ah, 09h
+     41	0028  CD 21			     int 21h
+     42	002A  EB 01 90			     jmp fin
+     43
+     44	002D			     fin:
+     45	002D  B8 4C00			     mov ax, 4c00h
+     46	0030  CD 21			     int 21h
+     47	0032			     code ends
+     48				     end start
+Turbo Assembler	 Version 3.1	    01/12/16 17:21:57	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name		Type   Value			   Cref	(defined at #)
+
+??DATE			Text   "01/12/16"
+??FILENAME		Text   "main	"
+??TIME			Text   "17:21:57"
+??VERSION		Number 030A
+@CPU			Text   0101H
+@CURSEG			Text   CODE			   #3  #17
+@FILENAME		Text   MAIN
+@WORDSIZE		Text   2			   #3  #17
+ACCESS_DENIED		Near   CODE:0023		   30  #38
+DIRNAME			Byte   DATA:0000		   #4  23
+ERROR3			Byte   DATA:0007		   #5  33
+ERROR5			Byte   DATA:0017		   #8  39
+FIN			Near   CODE:002D		   27  36  42  #44
+PATH_NOT_FOUND		Near   CODE:0019		   #32
+START			Near   CODE:0000		   #18	48
+
+Groups & Segments	Bit Size Align	Combine	Class	   Cref	(defined at #)
+
+CODE			16  0032 Para	none		   1  #17
+DATA			16  0042 Para	none		   1  #3  19
+
