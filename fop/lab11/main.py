@@ -25,18 +25,21 @@ def valid(stack, x):
 
     return True
 
-def back(v, level, stack):
+def back(v, level, stack, solutions):
     if level == len(v):             # reached the end of the given list
         return                      # nothing else to do
 
     for x in v:
         if valid(stack, x):
             if len(stack + [deepcopy(x)]) >= 2:
-                print('\t', stack + [deepcopy(x)])
+                # print('\t', stack + [deepcopy(x)])
+                solutions.append(stack + [deepcopy(x)])
 
-            back(v, level+1, stack + [deepcopy(x)])
+            back(v, level+1, stack + [deepcopy(x)], solutions)
 
-def backIter(v, level, stack):
+    return solutions
+
+def backIter(v, level, stack, iterSols):
     S = [(v, level, stack)]
 
     while len(S) > 0:
@@ -49,39 +52,38 @@ def backIter(v, level, stack):
         for x in v:
             if valid(stack, x):
                 if len(stack + [deepcopy(x)]) >= 2:
-                    print('\t', stack + [deepcopy(x)])
+                    # print('\t', stack + [deepcopy(x)])
+                    iterSols.append(stack + [deepcopy(x)])
 
                 S.append((v, level+1, stack + [deepcopy(x)]))
+
+    return iterSols
+
 
 def tester():
     """
     Method generates random testcases and runs both the recursive and
     the iterative backtracking algorithms on them.
     """
-    print("Rec:")
-    back([2346, 654920, 2342, 1511, 654], 0, [])
-    print("Iter:")
-    backIter([2346, 654920, 2342, 1511, 654], 0, [])
+    recSols = sorted(back([2346, 654920, 2342, 1511, 654], 0, [], []))
+    iterSols = sorted(backIter([2346, 654920, 2342, 1511, 654], 0, [], []))
 
-    print()
-    print("Rec:")
-    back([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 0, [])
-    print("Iter:")
-    backIter([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 0, [])
+    assert recSols == iterSols
 
-    for test in range(10):
+    recSols = sorted(back([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 0, [], []))
+    iterSols = sorted(backIter([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 0, [], []))
+
+    for test in range(50):
         n = randint(2, 10)
         v = list(set([(randint(1, 10), randint(10, 100), randint(100, 1000))[randint(0, 2)] for i in range(n)]))
 
-        print("Test #%i: %r" % (test+1, v))
+        print("Test #%i: %r: " % (test+1, v), end="")
 
-        print("Rec:")
-        back(v, 0, [])
-        print()
+        recSols = sorted(back(v, 0, [], []))
+        iterSols = sorted(backIter(v, 0, [], []))
 
-        print("Iter:")
-        backIter(v, 0, [])
-        print()
+        assert recSols == iterSols
+        print("OK")
 
 if __name__ == '__main__':
     tester()
