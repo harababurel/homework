@@ -100,5 +100,10 @@ class Console:
                 except:
                     print("Something went wrong :(. Could not delete current task.\n")
 
+            elif command == 'report':
+                for category in ['active', 'done', 'archived']:
+                    print("Category %s contains %i tasks." % (category, self.controller.repo.getTaskCountFor(category)))
+                print()
+
             else:
                 print("Command not recognized. Try something else.")

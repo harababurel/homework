@@ -102,3 +102,6 @@ class Repository:
         self.states[self.now] = [x for x in self.states[self.now] if x is not what]
         if self.current == self.getCurrentCategorySize():
             self.current = 0
+
+    def getTaskCountFor(self, category):
+        return len([x for x in self.getCurrentState() if x.getStatus() == category])
