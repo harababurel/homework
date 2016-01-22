@@ -12,3 +12,8 @@ class Controller:
         self.repo.prepareFuture()
         self.repo.getCurrentState().append(Task(text, self.repo.category))
 
+    def delete(self):
+        self.repo.prepareFuture()
+        task = self.repo.getCurrentTask()
+        self.repo.deleteTask(task)
+        

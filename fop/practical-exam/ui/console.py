@@ -58,9 +58,8 @@ class Console:
                 try:
                     self.controller.addTask(newText)
                     print("Task successfully added.")
-                except Exception as e:
-                    print("Something went wrong :(. Could not add task.")
-                    print(e)
+                except:
+                    print("Something went wrong :(. Could not add task.\n")
 
             elif command.split()[0] == 'status':
                 try:
@@ -77,7 +76,7 @@ class Console:
                     self.controller.repo.getCurrentTask().setStatus(newStatus)
                     print("Status successfully changed :).")
                 except:
-                    print("Something went wrong :(. Could not change status.")
+                    print("Something went wrong :(. Could not change status.\n")
 
             elif command.split()[0] == 'text':
                 newText = ' '.join(command.split()[1:])
@@ -93,8 +92,13 @@ class Console:
                     self.controller.repo.getCurrentTask().setText(newText)
                     print("Text sucessfully changed :).")
                 except:
-                    print("Something went wrong :(. Could not change status.")
+                    print("Something went wrong :(. Could not change status.\n")
 
+            elif command == 'delete':
+                try:
+                    self.controller.delete()
+                except:
+                    print("Something went wrong :(. Could not delete current task.\n")
 
             else:
                 print("Command not recognized. Try something else.")

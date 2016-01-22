@@ -97,3 +97,8 @@ class Repository:
 
         g.close()
         print("Finished saving changes to disk.")
+
+    def deleteTask(self, what):
+        self.states[self.now] = [x for x in self.states[self.now] if x is not what]
+        if self.current == self.getCurrentCategorySize():
+            self.current = 0
