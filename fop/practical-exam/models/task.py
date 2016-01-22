@@ -18,8 +18,15 @@ class Task:
     def getStatus(self):
         return self.__status
 
+    def setStatus(self, status):
+        if status in ['active', 'done', 'archived']:
+            self.__status = status
+
     def getText(self):
         return self.__text
+
+    def setText(self, text):
+        self.__text = text
 
     def __repr__(self):
         return self.__text

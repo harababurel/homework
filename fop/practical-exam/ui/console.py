@@ -44,6 +44,7 @@ class Console:
                     print("Invalid command. Usage:")
                     print("\t filter {active/done/archived}")
                     print()
+
             elif command.split()[0] == 'add':
                 newText = ' '.join(command.split()[1:])
 
@@ -60,6 +61,40 @@ class Console:
                 except Exception as e:
                     print("Something went wrong :(. Could not add task.")
                     print(e)
+
+            elif command.split()[0] == 'status':
+                try:
+                    assert len(command.split()) == 2
+                    newStatus = command.split()[1]
+                    assert newStatus in ['active', 'done', 'archived']
+                except:
+                    print("Invalid command. Usage:")
+                    print("\t status {active/done/archived}")
+                    print()
+                    continue
+
+                try:
+                    self.controller.repo.getCurrentTask().setStatus(newStatus)
+                    print("Status successfully changed :).")
+                except:
+                    print("Something went wrong :(. Could not change status.")
+
+            elif command.split()[0] == 'text':
+                newText = ' '.join(command.split()[1:])
+
+                try:
+                    assert newText != ''
+                except:
+                    print("The text can't be null.")
+                    print()
+                    continue
+
+                try:
+                    self.controller.repo.getCurrentTask().setText(newText)
+                    print("Text sucessfully changed :).")
+                except:
+                    print("Something went wrong :(. Could not change status.")
+
 
             else:
                 print("Command not recognized. Try something else.")
