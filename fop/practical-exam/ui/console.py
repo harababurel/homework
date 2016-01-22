@@ -25,7 +25,8 @@ class Console:
                 continue
 
             elif command == "exit":
-                # TODO: save changes first
+                self.controller.repo.saveChanges()
+                print("The application will now close.")
                 exit(0)
 
             elif command == "next":
@@ -43,5 +44,22 @@ class Console:
                     print("Invalid command. Usage:")
                     print("\t filter {active/done/archived}")
                     print()
+            elif command.split()[0] == 'add':
+                newText = ' '.join(command.split()[1:])
+
+                try:
+                    assert newText != ''
+                except:
+                    print("The text can't be null.")
+                    print()
+                    continue
+
+                try:
+                    self.controller.addTask(newText)
+                    print("Task successfully added.")
+                except Exception as e:
+                    print("Something went wrong :(. Could not add task.")
+                    print(e)
+
             else:
                 print("Command not recognized. Try something else.")

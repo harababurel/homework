@@ -1,4 +1,5 @@
 from models.task import Task
+import copy
 
 class Repository:
     """
@@ -37,6 +38,8 @@ class Repository:
 
         self.states.append(newState)
         self.now += 1
+
+        f.close()
         print("Finished adding tasks from file.")
         print()
 
@@ -66,3 +69,31 @@ class Repository:
 
         if self.current == -1:
             self.current = self.getCurrentCategorySize() - 1
+
+    def forgetFuture(self):
+        self.states = self.states[:self.now+1]
+
+    def duplicateCurrentState(self):
+        self.states.append(copy.deepcopy(self.states[self.now]))
+        self.now += 1
+
+    def prepareFuture(self):
+        self.forgetFuture()
+        self.duplicateCurrentState()
+
+    def saveChanges(self):
+        print("Saving changes to disk.")
+        try:
+            g = open("data.in", "w")
+        except:
+            print("Could not open data.in. Check file permissions.")
+
+        for x in self.getCurrentState():
+            try:
+                g.write("%s: %s\n" % (x.getStatus(), x.getText()))
+            except Exception as e:
+                print("Could not save a certain task. Moving on.")
+                print("Reason: %s" % e)
+
+        g.close()
+        print("Finished saving changes to disk.")
