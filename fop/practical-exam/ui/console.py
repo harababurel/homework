@@ -21,8 +21,8 @@ class Console:
                     print("\t%r" % x)
             # print("Current task: %r" % self.controller.repo.getCurrentTask())
 
-            print('\033[1m\033[94m', end='')
-            command = input("> ")
+            print('\033[1m', end='')
+            command = input("> \033[96m")
             print('\033[0m', end='')
 
             if command == "":

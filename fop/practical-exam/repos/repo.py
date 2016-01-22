@@ -7,18 +7,23 @@ class Repository:
     Structured as a list of states, where each state is
     a list of tasks.
     """
-    def __init__(self):
+    def __init__(self, silent=False, empty=False):
         self.states = [[]]
         self.now = 0
         self.category = 'active'
         self.current = 0
 
-        print("Adding tasks from file.")
+        if empty:
+            return
+
+        if not silent:
+            print("Adding tasks from file.")
 
         try:
             f = open("data.in", "r")
         except:
-            print("Could not open data.in. Check if file exists.")
+            if not silent:
+                print("Could not open data.in. Check if file exists.")
             return
 
         newState = []
@@ -28,20 +33,24 @@ class Repository:
                 status, text = line.split(':')
 
                 if status not in ['active', 'done', 'archived']:
-                    print("Task has invalid status (%s). Not going to add." % status)
+                    if not silent:
+                        print("Task has invalid status (%s). Not going to add." % status)
                     continue
 
                 newState.append(Task(text, status))
-                print("Added a new task from file. :)")
+                if not silent:
+                    print("Added a new task from file. :)")
             except:
-                print("Task has invalid format. Not going to add.")
+                if not silent:
+                    print("Task has invalid format. Not going to add.")
 
         self.states.append(newState)
         self.now += 1
 
         f.close()
-        print("Finished adding tasks from file.")
-        print()
+        if not silent:
+            print("Finished adding tasks from file.")
+            print()
 
     def getCurrentState(self):
         return self.states[self.now]
