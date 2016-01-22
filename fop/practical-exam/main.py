@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from repos.repo import Repository
 from models.task import Task
 from controllers.controller import Controller
