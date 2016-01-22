@@ -16,4 +16,16 @@ class Controller:
         self.repo.prepareFuture()
         task = self.repo.getCurrentTask()
         self.repo.deleteTask(task)
-        
+
+    def undo(self):
+        if self.repo.now == 1:
+            print("Already at oldest state\n.")
+        else:
+            self.repo.now -= 1
+
+    def redo(self):
+        if self.repo.now == len(self.repo.states) - 1:
+            print("Already at most recent state.\n")
+        else:
+            self.repo.now += 1
+

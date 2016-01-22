@@ -14,12 +14,16 @@ class Console:
             print("Tasks in this category:")
             for i, x in enumerate(self.controller.repo.getTasksInCurrentCategory()):
                 if i == self.controller.repo.current:
+                    print("\033[1m", end='')
                     print("      * %r" % x)
+                    print("\033[0m", end='')
                 else:
                     print("\t%r" % x)
             # print("Current task: %r" % self.controller.repo.getCurrentTask())
 
+            print('\033[1m\033[94m', end='')
             command = input("> ")
+            print('\033[0m', end='')
 
             if command == "":
                 continue
@@ -105,5 +109,11 @@ class Console:
                     print("Category %s contains %i tasks." % (category, self.controller.repo.getTaskCountFor(category)))
                 print()
 
+            elif command == 'undo':
+                self.controller.undo()
+
+            elif command == 'redo':
+                self.controller.redo()
+
             else:
-                print("Command not recognized. Try something else.")
+                print("Command not recognized. Try something else.\n")
