@@ -5,10 +5,17 @@ from repos.repo import Repository
 
 class Test:
     def __init__(self):
+        """
+        Class needs a dummy repository and controller which are initially empty
+        and upon which tests can be applied.
+        """
         self.dummyRepo = Repository(silent=True, empty=True)
         self.dummyController = Controller(self.dummyRepo)
 
     def testEverything(self):
+        """
+        Method tests most functions of classes Repository and Controller.
+        """
         assert self.dummyRepo.getCategory() == 'active'
         assert self.dummyRepo.getTasksInCurrentCategory() == []
         assert self.dummyRepo.getCurrentCategorySize() == 0

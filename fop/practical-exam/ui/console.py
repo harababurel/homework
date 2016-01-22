@@ -9,6 +9,11 @@ class Console:
         self.controller = controller
 
     def run(self):
+        """
+        Method defines the main loop of the interface,
+        which prompts the user for a command and then
+        processes it.
+        """
         while True:
             print("Current category: %s" % self.controller.repo.getCategory())
             print("Tasks in this category:")
@@ -19,7 +24,6 @@ class Console:
                     print("\033[0m", end='')
                 else:
                     print("\t%r" % x)
-            # print("Current task: %r" % self.controller.repo.getCurrentTask())
 
             print('\033[1m', end='')
             command = input("> \033[96m")
@@ -77,6 +81,7 @@ class Console:
                     continue
 
                 try:
+                    self.controller.repo.prepareFuture()
                     self.controller.repo.getCurrentTask().setStatus(newStatus)
                     print("Status successfully changed :).")
                 except:
@@ -93,6 +98,7 @@ class Console:
                     continue
 
                 try:
+                    self.controller.repo.prepareFuture()
                     self.controller.repo.getCurrentTask().setText(newText)
                     print("Text sucessfully changed :).")
                 except:
