@@ -85,15 +85,26 @@ void main() {
         for(int i=v.size-1; i; --i)
             v.dp[i] = (v.val[i] < v.val[i+1]? v.dp[i+1]:0) + 1;
 
-        int best_dp = 0, start = 0;
-        for(int i=1; i<=v.size; i++)
+        // In order to compute dp[i], two cases may arise:
+        //     1. v[i] < v[i+1]
+        //        In this case, the i-th and (i+1)-th elements can be used in the same subsequence,
+        //        so the i-th is prepended to the best subsequence that starts with i+1.
+        //        Recurrence: dp[i] = 1 + dp[i+1]
+        //
+        //     2. v[i] >= v[i+1]
+        //        In this case, the i-th and (i+1)-th elements cannot be used in the same subsequence,
+        //        so we create a single-element subsequence, containing the i-th element.
+        //        Recurrence: dp[i] = 1
+
+        int best_dp = 0, start = 0;                     // find the size of the longest dp
+        for(int i=1; i<=v.size; i++)                    // and the starting position
             if(v.dp[i] > best_dp) {
                 best_dp = v.dp[i];
                 start = i;
             }
 
         printf("Longest increasing contiguous subsequence: ");
-        for(int i=0; i<best_dp; ++i)
+        for(int i=0; i<best_dp; ++i)                    // so that we can output the elements of that subsequence
             printf("%d ", v.val[start+i]);
         printf("\n");
 
