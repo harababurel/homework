@@ -1,3 +1,6 @@
+// TODO:
+// mut b in metode
+// returnez secventa solutie ca obiect nou
 #include <stdio.h>
 #define nmax 1000005
 
