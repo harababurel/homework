@@ -1,10 +1,6 @@
-// TODO:
-// mut b in metode
-// returnez secventa solutie ca obiect nou
 #include <stdio.h>
-#define nmax 1000005
-
-char prime[nmax];
+#include <stdbool.h>
+#define nmax 10000
 
 typedef struct {
     /* val[i] = the i-th value of the vector
@@ -17,101 +13,142 @@ typedef struct {
     int size;
 } vector;
 
-vector v;
-
-int gcd(int a, int b) {
-    /* Method recursively computes the greatest common divisor.
-     * Input: two positive integers, a and b.
-     * Output: an integer equal to the gcd of a and b.
+void print_vector(vector v) {
+    /* Method prints the values of a vector, separated by spaces.
      */
 
-    if(b==0) return a;
-    return (b, a%b);
+    for(int i=1; i<=v.size; i++)
+        printf("%d ", v.val[i]);
+    printf("\n");
 }
 
-void sieve(char prime[], int n) {
-    /* Method determines prime numbers in the interval [2, n]
-     * using the Sieve of Eratosthenes.
-     *
-     * Input: an array of chars prime[] (can contain any values, as they will be overwritten)
-     *        an integer n
-     *
-     * Output: the array prime[] will be constructed as follows:
-     *         - prime[x] = 1, if x is a prime number
-     *         - prime[x] = 0, otherwise
-     *         for any x in [2, n].
+vector read_vector() {
+    /* Method reads the values of a vector, and returns the constructed vector.
      */
 
+    vector ret;
+
+    scanf("%d", &ret.size);
+    printf("values (separated by space): ");
+
+    for(int i=1; i<=ret.size; i++)
+        scanf("%d", &ret.val[i]);
+
+    return ret;
+}
+
+vector sieve(int n) {
+    /* Method determines and returns a vector containing all prime numbers
+     * in the interval [2, n], using the Sieve of Eratosthenes.
+     *
+     * Input: an integer n.
+     *
+     * Output: a vector containing prime numbers less than n.
+     */
+
+    bool prime[nmax];
+
     for(int i=2; i<=n; i++)
-        prime[i] = 1;
+        prime[i] = true;
 
     for(int i=2; i<=n; i++)
         for(int j=i*2; j<=n; j+=i)
-            prime[j] = 0;
+            prime[j] = false;
+
+    vector ret;
+    ret.size = 0;
+    for(int i=2; i<n; i++)
+        if(prime[i])
+            ret.val[++ret.size] = i;
+
+    return ret;
 }
 
+vector get_longest_increasing_subsequence(vector v) {
+    /*
+     * In order to compute dp[i], two cases may arise:
+     *     1. v[i] < v[i+1]
+     *        In this case, the i-th and (i+1)-th elements can be used in the same subsequence,
+     *        so the i-th is prepended to the best subsequence that starts with i+1.
+     *        Recurrence: dp[i] = 1 + dp[i+1]
+     *
+     *     2. v[i] >= v[i+1]
+     *        In this case, the i-th and (i+1)-th elements cannot be used in the same subsequence,
+     *        so we create a single-element subsequence, containing the i-th element.
+     *        Recurrence: dp[i] = 1
+     *
+     * Additionally, dp[n] = 1, as there is only one sequence that starts on the last position.
+     *
+     * Input: a vector to be processed
+     * Output: a newly constructed vector that contains the longest increasing contiguous subsequence of the input vector.
+     */
 
-void main() {
+    v.dp[v.size] = 1;
+
+    for(int i=v.size-1; i; --i)
+        v.dp[i] = (v.val[i] < v.val[i+1]? v.dp[i+1]:0) + 1;
+
+    int best_dp = 0, start = 0;                     // find the size of the longest dp
+    for(int i=1; i<=v.size; i++)                    // and the starting position
+        if(v.dp[i] > best_dp) {
+            best_dp = v.dp[i];
+            start = i;
+        }
+
+    vector ret;
+    ret.size = 0;
+
+    for(int i=0; i<best_dp; ++i)
+        ret.val[++ret.size] = v.val[start+i];
+
+    return ret;
+}
+
+void option_a() {
+    /* Method solves the first subproblem:
+     * Generate all the prime numbers smaller than a given natural number n.
+     */
+
+    int n;
+    scanf("%d", &n);
+
+    printf("Prime numbers: ");
+    print_vector(sieve(n));
+}
+
+void option_b() {
+    /* Method solves the second subproblem:
+     * Given a vector of numbers, find the longest increasing contiguous subsequence.
+     */
+
+    vector v = read_vector();
+    printf("Longest increasing contiguous subsequence: ");
+    print_vector(get_longest_increasing_subsequence(v));
+}
+
+void main_menu() {
+    /* Method displays the user interface.
+     */
+
     printf("(a) Generate all the prime numbers smaller than a given natural number n.\n");
     printf("(b) Given a vector of numbers, find the longest increasing contiguous subsequence.\n");
 
     char option;
-    int n;
 
     printf("Option: ");
     scanf("%c", &option);
 
     if(option == 'a') {
         printf("You chose option (a).\n\nn = ");        // prompt for n
-        scanf("%d", &n);                                // read it
-
-        sieve(prime, n);                                // find the primes
-
-        printf("Prime numbers: ");
-        for(int i=2; i<n; i++)
-            if(prime[i])
-                printf("%d ", i);                       // show them
-        printf("\n");
-
+        option_a();
     }
     else if(option == 'b') {
-        printf("You chose option (b).\n");
-
-        printf("n = ");                                 // prompt for n
-        scanf("%d", &v.size);                           // read it
-
-        printf("values (separated by space): ");
-        for(int i=1; i<=v.size; i++)
-            scanf("%d", &v.val[i]);                     // read the vector
-
-        v.dp[v.size] = 1;                               // dp[n] = 1, as there is only one sequence that starts on the last position
-        for(int i=v.size-1; i; --i)
-            v.dp[i] = (v.val[i] < v.val[i+1]? v.dp[i+1]:0) + 1;
-
-        // In order to compute dp[i], two cases may arise:
-        //     1. v[i] < v[i+1]
-        //        In this case, the i-th and (i+1)-th elements can be used in the same subsequence,
-        //        so the i-th is prepended to the best subsequence that starts with i+1.
-        //        Recurrence: dp[i] = 1 + dp[i+1]
-        //
-        //     2. v[i] >= v[i+1]
-        //        In this case, the i-th and (i+1)-th elements cannot be used in the same subsequence,
-        //        so we create a single-element subsequence, containing the i-th element.
-        //        Recurrence: dp[i] = 1
-
-        int best_dp = 0, start = 0;                     // find the size of the longest dp
-        for(int i=1; i<=v.size; i++)                    // and the starting position
-            if(v.dp[i] > best_dp) {
-                best_dp = v.dp[i];
-                start = i;
-            }
-
-        printf("Longest increasing contiguous subsequence: ");
-        for(int i=0; i<best_dp; ++i)                    // so that we can output the elements of that subsequence
-            printf("%d ", v.val[start+i]);
-        printf("\n");
-
+        printf("You chose option (b).\n\nn = ");        // prompt for n
+        option_b();
     }
     else printf("Invalid option.\n");
+}
 
+void main() {
+    main_menu();
 }
