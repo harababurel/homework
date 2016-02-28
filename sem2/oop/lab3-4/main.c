@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "ui/ui.h"
+#include "controllers/controller.h"
+#include "repos/repository.h"
 #include "models/medication.h"
 
 void run() {

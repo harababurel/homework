@@ -1,6 +1,8 @@
 #pragma once
+#include "../controllers/controller.h"
 
 typedef struct {
+    Controller controller;
 } UI;
 
 

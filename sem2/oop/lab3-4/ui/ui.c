@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "../models/medication.h"
+#include "../repos/repository.h"
+#include "../controllers/controller.h"
 #include "ui.h"
 
 void ui_run(UI ui) {
@@ -45,15 +47,17 @@ void ui_show_add_menu() {
     printf("Name (str): ");
     scanf("%s", name);
 
-    printf("Concentration (%): ");
-    scanf("%2f", &concentration);
+    printf("Concentration (percentage): ");
+    scanf("%lf", &concentration);
 
     printf("Quantity (int): ");
     scanf("%d", &quantity);
 
     printf("Price (double): ");
-    scanf("%2f", &price);
+    scanf("%lf", &price);
 
 
     Medication m = medication_create(name, concentration, quantity, price);
+    printf("Created medication with name %s.\n", m.name);
+
 }
