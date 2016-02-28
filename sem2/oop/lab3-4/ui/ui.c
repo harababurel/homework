@@ -4,11 +4,17 @@
 #include "../controllers/controller.h"
 #include "ui.h"
 
-void ui_run(UI ui) {
+UI ui_create() {
+    UI this;
+    this.controller = controller_create();
+    return this;
+}
+
+void ui_run(UI this) {
     char command;
 
     while(1) {
-        ui_get_command(ui, &command);
+        ui_get_command(this, &command);
         switch(command) {
             case 'a':
                 ui_show_add_menu();
@@ -17,6 +23,9 @@ void ui_run(UI ui) {
                 return;
             case 'h':
                 ui_show_help();
+                break;
+            case 'l':
+                controller_list_medications(this.controller);
                 break;
             default:
                 printf("Bad command. Try 'h' for help.\n");
@@ -32,6 +41,7 @@ void ui_get_command(UI ui, char *command) {
 void ui_show_help() {
     printf("Commands:\n");
     printf("\ta - add medication\n");
+    printf("\tl - list medications.\n");
     printf("\th - show this help page\n");
     printf("\tx - exit\n");
 }

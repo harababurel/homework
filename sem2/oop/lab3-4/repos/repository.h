@@ -6,4 +6,4 @@ typedef struct {
     int n;
 } Repository;
 
-Repository create();
+Repository repo_create();

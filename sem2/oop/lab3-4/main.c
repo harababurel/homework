@@ -5,7 +5,7 @@
 #include "models/medication.h"
 
 void run() {
-    UI ui;
+    UI ui = ui_create();
     ui_run(ui);
 }
 

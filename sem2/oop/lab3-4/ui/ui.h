@@ -5,6 +5,7 @@ typedef struct {
     Controller controller;
 } UI;
 
+UI ui_create();
 
 void ui_run(UI ui);
 
