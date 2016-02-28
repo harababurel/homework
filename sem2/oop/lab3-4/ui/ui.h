@@ -2,14 +2,14 @@
 #include "../controllers/controller.h"
 
 typedef struct {
-    Controller controller;
+    Controller *controller;
 } UI;
 
-UI ui_create();
+UI *ui_create();
 
-void ui_run(UI ui);
+void ui_run(UI *ui);
 
-void ui_get_command(UI ui, char *command);
+void ui_get_command(UI *ui, char *command);
 
 void ui_show_help();
 

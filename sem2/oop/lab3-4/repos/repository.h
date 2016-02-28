@@ -2,8 +2,8 @@
 #include "../models/medication.h"
 
 typedef struct {
-    Medication v[100];
+    Medication *v[100];
     int n;
 } Repository;
 
-Repository repo_create();
+Repository *repo_create();

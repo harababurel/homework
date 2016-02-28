@@ -7,7 +7,8 @@ typedef struct {
     double price;
 } Medication;
 
-Medication medication_create(char name[], double concentration, int quantity, double price);
 
-void medication_show(Medication this);
+Medication *medication_create(char name[], double concentration, int quantity, double price);
+
+void medication_show(Medication *this);
 
