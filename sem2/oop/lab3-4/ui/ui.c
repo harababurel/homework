@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../models/medication.h"
 #include "../repos/repository.h"
 #include "../controllers/controller.h"
@@ -105,10 +106,9 @@ void ui_show_delete_menu(UI *this) {
 
 void ui_show_update_menu(UI *this) {
     printf("You want to update a medication.\n");
-
     controller_list_medications(this->controller, false);
+    printf("\nPlease identify an existing medication: \n");
 
-    /*
     char name[50];
     double concentration;
     int quantity = 0;
@@ -121,10 +121,33 @@ void ui_show_update_menu(UI *this) {
     scanf("%lf", &concentration);
 
     Medication *m = medication_create(name, concentration, quantity, price);
+    Medication *what = controller_find_medication(this->controller, m);
 
-    if(controller_update_medication(this->controller, m, m)) {
-        n->quantity
-    */
+    if(what != NULL) {
+        printf("Medication found.\n");
+
+        printf("\nNew name (str): ");
+        scanf("%s", name);
+
+        printf("New concentration (percentage): ");
+        scanf("%lf", &concentration);
+
+        printf("New quantity (int): ");
+        scanf("%d", &quantity);
+
+        printf("New price (double): ");
+        scanf("%lf", &price);
+
+        controller_update_medication(this->controller, what, name, &concentration, &quantity, &price);
+
+        printf("Medication updated. :)\n");
+    }
+    else {
+        printf("Medication not found.\n");
+    }
+
+
+
 }
 
 

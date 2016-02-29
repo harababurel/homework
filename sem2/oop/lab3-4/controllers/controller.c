@@ -44,15 +44,11 @@ bool controller_delete_medication(Controller *this, Medication *what) {
     return true;
 }
 
-bool controller_update_medication(Controller *this, Medication *what, Medication *updated) {
-    Medication *m = controller_find_medication(this, what);
-
-    if(m == NULL)
-        return false;
-
-    free(m);        // destroy the original medication
-    m = updated;    // and direct the pointer to the new one
-    return true;
+void controller_update_medication(Controller *this, Medication *what, char *name, double *concentration, int *quantity, double *price) {
+    strcpy(what->name, name);
+    what->concentration = *concentration;
+    what->quantity = *quantity;
+    what->price = *price;
 }
 
 
