@@ -14,6 +14,17 @@ Medication *medication_create(char name[], double concentration, int quantity, d
     return ret;
 }
 
+void medication_show_header() {
+    printf("+------------------------+---------------+-------------+-------------+\n");
+    printf("|         Name           | Concentration |   Quantity  |    Price    |\n");
+    printf("+------------------------+---------------+-------------+-------------+\n");
+}
+
+void medication_show_footer() {
+    printf("+------------------------+---------------+-------------+-------------+\n");
+}
+
+
 void medication_show(Medication *this) {
-    printf("%s (%.2lf%%): %d units, %.2lf leva.\n", this->name, this->concentration, this->quantity, this->price);
+    printf("|%23s |%9.2lf%%     |%5d units  |%7.2lf leva |\n", this->name, this->concentration, this->quantity, this->price);
 }

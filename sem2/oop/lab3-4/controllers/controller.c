@@ -13,23 +13,20 @@ Controller *controller_create() {
     return this;
 }
 
-void controller_add_medication(Controller *this, Medication *what) {
+void controller_add_medication(Controller *this, Medication *what, bool verbose) {
     Medication *m = controller_find_medication(this, what);
 
     //printf("should add medication with name <%s>\n", what->name);
 
     if(m == NULL) {                                  // medication doesn't exist
         this->repo->v[this->repo->n++] = what;       // add it
-        //printf("added on new pos\n");
-        //printf("n became %d\n", this->repo->n);
-
-        medication_show(this->repo->v[this->repo->n-1]);
+        //medication_show(this->repo->v[this->repo->n-1]);
+        if(verbose)
+            printf("Medication added.\n");
     }
     else                                             // medication exists
         m->quantity += what->quantity;               // update its quantity
 
-    //this->repo->v[this->repo->n++] = what;
-    //printf("n became %d\n", this->repo->n);
 }
 
 bool controller_delete_medication(Controller *this, Medication *what) {
@@ -70,9 +67,11 @@ void controller_list_medications(Controller *this, bool indices) {
 
     printf("There are %d medications in stock.\n", this->repo->n);
 
+    medication_show_header();
     for(int i=0; i<this->repo->n; i++) {
         if(indices)
             printf("%d. ", i);
         medication_show(this->repo->v[i]);
     }
+    medication_show_footer();
 }

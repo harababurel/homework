@@ -45,7 +45,7 @@ void test_populate(Controller *this, char *filename) {
         test_parse_line(line, name, &concentration, &quantity, &price);
 
         Medication *m = medication_create(name, concentration, quantity, price);
-        controller_add_medication(this, m);
+        controller_add_medication(this, m, false);
     }
 
     fclose(f);

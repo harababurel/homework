@@ -9,7 +9,7 @@ typedef struct {
 
 Controller *controller_create();
 
-void controller_add_medication(Controller *this, Medication *what);
+void controller_add_medication(Controller *this, Medication *what, bool verbose);
 
 bool controller_delete_medication(Controller *this, Medication *what);
 

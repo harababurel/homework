@@ -48,9 +48,14 @@ void ui_get_command(UI *this, char *command) {
 
 void ui_show_help(UI *this) {
     printf("Commands:\n");
-    printf("\ta - add medication\n");
-    printf("\tl - list medications.\n");
-    printf("\th - show this help page\n");
+    printf("\ta - add\n");
+    printf("\tu - update\n");
+    printf("\td - delete\n");
+    printf("\n");
+    printf("\tl - list\n");
+    printf("\ts - search\n");
+    printf("\n");
+    printf("\th - help\n");
     printf("\tx - exit\n");
 }
 
@@ -81,7 +86,7 @@ void ui_show_add_menu(UI *this) {
         m->price = price;
     }
 
-    controller_add_medication(this->controller, m);
+    controller_add_medication(this->controller, m, true);
 }
 
 void ui_show_delete_menu(UI *this) {
