@@ -24,6 +24,9 @@ void ui_run(UI *this) {
             case 'd':
                 ui_show_delete_menu(this);
                 break;
+            case 's':
+                ui_show_search_menu(this);
+                break;
             case 'u':
                 ui_show_update_menu(this);
                 break;
@@ -150,9 +153,12 @@ void ui_show_update_menu(UI *this) {
     else {
         printf("Medication not found.\n");
     }
-
-
-
 }
 
+void ui_show_search_menu(UI *this) {
+    char name[50];
+    printf("Term to search: ");
+    scanf("%s", name);
 
+    controller_search_medication(this->controller, name);
+}

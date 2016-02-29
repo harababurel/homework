@@ -17,3 +17,5 @@ void controller_update_medication(Controller *this, Medication *what, char *name
 Medication *controller_find_medication(Controller *this, Medication *m);
 
 void controller_list_medications(Controller *this, bool indices);
+
+void controller_search_medication(Controller *this, char *name);

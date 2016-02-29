@@ -75,3 +75,18 @@ void controller_list_medications(Controller *this, bool indices) {
     }
     medication_show_footer();
 }
+
+void controller_search_medication(Controller *this, char *name) {
+    bool found = false;
+
+    medication_show_header();
+    for(int i=0; i<this->repo->n; i++)
+        if(strstr(this->repo->v[i]->name, name) != NULL) {
+            medication_show(this->repo->v[i]);
+            found = true;
+        }
+    if(!found)
+        medication_show_middle();
+    medication_show_footer();
+}
+

@@ -19,6 +19,9 @@ void medication_show_header() {
     printf("|         Name           | Concentration |   Quantity  |    Price    |\n");
     printf("+------------------------+---------------+-------------+-------------+\n");
 }
+void medication_show_middle() {
+    printf("|                        |               |             |             |\n");
+}
 
 void medication_show_footer() {
     printf("+------------------------+---------------+-------------+-------------+\n");
