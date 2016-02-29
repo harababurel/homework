@@ -15,5 +15,5 @@ Medication *medication_create(char name[], double concentration, int quantity, d
 }
 
 void medication_show(Medication *this) {
-    printf("Medication <%s (%.2lf%%)>: %d units, %.2lf leva.\n", this->name, this->concentration, this->quantity, this->price);
+    printf("%s (%.2lf%%): %d units, %.2lf leva.\n", this->name, this->concentration, this->quantity, this->price);
 }

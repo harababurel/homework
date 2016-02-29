@@ -7,10 +7,14 @@ typedef struct {
 
 UI *ui_create();
 
-void ui_run(UI *ui);
+void ui_run(UI *this);
 
-void ui_get_command(UI *ui, char *command);
+void ui_get_command(UI *this, char *command);
 
-void ui_show_help();
+void ui_show_help(UI *this);
 
-void ui_show_add_menu();
+void ui_show_add_menu(UI *this);
+
+void ui_show_delete_menu(UI *this);
+
+void ui_show_update_menu(UI *this);
