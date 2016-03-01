@@ -79,8 +79,6 @@ void controller_list_medications(Controller *this, bool indices) {
 void controller_search_medication(Controller *this, char *name) {
     bool found = false;
 
-    repo_sort(this->repo, repo_cmp_alpha);
-
     medication_show_header();
     for(int i=0; i<this->repo->n; i++)
         if(strstr(this->repo->v[i]->name, name) != NULL) {

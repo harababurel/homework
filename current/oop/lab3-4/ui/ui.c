@@ -161,6 +161,7 @@ void ui_show_search_menu(UI *this) {
     scanf("%s", name);
 
     char sort_criteria;
+
     while(true) {
         printf("Sort [a]lphabetically or by [p]rice: ");
         scanf("%s", &sort_criteria);
@@ -169,5 +170,10 @@ void ui_show_search_menu(UI *this) {
             break;
     }
 
-    controller_search_medication(this->controller, name, sort_criteria);
+    if(sort_criteria == 'a')
+        repo_sort(this->controller->repo, repo_cmp_alpha);
+    else
+        repo_sort(this->controller->repo, repo_cmp_price);
+
+    controller_search_medication(this->controller, name);
 }
