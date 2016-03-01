@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 import os
+from collections import defaultdict
 
 class DiGraph:
-    def __init__(self, nodes=set(), outEdges={}, inEdges={}, weight={}):
+    def __init__(self, nodes=set(), outEdges=defaultdict(list), inEdges=defaultdict(list), weight={}):
         self.nodes = nodes
         self.outEdges = outEdges
         self.inEdges = inEdges
@@ -15,21 +16,17 @@ class DiGraph:
         return node in self.nodes
 
     def addEdge(self, source, target, weight):
+        """
         if not self.isNode(source):
             self.addNode(source)
         if not self.isNode(target):
             self.addNode(target)
+        """
 
-        if source not in self.outEdges:
-            self.outEdges[source] = []
         self.outEdges[source].append(target)
-
-        self.weight[(source, target)] = weight
-
-        if target not in self.inEdges:
-            self.inEdges[target] = []
         self.inEdges[target].append(source)
 
+        self.weight[(source, target)] = weight
 
     def populateFromFile(self, filename):
         path = os.path.join(os.getcwd(), filename)
