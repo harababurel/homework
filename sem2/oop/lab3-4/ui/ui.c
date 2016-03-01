@@ -160,5 +160,14 @@ void ui_show_search_menu(UI *this) {
     printf("Term to search: ");
     scanf("%s", name);
 
-    controller_search_medication(this->controller, name);
+    char sort_criteria;
+    while(true) {
+        printf("Sort [a]lphabetically or by [p]rice: ");
+        scanf("%s", &sort_criteria);
+
+        if(sort_criteria == 'a' || sort_criteria == 'p')
+            break;
+    }
+
+    controller_search_medication(this->controller, name, sort_criteria);
 }

@@ -14,6 +14,10 @@ bool repo_cmp_alpha(Medication *a, Medication *b) {
     return (strcmp(a->name, b->name) <= 0);
 }
 
+bool repo_cmp_price(Medication *a, Medication *b) {
+    return (a->price <= b->price);
+}
+
 void repo_sort(Repository *this, bool (*cmp)(Medication *, Medication *)) {
     for(int i=0; i<this->n; i++)
         for(int j=i+1; j<this->n; j++)
