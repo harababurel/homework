@@ -20,3 +20,5 @@ void ui_show_delete_menu(UI *this);
 void ui_show_update_menu(UI *this);
 
 void ui_show_search_menu(UI *this);
+
+void ui_show_short_supply_menu(UI *this);

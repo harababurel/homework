@@ -3,7 +3,9 @@
 #include <stdbool.h>
 
 typedef struct {
-    Repository *repo;
+    Repository *repo[1000];
+    int index;
+    int states;
 } Controller;
 
 
@@ -19,3 +21,12 @@ Medication *controller_find_medication(Controller *this, Medication *m);
 void controller_list_medications(Controller *this, bool indices);
 
 void controller_search_medication(Controller *this, char *name);
+
+void controller_filter_medication(Controller *this, int quantity);
+
+void controller_prepare_future(Controller *this);
+
+void controller_undo(Controller *this);
+void controller_redo(Controller *this);
+
+Repository *controller_get_current_repo(Controller *this);

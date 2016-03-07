@@ -6,6 +6,26 @@
 #include "../controllers/controller.h"
 #include "ui.h"
 
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"      /* Black */
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define BLUE    "\033[34m"      /* Blue */
+#define MAGENTA "\033[35m"      /* Magenta */
+#define CYAN    "\033[36m"      /* Cyan */
+#define WHITE   "\033[37m"      /* White */
+#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
+#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
+#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
+#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
+#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
+#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
+#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
+#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+
+
+
 UI *ui_create() {
     UI *this = malloc(sizeof(UI));
     this->controller = controller_create();
@@ -16,6 +36,8 @@ void ui_run(UI *this) {
     char command;
 
     while(1) {
+        printf("State: %d\n", this->controller->index);
+
         ui_get_command(this, &command);
         switch(command) {
             case 'a':
@@ -29,6 +51,15 @@ void ui_run(UI *this) {
                 break;
             case 'u':
                 ui_show_update_menu(this);
+                break;
+            case 'p':
+                ui_show_short_supply_menu(this);
+                break;
+            case 'n':
+                controller_undo(this->controller);
+                break;
+            case 'r':
+                controller_redo(this->controller);
                 break;
             case 'x':
                 exit(0);
@@ -51,15 +82,19 @@ void ui_get_command(UI *this, char *command) {
 
 void ui_show_help(UI *this) {
     printf("Commands:\n");
-    printf("\ta - add\n");
-    printf("\tu - update\n");
-    printf("\td - delete\n");
+    printf("\t" BOLDWHITE "a" RESET "dd\n");
+    printf("\t" BOLDWHITE "u" RESET "pdate\n");
+    printf("\t" BOLDWHITE "d" RESET "elete\n");
     printf("\n");
-    printf("\tl - list\n");
-    printf("\ts - search\n");
+    printf("\t" BOLDWHITE "l" RESET "ist\n");
+    printf("\t" BOLDWHITE "s" RESET "earch\n");
+    printf("\tshort su" BOLDWHITE "p" RESET "ply\n");
     printf("\n");
-    printf("\th - help\n");
-    printf("\tx - exit\n");
+    printf("\tu" BOLDWHITE "n" RESET "do\n");
+    printf("\t" BOLDWHITE "r" RESET "edo\n");
+    printf("\n");
+    printf("\t" BOLDWHITE "h" RESET "elp\n");
+    printf("\te" BOLDWHITE "x" RESET "it\n");
 }
 
 void ui_show_add_menu(UI *this) {
@@ -171,9 +206,17 @@ void ui_show_search_menu(UI *this) {
     }
 
     if(sort_criteria == 'a')
-        repo_sort(this->controller->repo, repo_cmp_alpha);
+        repo_sort(this->controller->repo[this->controller->index], repo_cmp_alpha);
     else
-        repo_sort(this->controller->repo, repo_cmp_price);
+        repo_sort(this->controller->repo[this->controller->index], repo_cmp_price);
 
     controller_search_medication(this->controller, name);
+}
+
+void ui_show_short_supply_menu(UI *this) {
+    int quantity;
+    printf("Quantity: ");
+    scanf("%d", &quantity);
+
+    controller_filter_medication(this->controller, quantity);
 }
