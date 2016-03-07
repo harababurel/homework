@@ -27,4 +27,3 @@ void repo_sort(Repository *this, bool (*cmp)(Medication *, Medication *)) {
                 this->v[j] = temp;
             }
 }
-

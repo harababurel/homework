@@ -121,6 +121,8 @@ void controller_search_medication(Controller *this, char *name) {
     Repository *r = controller_get_current_repo(this);
     bool found = false;
 
+    // printf("Will search for %s.\n", name);
+
     medication_show_header();
     for(int i=0; i<r->n; i++)
         if(strstr(r->v[i]->name, name) != NULL) {

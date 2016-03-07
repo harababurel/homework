@@ -33,68 +33,58 @@ UI *ui_create() {
 }
 
 void ui_run(UI *this) {
-    char command;
+    char *command = malloc(50*sizeof(char));
 
     while(1) {
         printf("State: %d\n", this->controller->index);
 
-        ui_get_command(this, &command);
-        switch(command) {
-            case 'a':
-                ui_show_add_menu(this);
-                break;
-            case 'd':
-                ui_show_delete_menu(this);
-                break;
-            case 's':
-                ui_show_search_menu(this);
-                break;
-            case 'u':
-                ui_show_update_menu(this);
-                break;
-            case 'p':
-                ui_show_short_supply_menu(this);
-                break;
-            case 'n':
-                controller_undo(this->controller);
-                break;
-            case 'r':
-                controller_redo(this->controller);
-                break;
-            case 'x':
-                exit(0);
-            case 'h':
-                ui_show_help(this);
-                break;
-            case 'l':
-                controller_list_medications(this->controller, false);
-                break;
-            default:
-                printf("Bad command. Try 'h' for help.\n");
-        }
+        ui_get_command(this, command);
+        if(!strcmp(command, "add"))
+            ui_show_add_menu(this);
+        else if(!strcmp(command, "delete"))
+            ui_show_delete_menu(this);
+        else if(!strcmp(command, "search"))
+            ui_show_search_menu(this);
+        else if(!strcmp(command, "update"))
+            ui_show_update_menu(this);
+        else if(!strcmp(command, "supply"))
+            ui_show_short_supply_menu(this);
+        else if(!strcmp(command, "undo"))
+            controller_undo(this->controller);
+        else if(!strcmp(command, "redo"))
+            controller_redo(this->controller);
+        else if(!strcmp(command, "exit") || !strcmp(command, "quit"))
+            exit(0);
+        else if(!strcmp(command, "help"))
+            ui_show_help(this);
+        else if(!strcmp(command, "list"))
+            controller_list_medications(this->controller, false);
+        else
+            printf("Bad command. Try " BOLDWHITE "help" RESET ".\n");
     }
 }
 
 void ui_get_command(UI *this, char *command) {
-    printf("> ");
+    printf(BOLDWHITE "> ");
     scanf("%s", command);
+    printf(RESET);
 }
 
 void ui_show_help(UI *this) {
     printf("Commands:\n");
-    printf("\t" BOLDWHITE "a" RESET "dd\n");
-    printf("\t" BOLDWHITE "u" RESET "pdate\n");
-    printf("\t" BOLDWHITE "d" RESET "elete\n");
+    printf("\t" BOLDWHITE "add" RESET "\n");
+    printf("\t" BOLDWHITE "update" RESET "\n");
+    printf("\t" BOLDWHITE "delete" RESET "\n");
     printf("\n");
-    printf("\t" BOLDWHITE "l" RESET "ist\n");
-    printf("\t" BOLDWHITE "s" RESET "earch\n");
-    printf("\tshort su" BOLDWHITE "p" RESET "ply\n");
+    printf("\t" BOLDWHITE "list" RESET "\n");
+    printf("\t" BOLDWHITE "search" RESET "\n");
+    printf("\t" BOLDWHITE "supply" RESET "\n");
     printf("\n");
-    printf("\tu" BOLDWHITE "n" RESET "do\n");
-    printf("\t" BOLDWHITE "r" RESET "edo\n");
+    printf("\t" BOLDWHITE "undo" RESET "\n");
+    printf("\t" BOLDWHITE "redo" RESET "\n");
     printf("\n");
-    printf("\t" BOLDWHITE "h" RESET "elp\n");
-    printf("\te" BOLDWHITE "x" RESET "it\n");
+    printf("\t" BOLDWHITE "help" RESET "\n");
+    printf("\t" BOLDWHITE "exit" RESET "/" BOLDWHITE "quit" RESET "\n");
 }
 
 void ui_show_add_menu(UI *this) {
@@ -191,12 +181,12 @@ void ui_show_update_menu(UI *this) {
 }
 
 void ui_show_search_menu(UI *this) {
-    char name[50];
+    char *name = malloc(50 * sizeof(char));
     printf("Term to search: ");
     scanf("%s", name);
 
+    /*
     char sort_criteria;
-
     while(true) {
         printf("Sort [a]lphabetically or by [p]rice: ");
         scanf("%s", &sort_criteria);
@@ -208,7 +198,7 @@ void ui_show_search_menu(UI *this) {
     if(sort_criteria == 'a')
         repo_sort(this->controller->repo[this->controller->index], repo_cmp_alpha);
     else
-        repo_sort(this->controller->repo[this->controller->index], repo_cmp_price);
+        repo_sort(this->controller->repo[this->controller->index], repo_cmp_price);*/
 
     controller_search_medication(this->controller, name);
 }
