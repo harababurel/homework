@@ -45,6 +45,8 @@ void ui_run(UI *this) {
             ui_show_delete_menu(this);
         else if(!strcmp(command, "search"))
             ui_show_search_menu(this);
+        else if(!strcmp(command, "sort"))
+            ui_show_sort_menu(this);
         else if(!strcmp(command, "update"))
             ui_show_update_menu(this);
         else if(!strcmp(command, "supply"))
@@ -72,19 +74,20 @@ void ui_get_command(UI *this, char *command) {
 
 void ui_show_help(UI *this) {
     printf("Commands:\n");
-    printf("\t" BOLDWHITE "add" RESET "\n");
+    printf("\t" BOLDWHITE "add"    RESET "\n");
     printf("\t" BOLDWHITE "update" RESET "\n");
     printf("\t" BOLDWHITE "delete" RESET "\n");
     printf("\n");
-    printf("\t" BOLDWHITE "list" RESET "\n");
+    printf("\t" BOLDWHITE "list"   RESET "\n");
     printf("\t" BOLDWHITE "search" RESET "\n");
+    printf("\t" BOLDWHITE "sort"   RESET "\n");
     printf("\t" BOLDWHITE "supply" RESET "\n");
     printf("\n");
-    printf("\t" BOLDWHITE "undo" RESET "\n");
-    printf("\t" BOLDWHITE "redo" RESET "\n");
+    printf("\t" BOLDWHITE "undo"   RESET "\n");
+    printf("\t" BOLDWHITE "redo"   RESET "\n");
     printf("\n");
-    printf("\t" BOLDWHITE "help" RESET "\n");
-    printf("\t" BOLDWHITE "exit" RESET "/" BOLDWHITE "quit" RESET "\n");
+    printf("\t" BOLDWHITE "help"   RESET "\n");
+    printf("\t" BOLDWHITE "exit"   RESET "/" BOLDWHITE "quit" RESET "\n");
 }
 
 void ui_show_add_menu(UI *this) {
@@ -185,22 +188,40 @@ void ui_show_search_menu(UI *this) {
     printf("Term to search: ");
     scanf("%s", name);
 
-    /*
-    char sort_criteria;
-    while(true) {
-        printf("Sort [a]lphabetically or by [p]rice: ");
-        scanf("%s", &sort_criteria);
+    controller_search_medication(this->controller, name);
+}
 
-        if(sort_criteria == 'a' || sort_criteria == 'p')
-            break;
+void ui_show_sort_menu(UI *this) {
+    char *criteria = malloc(50*sizeof(char));
+
+    printf("Criteria:\n");
+    printf("\t" BOLDWHITE "name" RESET "\n");
+    printf("\t" BOLDWHITE "concentration" RESET "\n");
+    printf("\t" BOLDWHITE "quantity" RESET "\n");
+    printf("\t" BOLDWHITE "price" RESET "\n");
+
+    scanf("%s", criteria);
+
+    Repository *r = controller_get_current_repo(this->controller);
+
+    if(!strcmp(criteria, "name"))
+        repo_sort(r, repo_cmp_name);
+    else if(!strcmp(criteria, "concentration"))
+        repo_sort(r, repo_cmp_concentration);
+    else if(!strcmp(criteria, "quantity"))
+        repo_sort(r, repo_cmp_quantity);
+    else if(!strcmp(criteria, "price"))
+        repo_sort(r, repo_cmp_price);
+    else {
+        printf("Invalid criteria.\n");
+        return;
     }
 
-    if(sort_criteria == 'a')
-        repo_sort(this->controller->repo[this->controller->index], repo_cmp_alpha);
-    else
-        repo_sort(this->controller->repo[this->controller->index], repo_cmp_price);*/
+    printf("Reverse? (y/n): ");
+    scanf("%s", criteria);
+    if(!strcmp(criteria, "y"))
+        repo_reverse(r);
 
-    controller_search_medication(this->controller, name);
 }
 
 void ui_show_short_supply_menu(UI *this) {

@@ -21,4 +21,6 @@ void ui_show_update_menu(UI *this);
 
 void ui_show_search_menu(UI *this);
 
+void ui_show_sort_menu(UI *this);
+
 void ui_show_short_supply_menu(UI *this);
