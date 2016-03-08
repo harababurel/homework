@@ -37,6 +37,7 @@ void ui_run(UI *this) {
 
     while(1) {
         printf("State: %d\n", this->controller->index);
+        printf("Vector has has %d/%d objects.\n", vector_size(controller_get_current_repo(this->controller)->v), controller_get_current_repo(this->controller)->v->capacity);
 
         ui_get_command(this, command);
         if(!strcmp(command, "add"))

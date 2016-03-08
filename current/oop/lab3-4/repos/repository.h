@@ -1,10 +1,11 @@
 #pragma once
-#include "../models/medication.h"
 #include <stdbool.h>
+#include "../models/medication.h"
+#include "../collections/vector.h"
+
 
 typedef struct {
-    Medication *v[100];
-    int n;
+    vector *v;
 } Repository;
 
 Repository *repo_create();
