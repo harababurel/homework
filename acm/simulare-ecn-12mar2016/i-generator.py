@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 from random import randint
 import os
 
-n = 50
+n = 30
 points = {}
 
 v = []
 for i in range(n):
-    point = (randint(1, 100), randint(1, 20), i)
+    point = (randint(1, 100), randint(1, 100), i)
     while (point[0], point[1]) in points:
-        point = (randint(1, 100), randint(1, 20), i)
+        point = (randint(1, 100), randint(1, 100), i)
 
     points[(point[0], point[1])] = True
 
@@ -29,7 +29,7 @@ with open("i.out", "r") as f:
     order = list(map(int, f.readline().split()))
 
 
-plt.axis([-1,101, -1,21])
+plt.axis([-1,101, -1,101])
 
 
 #plt.plot([v[order[i]][0] for i in range(n)] + [v[order[0]][0]], [v[order[i]][1] for i in range(n)] + [v[order[0]][1]])

@@ -12,4 +12,8 @@ subjects:
     * **csa** - computer systems architecture
     * **fop** - fundamentals of programming
 * **sem 2**
+    * **dynsys**
+    * **geometry**
+    * **graph**
+    * **oop**
 * **acm** - training rounds and such

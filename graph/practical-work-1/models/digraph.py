@@ -148,3 +148,18 @@ class DiGraph:
             print("Reason: %s" % e)
         if self.DEBUG:
             print("Graph was populated.")
+
+    def DFS(self, node, visited, discovery, finish, currentTime=1):
+        visited[node] = True
+
+        discovery[node] = currentTime
+        currentTime += 1
+
+        for edge in outboundEdges[node]:
+            neighbor = edge[0]
+            if not visited[neighbor]:
+                dfs(neighbor, visited, discovery, finish, currentTime)
+
+        finish[node] = currentTime
+
+        return (visited, discovery, finish)
