@@ -7,6 +7,7 @@
 
 void run() {
     UI *ui = ui_create();
+    test_everything();
     test_populate(ui->controller, "input");
     ui_run(ui);
 }

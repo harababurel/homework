@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "../controllers/controller.h"
+#include "../repos/repository.h"
 #include "../models/medication.h"
 
 
@@ -49,5 +51,30 @@ void test_populate(Controller *this, char *filename) {
     }
 
     fclose(f);
+}
+
+void test_medication() {
+    char name[50] = "Lemon";
+    double concentration = 99.9;
+    int quantity = 2;
+    double price = 1.2;
+
+    Medication *m = medication_create(name, concentration, quantity, price);
+
+    assert(!strcmp(m->name, "Lemon"));
+    assert(99.8 < m->concentration && m->concentration < 100.0);
+    assert(m->quantity == 2);
+    assert(m->price == 1.2);
+}
+
+void test_repository() {
+    Repository *r = repo_create();
+}
+
+void test_everything() {
+    test_medication();
+    test_repository();
+
+    printf("All tests passed :).\n");
 }
 
