@@ -2,6 +2,8 @@
 import sys
 from models.digraph import DiGraph
 
+sys.setrecursionlimit(2*10**9)
+
 DEBUG = "-d" in sys.argv or "--debug" in sys.argv
 
 G = DiGraph(DEBUG=DEBUG)
@@ -18,4 +20,18 @@ G.getWeight(1, 5)
 
 G.removeVertex(1)
 """
-G.scc()
+components = G.scc()
+
+#print(data['discovery'])
+#print(data['finish'])
+
+print("There are %i strongly connected components:" % len(components))
+for x in components:
+    print(x)
+print()
+
+data = G.iterativeDFS()
+
+print(data['visitedVertices'])
+print(data['discovery'])
+print(data['finish'])

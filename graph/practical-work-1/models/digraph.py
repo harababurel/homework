@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import os
 from collections import defaultdict
+from copy import deepcopy
 
 class DiGraph:
     def __init__(self, vertices=set(), outEdges=defaultdict(list), inEdges=defaultdict(list), DEBUG=False):
@@ -149,59 +150,117 @@ class DiGraph:
         if self.DEBUG:
             print("Graph was populated.")
 
-    def dfs(self, node, wasVisited=None, visitedVertices=[], discovery={}, finish={}, currentTime=[1]):
-        if wasVisited is None:
-            wasVisited = {x: False for x in self.vertices}
+    def recursiveDFS(self, node, data=None):
+        if data is None:
+            data = {
+                    'wasVisited': { x: False for x in self.vertices },
+                    'visitedVertices': [],
+                    'discovery': {},
+                    'finish': {},
+                    'currentTime': 0,
+                    }
+
+
+        if data['wasVisited'][node]:
+            return data
+
+        data['wasVisited'][node] = True
+        data['visitedVertices'].append(node)
+        data['discovery'][node] = data['currentTime']
+        data['currentTime'] += 1
 
         if self.DEBUG:
-            print("Discovered vertex %i at time %i." % (node, currentTime[0]))
-
-        if wasVisited[node]:
-            return (wasVisited, visitedVertices, discovery, finish, currentTime)
-
-
-        wasVisited[node] = True
-        visitedVertices.append(node)
-        discovery[node] = currentTime
-        currentTime[0] += 1
+            print("Discovered vertex %i at time %i." % (node, data['discovery'][node]))
 
         for edge in self.outboundEdges(node):
             neighbor = edge[0]
-            if not wasVisited[neighbor]:
-                self.dfs(neighbor, wasVisited, visitedVertices, discovery, finish, currentTime)
+            if not data['wasVisited'][neighbor]:
+                self.recursiveDFS(neighbor, data)
 
-        finish[node] = currentTime[0]
-        currentTime[0] += 1
+        data['finish'][node] = data['currentTime']
+        data['currentTime'] += 1
 
         if self.DEBUG:
-            print("Finished vertex %i at time %i." % (node, currentTime[0]))
+            print("Finished vertex %i at time %i." % (node, data['finish'][node]))
 
-        return (wasVisited, visitedVertices, discovery, finish, currentTime)
+        return data
+
+    def iterativeDFS(self, data=None):
+        if data is None:
+            data = {
+                    'wasVisited': { x: False for x in self.vertices },
+                    'visitedVertices': [],
+                    'discovery': {},
+                    'finish': {},
+                    'currentTime': 0,
+                    }
+
+        for source in self.vertices:
+            if data['wasVisited'][source]:
+                continue
+
+            S = [source]
+            while len(S) > 0:
+                current = S.pop()
+
+                data['wasVisited'][current] = True
+                data['visitedVertices'].append(current)
+
+                for edge in self.outboundEdges(current):
+                    neighbor = edge[0]
+
+                    if not data['wasVisited'][neighbor]:
+                        data['wasVisited'][neighbor] = True
+                        S.append(neighbor)
+        return data
+
+
 
     def scc(self):
-        wasVisited = {x: False for x in self.vertices}
-        visitedVertices = []
-        discovery = {}
-        finish = {}
-        currentTime = [0]
+        data = {
+                'wasVisited': { x: False for x in self.vertices },
+                'visitedVertices': [],
+                'discovery': {},
+                'finish': {},
+                'currentTime': 0,
+                }
 
         for x in self.vertices:
-            if not wasVisited[x]:
-                (wasVisited, visitedVertices, discovery, finish, currentTime) = self.dfs(x, wasVisited, visitedVertices, discovery, finish, currentTime)
+            if not data['wasVisited'][x]:
+                data = self.recursiveDFS(x, data)
 
-        orderedVertices = sorted(self.vertices, key=lambda x: finish[x], reverse=True)
+        orderedVertices = sorted(self.vertices, key=lambda x: data['finish'][x], reverse=True)
+
+        # orderedVertices = reversed(self.iterativeDFS()['visitedVertices'])
 
         if self.DEBUG:
             print("In order to compute the SCCs, vertices should be processed in the following order:")
-            print(" -> ".join([str(x) for x in orderedVertices]))
+            print(' -> '.join([str(x) for x in orderedVertices]))
 
+        T = self.transpose()
+        data = {
+                'wasVisited': { x: False for x in self.vertices },
+                'visitedVertices': [],
+                'discovery': {},
+                'finish': {},
+                'currentTime': 0,
+                }
 
-        wasVisited = None
+        components = []
         for x in orderedVertices:
-            exploration = self.dfs(x, wasVisited)
+            if not data['wasVisited'][x]:
+                data['visitedVertices'] = []
+                data = T.recursiveDFS(x, data)
 
-            wasVisited = exploration[0]
-            component = exploration[1]
-            print(component)
+                components.append(data['visitedVertices'])
+
+        return components
 
 
+    def transpose(self):
+        ret = deepcopy(self)
+
+        for x in ret.vertices:
+            ret.inEdges[x], ret.outEdges[x] = ret.outEdges[x], ret.inEdges[x]
+
+        return ret
