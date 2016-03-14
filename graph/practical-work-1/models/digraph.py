@@ -3,14 +3,14 @@ import os
 from collections import defaultdict
 
 class DiGraph:
-    def __init__(self, nodes=set(), outEdges=defaultdict(list), inEdges=defaultdict(list), DEBUG=False):
-        self.nodes = nodes
+    def __init__(self, vertices=set(), outEdges=defaultdict(list), inEdges=defaultdict(list), DEBUG=False):
+        self.vertices = vertices
         self.outEdges = outEdges
         self.inEdges = inEdges
         self.DEBUG = DEBUG
 
     def numberOfVertices(self):
-        return len(self.nodes)
+        return len(self.vertices)
 
     def inDegree(self, node):
         return len(self.inEdges[node])
@@ -26,10 +26,10 @@ class DiGraph:
         else:
             if self.DEBUG:
                 print("Adding vertex %i." % node)
-            self.nodes.add(node)
+            self.vertices.add(node)
 
     def isNode(self, node):
-        return node in self.nodes
+        return node in self.vertices
 
     def outboundEdges(self, node):
         for neighbor in self.outEdges[node]:
@@ -93,9 +93,9 @@ class DiGraph:
 
     def removeVertex(self, node):
         self.outEdges[node] = []
-        self.nodes.remove(node)
+        self.vertices.remove(node)
 
-        for x in self.nodes:
+        for x in self.vertices:
             for i in range(len(self.inEdges[x])):
                 if self.inEdges[x][i][0] == node:
                     self.inEdges[x][i] = self.inEdges[x][ len(self.inEdges[x])-1 ]
@@ -149,17 +149,59 @@ class DiGraph:
         if self.DEBUG:
             print("Graph was populated.")
 
-    def DFS(self, node, visited, discovery, finish, currentTime=1):
-        visited[node] = True
+    def dfs(self, node, wasVisited=None, visitedVertices=[], discovery={}, finish={}, currentTime=[1]):
+        if wasVisited is None:
+            wasVisited = {x: False for x in self.vertices}
 
+        if self.DEBUG:
+            print("Discovered vertex %i at time %i." % (node, currentTime[0]))
+
+        if wasVisited[node]:
+            return (wasVisited, visitedVertices, discovery, finish, currentTime)
+
+
+        wasVisited[node] = True
+        visitedVertices.append(node)
         discovery[node] = currentTime
-        currentTime += 1
+        currentTime[0] += 1
 
-        for edge in outboundEdges[node]:
+        for edge in self.outboundEdges(node):
             neighbor = edge[0]
-            if not visited[neighbor]:
-                dfs(neighbor, visited, discovery, finish, currentTime)
+            if not wasVisited[neighbor]:
+                self.dfs(neighbor, wasVisited, visitedVertices, discovery, finish, currentTime)
 
-        finish[node] = currentTime
+        finish[node] = currentTime[0]
+        currentTime[0] += 1
 
-        return (visited, discovery, finish)
+        if self.DEBUG:
+            print("Finished vertex %i at time %i." % (node, currentTime[0]))
+
+        return (wasVisited, visitedVertices, discovery, finish, currentTime)
+
+    def scc(self):
+        wasVisited = {x: False for x in self.vertices}
+        visitedVertices = []
+        discovery = {}
+        finish = {}
+        currentTime = [0]
+
+        for x in self.vertices:
+            if not wasVisited[x]:
+                (wasVisited, visitedVertices, discovery, finish, currentTime) = self.dfs(x, wasVisited, visitedVertices, discovery, finish, currentTime)
+
+        orderedVertices = sorted(self.vertices, key=lambda x: finish[x], reverse=True)
+
+        if self.DEBUG:
+            print("In order to compute the SCCs, vertices should be processed in the following order:")
+            print(" -> ".join([str(x) for x in orderedVertices]))
+
+
+        wasVisited = None
+        for x in orderedVertices:
+            exploration = self.dfs(x, wasVisited)
+
+            wasVisited = exploration[0]
+            component = exploration[1]
+            print(component)
+
+
