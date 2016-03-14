@@ -86,10 +86,19 @@ bool controller_delete_medication(Controller *this, Medication *what) {
 
 void controller_update_medication(Controller *this, Medication *what, char *name, double *concentration, int *quantity, double *price) {
 
-    strcpy(what->name, name);
-    what->concentration = *concentration;
-    what->quantity = *quantity;
-    what->price = *price;
+    controller_prepare_future(this);
+    Repository *r = controller_get_current_repo(this);
+
+    for(int i=0; i<vector_size(r->v); i++) {
+        Medication *elem = vector_at_pos(r->v, i);
+
+        if(!strcmp(elem->name, what->name) && elem->concentration == what->concentration) {
+            strcpy(elem->name, name);
+            elem->concentration = *concentration;
+            elem->quantity = *quantity;
+            elem->price = *price;
+        }
+    }
 }
 
 

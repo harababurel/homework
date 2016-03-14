@@ -67,13 +67,38 @@ void test_medication() {
     assert(m->price == 1.2);
 }
 
-void test_repository() {
-    Repository *r = repo_create();
+void test_controller() {
+    Controller *c = controller_create();
+
+    Medication *m1 = medication_create("vin_fiert", 14, 1, 20);
+    Medication *m2 = medication_create("apa_calda", 0, 100, 5);
+    Medication *m3 = medication_create("vitamina_c", 100, -1, 15);
+
+    controller_add_medication(c, m1, false);
+    controller_add_medication(c, m2, false);
+
+    assert(controller_find_medication(c, m1) != NULL);
+    assert(controller_find_medication(c, m2) != NULL);
+    assert(controller_find_medication(c, m3) == NULL);
+
+    controller_delete_medication(c, m2);
+
+    assert(controller_find_medication(c, m2) == NULL);
+
+    double *new_concentration = malloc(sizeof(double));
+    int *new_quantity = malloc(sizeof(int));
+    double *new_price = malloc(sizeof(double));
+    *new_concentration = 0;
+    *new_quantity = 0;
+    *new_price = 0;
+
+    controller_update_medication(c, m3, "tiramisu", new_concentration, new_quantity, new_price);
+
 }
 
 void test_everything() {
     test_medication();
-    test_repository();
+    test_controller();
 
     printf("All tests passed :).\n");
 }
