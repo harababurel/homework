@@ -363,7 +363,7 @@ $!+t+s`HF-7$$\"\"&F*$!+w8zvKF--%'COLOURG6&%$RGBG$\"#5!\"\"$F*F*F^_l-%+
 AXESLABELSG6$Q\"t6\"Q!Fc_l-%%VIEWG6$;F(Fc^l%(DEFAULTG" 1 2 0 1 10 0 2 
 9 1 4 2 1.000000 45.000000 45.000000 0 0 "Curve 1" }}}}{EXCHG {PARA 0 
 "> " 0 "" {MPLTEXT 1 0 43 "plot(BesselJ(1, t), t=-infinity..infinity);
-" }}{PARA 13 "" 1 "" {GLPLOT2D 527 527 527 {PLOTDATA 2 "6&-%'CURVESG6$
+" }}{PARA 13 "" 1 "" {GLPLOT2D 982 526 526 {PLOTDATA 2 "6&-%'CURVESG6$
 7\\^l7$$!+ynP')**!#5$\"+>t%)pW!#87$$!+dNvs**F*$\"+Az>5N!#77$$!+N.8f**F
 *$\"++?!4]%F37$$!+9r]X**F*$!+#yEi0&F37$$!+$*Q)=$**F*$\"+oyM(e$F37$$!+r
 1E=**F*$\"+q>=9eF37$$!+]uj/**F*$!+O1`%)oF37$$!+HU,\"*)*F*$!+J(QGi$F37$
@@ -550,5 +550,226 @@ unction solution successful" }}{PARA 6 "" 1 "" {TEXT -1 50 "<- success
 ful solving of the linear ODE \"as given\"" }}{PARA 11 "" 1 "" 
 {XPPMATH 20 "6#/-%\"xG6#%\"tG*(%$_C1G\"\"\"F'#F*\"\"#-%(BesselJG6$#F*
 \"\"(,$*(F,F*F1!\"\"F'#F1F,F*F*" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 
-1 0 0 "" }}}}{MARK "29 15 0" 0 }{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }
-{PAGENUMBERS 0 1 2 33 1 1 }
+1 0 33 "bvp10 := (D@@2)(x)(t) + x(t) = 0;" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%&bvp10G/,&---%#@@G6$%\"DG\"\"#6#%\"xG6#%\"tG\"\"\"-F/
+F0F2\"\"!" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 22 "bvp10_ic1 := x
+(0) = 0;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%*bvp10_ic1G/-%\"xG6#\"\"
+!F)" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 23 "bvp10_ic2 := x(Pi) =
+ 0;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%*bvp10_ic2G/-%\"xG6#%#PiG\"\"
+!" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 44 "dsolve(\{bvp10, bvp10_
+ic1, bvp10_ic2\}, x(t));" }}{PARA 6 "" 1 "" {TEXT -1 30 "Methods for s
+econd order ODEs:" }}{PARA 6 "" 1 "" {TEXT -1 37 "--- Trying classific
+ation methods ---" }}{PARA 6 "" 1 "" {TEXT -1 38 "-> Tackling the line
+ar ODE \"as given\":" }}{PARA 6 "" 1 "" {TEXT -1 22 "   trying a quadr
+ature" }}{PARA 6 "" 1 "" {TEXT -1 49 "   checking if the LODE has cons
+tant coefficients" }}{PARA 6 "" 1 "" {TEXT -1 38 "   <- constant coeff
+icients successful" }}{PARA 6 "" 1 "" {TEXT -1 50 "<- successful solvi
+ng of the linear ODE \"as given\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/
+-%\"xG6#%\"tG*&%$_C1G\"\"\"-%$sinGF&F*" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 32 "eq12 := (D@@2)(x)(t) + x(t) = 0;" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%%eq12G/,&---%#@@G6$%\"DG\"\"#6#%\"xG6#%\"tG\"\"\"-F/F
+0F2\"\"!" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 20 "eq12_ic := x(0)
+ = 0;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%(eq12_icG/-%\"xG6#\"\"!F)" 
+}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 41 "dsolve(\{eq12, eq12_ic, x
+(Pi) = 0\}, x(t));" }}{PARA 6 "" 1 "" {TEXT -1 30 "Methods for second \+
+order ODEs:" }}{PARA 6 "" 1 "" {TEXT -1 37 "--- Trying classification \+
+methods ---" }}{PARA 6 "" 1 "" {TEXT -1 38 "-> Tackling the linear ODE
+ \"as given\":" }}{PARA 6 "" 1 "" {TEXT -1 22 "   trying a quadrature
+" }}{PARA 6 "" 1 "" {TEXT -1 49 "   checking if the LODE has constant \+
+coefficients" }}{PARA 6 "" 1 "" {TEXT -1 38 "   <- constant coefficien
+ts successful" }}{PARA 6 "" 1 "" {TEXT -1 50 "<- successful solving of
+ the linear ODE \"as given\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/-%\"x
+G6#%\"tG*&%$_C1G\"\"\"-%$sinGF&F*" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 31 "a := 'a';\neq12_ic1 := x(0) = 0;" }}{PARA 0 "" 0 "" 
+{TEXT -1 0 "" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"aGF$" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#>%)eq12_ic1G/-%\"xG6#\"\"!F)" }}}{EXCHG {PARA 0 
+"> " 0 "" {MPLTEXT 1 0 21 "eq12_ic2 := x(a) = 0;" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%)eq12_ic2G/-%\"xG6#%\"aG\"\"!" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 18 "eq12_ic3 := a > 0;" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%)eq12_ic3G2\"\"!%\"aG" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 41 "dsolve(\{eq12, eq12_ic1, eq12_ic2\}, x(t));" }}{PARA 
+6 "" 1 "" {TEXT -1 30 "Methods for second order ODEs:" }}{PARA 6 "" 1 
+"" {TEXT -1 37 "--- Trying classification methods ---" }}{PARA 6 "" 1 
+"" {TEXT -1 38 "-> Tackling the linear ODE \"as given\":" }}{PARA 6 "
+" 1 "" {TEXT -1 22 "   trying a quadrature" }}{PARA 6 "" 1 "" {TEXT 
+-1 49 "   checking if the LODE has constant coefficients" }}{PARA 6 "
+" 1 "" {TEXT -1 38 "   <- constant coefficients successful" }}{PARA 6 
+"" 1 "" {TEXT -1 50 "<- successful solving of the linear ODE \"as give
+n\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/-%\"xG6#%\"tG\"\"!" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 43 "eq16 := D(x)(t) + x(t) = sin(t) + 3
+*cos(t);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%%eq16G/,&--%\"DG6#%\"xG6
+#%\"tG\"\"\"-F+F,F.,&-%$sinGF,F.*&\"\"$F.-%$cosGF,F.F." }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 19 "dsolve(eq16, x(t));" }}{PARA 6 "" 
+1 "" {TEXT -1 29 "Methods for first order ODEs:" }}{PARA 6 "" 1 "" 
+{TEXT -1 37 "--- Trying classification methods ---" }}{PARA 6 "" 1 "" 
+{TEXT -1 19 "trying a quadrature" }}{PARA 6 "" 1 "" {TEXT -1 23 "tryin
+g 1st order linear" }}{PARA 6 "" 1 "" {TEXT -1 30 "<- 1st order linear
+ successful" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/-%\"xG6#%\"tG,(-%$cosG
+F&\"\"\"*&\"\"#F+-%$sinGF&F+F+*&-%$expG6#,$F'!\"\"F+%$_C1GF+F+" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 53 "eq19 := D(x)(t) + (t) = 2 / \+
+sqrt(Pi) * exp(-t^2 - t);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%%eq19G/
+,&--%\"DG6#%\"xG6#%\"tG\"\"\"F-F.,$*(\"\"#F.%#PiG#!\"\"F1-%$expG6#,&*$
+)F-F1F.F4F-F4F.F." }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 19 "dsolve
+(eq19, x(t));" }}{PARA 6 "" 1 "" {TEXT -1 29 "Methods for first order \+
+ODEs:" }}{PARA 6 "" 1 "" {TEXT -1 37 "--- Trying classification method
+s ---" }}{PARA 6 "" 1 "" {TEXT -1 19 "trying a quadrature" }}{PARA 6 "
+" 1 "" {TEXT -1 24 "<- quadrature successful" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/-%\"xG6#%\"tG,(*&\"\"#!\"\"F'F*F+*&-%$expG6##\"\"\"\"
+\"%F1-%$erfG6#,&F'F1#F1F*F1F1F1%$_C1GF1" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 4 "?erf" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 44 "eq2
+0 := (D@@2)(x)(t) + 3*D(x)(t) + x(t) = 1;" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%%eq20G/,(---%#@@G6$%\"DG\"\"#6#%\"xG6#%\"tG\"\"\"*&\"
+\"$F2--F,F.F0F2F2-F/F0F2F2" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+13 "dsolve(eq20);" }}{PARA 6 "" 1 "" {TEXT -1 30 "Methods for second o
+rder ODEs:" }}{PARA 6 "" 1 "" {TEXT -1 37 "--- Trying classification m
+ethods ---" }}{PARA 6 "" 1 "" {TEXT -1 19 "trying a quadrature" }}
+{PARA 6 "" 1 "" {TEXT -1 47 "trying high order exact linear fully inte
+grable" }}{PARA 6 "" 1 "" {TEXT -1 71 "trying differential order: 2; l
+inear nonhomogeneous with symmetry [0,1]" }}{PARA 6 "" 1 "" {TEXT -1 
+53 "trying a double symmetry of the form [xi=0, eta=F(x)]" }}{PARA 6 "
+" 1 "" {TEXT -1 49 "Try solving first the homogeneous part of the ODE
+" }}{PARA 6 "" 1 "" {TEXT -1 41 "   -> Tackling the linear ODE \"as gi
+ven\":" }}{PARA 6 "" 1 "" {TEXT -1 52 "      checking if the LODE has \+
+constant coefficients" }}{PARA 6 "" 1 "" {TEXT -1 41 "      <- constan
+t coefficients successful" }}{PARA 6 "" 1 "" {TEXT -1 53 "   <- succes
+sful solving of the linear ODE \"as given\"" }}{PARA 6 "" 1 "" {TEXT 
+-1 70 "   -> Determining now a particular solution to the non-homogene
+ous ODE" }}{PARA 6 "" 1 "" {TEXT -1 43 "      trying a rational partic
+ular solution" }}{PARA 6 "" 1 "" {TEXT -1 48 "      <- rational partic
+ular solution successful" }}{PARA 6 "" 1 "" {TEXT -1 62 "   <- solving
+ first the homogeneous part of the ODE successful" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/-%\"xG6#%\"tG,(*&-%$expG6#,$*(\"\"#!\"\",&*$\"\"&#\"\"
+\"F/F5\"\"$F0F5F'F5F5F5%$_C2GF5F5*&-F+6#,$*(F/F0,&F2F5F6F5F5F'F5F0F5%$
+_C1GF5F5F5F5" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 76 "limit(exp(1
+/2*(5^(1/2)-3)*t)*_C2+exp(-1/2*(5^(1/2)+3)*t)*_C1+1, t=infinity);" }}
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#
+\"\"\"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 34 "eq21 := (D@@2)(x)
+(t) + 4*x(t) = 1;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%%eq21G/,&---%#@
+@G6$%\"DG\"\"#6#%\"xG6#%\"tG\"\"\"*&\"\"%F2-F/F0F2F2F2" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 23 "eq21_ic1 := x(0) = 5/4;" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#>%)eq21_ic1G/-%\"xG6#\"\"!#\"\"&\"\"%" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 24 "eq21_ic2 := D(x)(0) = 0;" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%)eq21_ic2G/--%\"DG6#%\"xG6#\"\"!F," 
+}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 41 "dsolve(\{eq21, eq21_ic1, \+
+eq21_ic2\}, x(t));" }}{PARA 6 "" 1 "" {TEXT -1 30 "Methods for second \+
+order ODEs:" }}{PARA 6 "" 1 "" {TEXT -1 37 "--- Trying classification \+
+methods ---" }}{PARA 6 "" 1 "" {TEXT -1 19 "trying a quadrature" }}
+{PARA 6 "" 1 "" {TEXT -1 47 "trying high order exact linear fully inte
+grable" }}{PARA 6 "" 1 "" {TEXT -1 71 "trying differential order: 2; l
+inear nonhomogeneous with symmetry [0,1]" }}{PARA 6 "" 1 "" {TEXT -1 
+53 "trying a double symmetry of the form [xi=0, eta=F(x)]" }}{PARA 6 "
+" 1 "" {TEXT -1 49 "Try solving first the homogeneous part of the ODE
+" }}{PARA 6 "" 1 "" {TEXT -1 41 "   -> Tackling the linear ODE \"as gi
+ven\":" }}{PARA 6 "" 1 "" {TEXT -1 52 "      checking if the LODE has \+
+constant coefficients" }}{PARA 6 "" 1 "" {TEXT -1 41 "      <- constan
+t coefficients successful" }}{PARA 6 "" 1 "" {TEXT -1 53 "   <- succes
+sful solving of the linear ODE \"as given\"" }}{PARA 6 "" 1 "" {TEXT 
+-1 70 "   -> Determining now a particular solution to the non-homogene
+ous ODE" }}{PARA 6 "" 1 "" {TEXT -1 43 "      trying a rational partic
+ular solution" }}{PARA 6 "" 1 "" {TEXT -1 48 "      <- rational partic
+ular solution successful" }}{PARA 6 "" 1 "" {TEXT -1 62 "   <- solving
+ first the homogeneous part of the ODE successful" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/-%\"xG6#%\"tG,&#\"\"\"\"\"%F*-%$cosG6#,$*&\"\"#F*F'F*F
+*F*" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 26 "eval(1/4+cos(2*Pi)) \+
+= 5/4;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/#\"\"&\"\"%F$" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 31 "eq22 := D(x)(t) = 3*x(t) + t^3;" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%%eq22G/--%\"DG6#%\"xG6#%\"tG,&*&\"\"
+$\"\"\"-F*F+F0F0*$)F,F/F0F0" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+19 "dsolve(eq22, x(t));" }}{PARA 6 "" 1 "" {TEXT -1 29 "Methods for fi
+rst order ODEs:" }}{PARA 6 "" 1 "" {TEXT -1 37 "--- Trying classificat
+ion methods ---" }}{PARA 6 "" 1 "" {TEXT -1 19 "trying a quadrature" }
+}{PARA 6 "" 1 "" {TEXT -1 23 "trying 1st order linear" }}{PARA 6 "" 1 
+"" {TEXT -1 30 "<- 1st order linear successful" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#/-%\"xG6#%\"tG,,*&\"\"$!\"\"F'F*F+*&F*F+F'\"\"#F+*(F-\"
+\"\"\"\"*F+F'F/F+#F-\"#FF+*&-%$expG6#,$*&F*F/F'F/F/F/%$_C1GF/F/" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 34 "f := piecewise(t<=2, t, t>2,
+ 3-t);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"fG-%*PIECEWISEG6$7$%\"tG
+1F)\"\"#7$,&\"\"$\"\"\"F)!\"\"2F+F)" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 34 "plot(f(t), t=-2..5, discont=true);" }}{PARA 13 "" 1 "
+" {GLPLOT2D 527 527 527 {PLOTDATA 2 "6%-%'CURVESG6%7S7$$!\"#\"\"!F(7$$
+!+#4;G\">!\"*F,7$$!+Ry&p$=F.F07$$!+,tk^<F.F37$$!+o7xl;F.F67$$!+!R..e\"
+F.F97$$!+EP1,:F.F<7$$!+Wc,>9F.F?7$$!++9;M8F.FB7$$!+%Gz&\\7F.FE7$$!+#=w
+D;\"F.FH7$$!+-Q%f3\"F.FK7$$!*$*Qn***F.FN7$$!*^(\\I\"*F.FQ7$$!*R8dH)F.F
+T7$$!*W\\w`(F.FW7$$!*3Qij'F.FZ7$$!*UCE(eF.Fgn7$$!*?gV)\\F.Fjn7$$!*&e4)
+>%F.F]o7$$!*DRaL$F.F`o7$$!*;')R^#F.Fco7$$!*/')ol\"F.Ffo7$$!)d+)p)F.Fio
+7$$!(cA3#F.F\\p7$$\")*p-h)F.F_p7$$\"*iz'G;F.Fbp7$$\"*[lxX#F.Fep7$$\"*J
+#H9LF.Fhp7$$\"*rOA:%F.F[q7$$\"*+\"*H'\\F.F^q7$$\"*T&>jeF.Faq7$$\"*6p?n
+'F.Fdq7$$\"*V9d`(F.Fgq7$$\"*Y0$=$)F.Fjq7$$\"*;%)Q<*F.F]r7$$\"*/<*y**F.
+F`r7$$\"+P3/#3\"F.Fcr7$$\"+%*>Jk6F.Ffr7$$\"+sAW]7F.Fir7$$\"+mfRL8F.F\\
+s7$$\"++\"G#=9F.F_s7$$\"+\"ydB]\"F.Fbs7$$\"+?Umz:F.Fes7$$\"+BhEo;F.Fhs
+7$$\"+AF^Z<F.F[t7$$\"+Dh+K=F.F^t7$$\"+#4xG\">F.Fat7$$\"+\"*Ry**>F.Fdt7
+S7$$\"+7D=+?F.$\"*)[<)***F.7$$\"+'**pb1#F.$\"*/+VM*F.7$$\"+(HjC7#F.$\"
+*.n`x)F.7$$\"+jdW'=#F.$\"*PUb8)F.7$$\"+ZB&3D#F.$\"*`w9\\(F.7$$\"+=G&\\
+J#F.$\"*#=Z]oF.7$$\"+g@QuBF.$\"*SyhD'F.7$$\"+,y\"fV#F.$\"**>#3k&F.7$$
+\"+\\!e&*\\#F.$\"*^>W+&F.7$$\"+-U*Hc#F.$\"*)z0qVF.7$$\"+#3Y#GEF.$\"*=R
+vr$F.7$$\"+u*>do#F.$\"*E+G9$F.7$$\"+k>U]FF.$\"*O!y&\\#F.7$$\"+E'*Q:GF.
+$\"*u.h%=F.7$$\"+2!)*z(GF.$\"*$*>+A\"F.7$$\"+:C&[$HF.$\")&eZ^'F.7$$\"+
+0yX-IF.$!(0yX#F.7$$\"+Q%G(fIF.$!)Q%G(fF.7$$\"+*zZj7$F.$!**zZj7F.7$$\"+
+AsJ&=$F.$!*AsJ&=F.7$$\"+Dg,]KF.$!*Dg,]#F.7$$\"+'eC;J$F.$!*'eC;JF.7$$\"
++bm!fP$F.$!*bm!fPF.7$$\"+iw$\\V$F.$!*iw$\\VF.7$$\"+x0h)\\$F.$!*x0h)\\F
+.7$$\"+U)[Zc$F.$!*U)[ZcF.7$$\"+&RABi$F.$!*&RABiF.7$$\"+5M]%o$F.$!*5M]%
+oF.7$$\"+$[U([PF.$!*$[U([(F.7$$\"+$)ye6QF.$!*$)ye6)F.7$$\"+RSRsQF.$!*R
+SRs)F.7$$\"+3*3*RRF.$!*3*3*R*F.7$$\"+@Sd+SF.$!+@Sd+5F.7$$\"+ypMlSF.$!+
+ypMl5F.7$$\"+/4/CTF.$!+/4/C6F.7$$\"+o)3#)=%F.$!+o)3#)=\"F.7$$\"+@fe[UF
+.$!+@fe[7F.7$$\"+Rtp6VF.$!+Rtp68F.7$$\"+'G+MP%F.$!+'G+MP\"F.7$$\"+_v*z
+V%F.$!+_v*zV\"F.7$$\"+)R7-]%F.$!+)R7-]\"F.7$$\"+jg$Qc%F.$!+jg$Qc\"F.7$
+$\"+#*G$pi%F.$!+#*G$pi\"F.7$$\"+DB\"\\o%F.$!+DB\"\\o\"F.7$$\"+*Hj8v%F.
+$!+*Hj8v\"F.7$$\"+Tyz5[F.$!+Tyz5=F.7$$\"+gu;u[F.$!+gu;u=F.7$$\"+r-#[$
+\\F.$!+r-#[$>F.7$$\"\"&F*F(-%'COLOURG6&%$RGBG$\"*++++\"!\")$F*F*Fadl-%
++AXESLABELSG6$Q\"t6\"Q!Ffdl-%%VIEWG6$;F(Fhcl%(DEFAULTG" 1 2 0 1 10 0 
+2 9 1 4 2 1.000000 45.000000 45.000000 0 0 "Curve 1" }}}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 66 "f24 := t-> piecewise(0 <= t and t <= Pi, \+
+t, t > Pi, Pi*exp(Pi-t));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%$f24Gf*
+6#%\"tG6\"6$%)operatorG%&arrowGF(-%*piecewiseG6&31\"\"!9$1F2%#PiGF22F4
+F2*&F4\"\"\"-%$expG6#,&F4F7F2!\"\"F7F(F(F(" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 37 "plot(f24(t), t=-1..10, discont=true);" }}{PARA 13 "
+" 1 "" {GLPLOT2D 984 526 526 {PLOTDATA 2 "6&-%'CURVESG6%7X7$$!\"\"\"\"
+!$F*F*7$$!3?3,cl1D(4*!#=F+7$$!3N=%QmHt<J)F/F+7$$!3#fYsZ%=UGuF/F+7$$!3'
+4=zg'\\@RlF/F+7$$!3;e>YKVBacF/F+7$$!3i-Bp**RuL[F/F+7$$!3]kTw%ytT)RF/F+
+7$$!3hJF;`qa0JF/F+7$$!3,REj)3Q(HAF/F+7$$!3!Qo2!=4')G8F/F+7$$!3r2i&)oO9
+@$*!#>F+7$$!3Uxbjd\"yON&FNF+7$$!35fOk?\\Y?JFNF+7$$!3'yS<l$o^s))!#?F+7$
+$\"3ax,M`:'fM\"FNFZ7$$\"3'e4K.zu\"zNFNFgn7$$\"3aPNaS3%R1)FNFjn7$$\"3#z
+\\v!*oq[D\"F/F]o7$$\"3KH%R$38D>@F/F`o7$$\"3z-Vx><>/HF/Fco7$$\"3F8C.!zh
+v$QF/Ffo7$$\"3&yq%*)p'[#GYF/Fio7$$\"3!RcG/[0![bF/F\\p7$$\"3U$)\\a/h9ij
+F/F_p7$$\"3y&=[NS(QbsF/Fbp7$$\"3=teO`V'f5)F/Fep7$$\"3;2\">\"p@X$**)F/F
+hp7$$\"3B!*GpFIW3)*F/F[q7$$\"3)p`5q2_(o5!#<F^q7$$\"31OtT[N1g6F`qFbq7$$
+\"3%o\\.FX]&R7F`qFeq7$$\"3*>XZp[)RD8F`qFhq7$$\"3P_wb1z399F`qF[r7$$\"3f
+ah*3?`3]\"F`qF^r7$$\"3]opb%3.[e\"F`qFar7$$\"3Mi*)H<^,y;F`qFdr7$$\"3c!G
+!\\u-xh<F`qFgr7$$\"3/kB(>y'>^=F`qFjr7$$\"38JN9*[IA$>F`qF]s7$$\"392&))[
+t@3-#F`qF`s7$$\"300t0$>zT5#F`qFcs7$$\"3;9N?b<J\">#F`qFfs7$$\"3;$z$3h(*
+\\wAF`qFis7$$\"3'*fpU3PolBF`qF\\t7$$\"3w-?[\\%y:X#F`qF_t7$$\"3O?JEG#=%
+RDF`qFbt7$$\"3U$eE$\\1`EEF`qFet7$$\"3-Ty8<zd1FF`qFht7$$\"3M\"3z$>6K)z#
+F`qF[u7$$\"3;+B9LtP!)GF`qF^u7$$\"3Ys)e;Pmy'HF`qFau7$$\"371!p[a/;0$F`qF
+du7$$\"3/+++[EfTJF`qFgu7W7$$\"3(******Rn#fTJF`q$\"3.Q#p%*e#fTJF`q7$$\"
+3'*38\"\\bRj@$F`q$\"30X/%Q*)H`\"HF`q7$$\"3%zhAeV'3\"H$F`q$\"3i=:(=,j`q
+#F`q7$$\"3qZTB(HBhN$F`q$\"37O_74U,NDF`q7$$\"3Yxcke,;@MF`q$\"3[lJms<RvB
+F`q7$$\"37RfH64I%\\$F`q$\"3\"4pO,Qby?#F`q7$$\"3K+i%RmTuc$F`q$\"3Wro8I`
+8_?F`q7$$\"3&QU#)4Cn5k$F`q$\"3h]z$potk!>F`q7$$\"3PZ'=!=Gp9PF`q$\"3!zP_
+O=^6x\"F`q7$$\"31(ofI6W7'QF`q$\"3umig%Q5(H:F`q7$$\"3M-VVBf6(*RF`q$\"3X
+JsM3wON8F`q7$$\"3(R\"[28L!y8%F`q$\"3;)obB5:,;\"F`q7$$\"3'=U'p7CI$G%F`q
+$\"3R!>?>pCI+\"F`q7$$\"3Wl-'[*[LGWF`q$\"3CG=En`5w')F/7$$\"3y')Q_H'=vd%
+F`q$\"3#=Ag(>6ptuF/7$$\"3j-!=Uu>*3ZF`q$\"3Q#\\J!)[DMb'F/7$$\"3-3U4xi%o
+&[F`q$\"37i,\"GH$H_cF/7$$\"3k\"*o_5-Q0]F`q$\"3+T%e'G:6s[F/7$$\"3cfy0y,
+_[^F`q$\"3CEi!4YJBA%F/7$$\"33Q*H;)\\]y_F`q$\"3It&4lImwq$F/7$$\"3D5lZ&[
+pIV&F`q$\"3U*[n2$[owJF/7$$\"3O1R\\%*e+kbF`q$\"3O%[x#3;#oy#F/7$$\"3W]9d
+lgJ;dF`q$\"3%o\"3.:Z5$R#F/7$$\"3)fPS\\PO6&eF`q$\"3'f$*=cTp74#F/7$$\"3W
+Jw=Ac0**fF`q$\"3E1*[LY@P!=F/7$$\"3&**)=UD(4*RhF`q$\"3I'4C!y8um:F/7$$\"
+3i(3\"e0i(oG'F`q$\"3+8\">Tt.EN\"F/7$$\"36xqL7t$=U'F`q$\"3#R%QIpt$==\"F
+/7$$\"3KHce)46uc'F`q$\"3Gm>')[#H<-\"F/7$$\"35(fI(\\8i=nF`q$\"3)\\:0W]o
+My)FN7$$\"3#>5iyJ]-&oF`q$\"3Ql%4z+q,q(FN7$$\"3_Xv`4KT#*pF`q$\"3?zCE9Iu
+zmFN7$$\"3;RsG(Q\"GRrF`q$\"3;\"e6)G@MndFN7$$\"3WVS:YK'HG(F`q$\"3EG\")p
+'*)fa*\\FN7$$\"3%4@\"fKG)>U(F`q$\"3%QEJ?2/rM%FN7$$\"3%>0R6QSjd(F`q$\"3
+EqX,t%=`s$FN7$$\"3K/'QQ]P]r(F`q$\"39-(z'*eeGC$FN7$$\"3ea%GmGEJ'yF`q$\"
+3GP&[v&Q\\'z#FN7$$\"3C3p:MnJ(*zF`q$\"3%f/QS**>`W#FN7$$\"3lXukPB-W\")F`
+q$\"3.O)o]f^;6#FN7$$\"3E8q\\x31#G)F`q$\"3`Q'f30'QR=FN7$$\"3$y8Pc#4NE%)
+F`q$\"3967<_*RAf\"FN7$$\"3uLP^@3Un&)F`q$\"3YqiWGnu#Q\"FN7$$\"3>B!>)Gz5
+:()F`q$\"3;SP1$*p*G>\"FN7$$\"3%o3$=m\"[t&))F`q$\"3D(\\2j<MZ.\"FN7$$\"3
+5J05`$4G+*F`q$\"3!p42TJal%*)FX7$$\"3_F&[z/mq9*F`q$\"3!f4M@[BZu(FX7$$\"
+3m%3$foHiz#*F`q$\"3e)*fY/*RKy'FX7$$\"3znDpe\"[:V*F`q$\"3IT&3j\\fr#eFX7
+$$\"3u%)3$)f=Vn&*F`q$\"3!z(3d(y%y'3&FX7$$\"3ATn!oA7Br*F`q$\"3&=#G5!o32
+S%FX7$$\"3G=4KC7)4&)*F`q$\"3?'Hs?'y)3$QFX7$$\"#5F*$\"3&*oQl%p70I$FX-%'
+COLOURG6&%$RGBG$\"*++++\"!\")F+F+-%'POINTSG6$7$$\"+aEfTJ!\"*F^glFcfl-%
++AXESLABELSG6$Q\"t6\"Q!Fegl-%%VIEWG6$;F(F_fl%(DEFAULTG" 1 2 0 1 10 0 
+2 9 1 4 2 1.000000 45.000000 45.000000 0 0 "Curve 1" "Curve 2" }}}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "73 0 0" 0 }
+{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }
