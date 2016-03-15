@@ -14,10 +14,14 @@ class DiGraph:
         return len(self.vertices)
 
     def inDegree(self, node):
-        return len(self.inEdges[node])
+        if self.isNode(node):
+            return len(self.inEdges[node])
+        raise Exception("Node %i is not a node." % i)
 
     def outDegree(self, node):
-        return len(self.outEdges[node])
+        if self.isNode(node):
+            return len(self.outEdges[node])
+        raise Exception("Node %i is not a node." % i)
 
     def addNode(self, node):
         if self.isNode(node):
@@ -33,12 +37,12 @@ class DiGraph:
         return node in self.vertices
 
     def outboundEdges(self, node):
-        for neighbor in self.outEdges[node]:
-            yield neighbor
+        for edge in self.outEdges[node]:
+            yield edge
 
     def inboundEdges(self, node):
-        for neighbor in self.inEdges[node]:
-            yield neighbor
+        for edge in self.inEdges[node]:
+            yield edge
 
     def setWeight(self, source, target, weight):
         for neighbor in self.outboundEdges(source):
@@ -51,7 +55,7 @@ class DiGraph:
 
         for neighbor in self.inboundEdges(target):
             if neighbor[0] == source:
-                neighbor = (neighbor[0], weight)
+                check = (neighbor[0], weight)
 
                 if self.DEBUG:
                     print("Found edge %i -> %i. New weight is %i." % (target, source, weight))
@@ -69,6 +73,8 @@ class DiGraph:
         self.addNode(source)
         self.addNode(target)
 
+        # TODO: check if edge exists
+
         self.outEdges[source].append((target, weight))
         self.inEdges[target].append((source, weight))
 
@@ -76,6 +82,9 @@ class DiGraph:
             print("Added edge %i -> %i with weight %i." % (source, target, weight))
 
     def removeEdge(self, source, target):
+        if not self.isEdge(source, target):
+            return
+
         for i in range(len(self.outEdges[source])):
             if self.outEdges[source][i][0] == target:
                 self.outEdges[source][i] = self.outEdges[source][ len(self.outEdges[source])-1 ]
@@ -93,8 +102,15 @@ class DiGraph:
 
 
     def removeVertex(self, node):
+        if not self.isNode(node):
+            if self.DEBUG:
+                print("Vertex doesn't exist.")
+            return
+
         self.outEdges[node] = []
         self.vertices.remove(node)
+
+        # TOOD: check only vertices that have inbound edge from node
 
         for x in self.vertices:
             for i in range(len(self.inEdges[x])):
@@ -264,3 +280,10 @@ class DiGraph:
             ret.inEdges[x], ret.outEdges[x] = ret.outEdges[x], ret.inEdges[x]
 
         return ret
+
+
+    """
+    def Dijkstra(self, source, target):
+        best = {x: 1
+    """
+
