@@ -18,6 +18,7 @@ Dog::~Dog() {
     cout<<"Destructor called for dog "<<this->breed<<", age "<<this->age<<".\n";
 }
 
+
 void Dog::set_breed(string what) {
     this->breed = what;
 }
@@ -30,13 +31,13 @@ void Dog::set_photograph(string what) {
     this->photograph = what;
 }
 
-string Dog::get_breed() {
+string Dog::get_breed() const {
     return this->breed;
 }
-int Dog::get_age() {
+int Dog::get_age() const {
     return this->age;
 }
-string Dog::get_photograph() {
+string Dog::get_photograph() const {
     return this->photograph;
 }
 

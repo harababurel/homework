@@ -4,12 +4,8 @@ using namespace std;
 int main() {
 
     Test T;
-    if(!T.test_models())
-        cout<<"All tests passed. :)\n";
-    else
-        cout<<"Some tests failed. :(\n";
-
-
+    T.test_everything();
+    cout<<"All tests passed. :)\n";
 
     return 0;
 }

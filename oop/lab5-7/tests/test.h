@@ -5,6 +5,8 @@ using namespace std;
 
 class Test {
 public:
-    int test_models();
+    void test_models();
+    void test_repository();
+    void test_everything();
 };
 

@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 #include "../models/dog.h"
+#include "../repos/repository.h"
 #include "test.h"
 #include <cassert>
 
 using namespace std;
 
-int Test::test_models() {
+void Test::test_models() {
     Dog *a = new Dog("Beagle", 5, "no_photograph");
 
     assert(a->get_breed() == "Beagle");
@@ -44,6 +45,25 @@ int Test::test_models() {
 
     assert(a->get_photograph() == "no_photograph");
     assert(d->get_photograph() == "some_photograph");
+}
 
-    return 0;
+void Test::test_repository() {
+    Repository repo;
+
+    Dog a("Labrador Retriever", 1, "http://d21vu35cjx7sd4.cloudfront.net/dims3/MMAH/crop/0x0%2B0%2B0/resize/645x380/quality/90/?url=http%3A%2F%2Fs3.amazonaws.com%2Fassets.prod.vetstreet.com%2Ff8%2F7a54f0a10511e087a80050568d634f%2Ffile%2FLabrador-1-645mk062111.jpg");
+
+    Dog b("German Shepherd", 5, "http://r.ddmcdn.com/s_f/o_1/APL/uploads/2014/04/1394746213009gshep.jpg");
+
+    assert(repo.get_population() == 0);
+
+    repo.add_dog(a);
+    repo.add_dog(b);
+
+    assert(repo.get_population() == 2);
+
+}
+
+void Test::test_everything() {
+    this->test_models();
+    this->test_repository();
 }
