@@ -8,6 +8,7 @@ DEBUG = "-d" in sys.argv or "--debug" in sys.argv
 
 G = DiGraph(DEBUG=DEBUG)
 G.populateFromFile("samples/graph1k.txt")
+#G.populateFromFile("samples/graph1m.txt")
 
 def showMenu():
     print()
