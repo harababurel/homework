@@ -9,13 +9,14 @@ private:
 
 public:
     vector <Dog> get_dogs();
-    void add_dog(Dog what);
+    bool add_dog(Dog what);
     bool remove_dog(Dog what);
 
     /* Returns the position of `what` in the repository,
      * or -1 if dog does not exist.
      */
     int find_dog(Dog what);
+    void update_dog(int pos, Dog what);
 
     int get_population();
 };

@@ -7,8 +7,12 @@ vector <Dog> Repository::get_dogs() {
     return this->dogs;
 }
 
-void Repository::add_dog(Dog what) {
+bool Repository::add_dog(Dog what) {
+    if(this->find_dog(what) != -1)
+        return false;
+
     this->dogs.push_back(what);
+    return true;
 }
 
 int Repository::find_dog(Dog what) {
@@ -18,10 +22,26 @@ int Repository::find_dog(Dog what) {
     return -1;
 }
 
-
 bool Repository::remove_dog(Dog what) {
+    int pos = this->find_dog(what);
+
+    if(pos == -1)
+        return false;
+
+    this->dogs[pos] = this->dogs[this->get_population()-1];
+    this->dogs.pop_back();
+
     return true;
 }
+
+void Repository::update_dog(int pos, Dog what) {
+    Dog *original = &(this->dogs[pos]);
+
+    original->set_breed(what.get_breed());
+    original->set_age(what.get_age());
+    original->set_photograph(what.get_photograph());
+}
+
 
 int Repository::get_population() {
     return (int)(this->dogs.size());

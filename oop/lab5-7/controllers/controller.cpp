@@ -7,12 +7,24 @@ Repository Controller::get_repo() const {
     return this->repo;
 }
 
-void Controller::add_dog(Dog what) {
-    this->repo.add_dog(what);
+bool Controller::add_dog(Dog what) {
+    return this->repo.add_dog(what);
 }
 
-void Controller::remove_dog(Dog what) {
-    this->repo.remove_dog(what);
+bool Controller::remove_dog(Dog what) {
+    return this->repo.remove_dog(what);
+}
+
+bool Controller::dog_exists(Dog what) {
+    return (this->repo.find_dog(what) != -1);
+}
+
+int Controller::find_dog(Dog what) {
+    return this->repo.find_dog(what);
+}
+
+void Controller::update_dog(int pos, Dog what) {
+    this->repo.update_dog(pos, what);
 }
 
 vector <Dog> Controller::get_dogs() {

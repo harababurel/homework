@@ -9,8 +9,11 @@ private:
 
 public:
     Repository get_repo() const;
-    void add_dog(Dog what);
-    void remove_dog(Dog what);
+    bool add_dog(Dog what);
+    bool dog_exists(Dog what);
+    bool remove_dog(Dog what);
+    int find_dog(Dog what);
+    void update_dog(int pos, Dog what);
     vector <Dog> get_dogs();
 };
 
