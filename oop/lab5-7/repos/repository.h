@@ -21,3 +21,7 @@ public:
     int get_population();
 };
 
+vector <Dog> operator+(vector <Dog> &v, const Dog &b);
+vector <Dog> operator+(const Dog &b, vector <Dog> &v);
+vector <Dog> operator-(vector <Dog> &v, const Dog &b);
+

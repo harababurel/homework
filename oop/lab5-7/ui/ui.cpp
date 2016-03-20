@@ -14,8 +14,6 @@ void UI::run() {
         cout<<"> ";
         getline(cin, command);
 
-        cout<<"command is "<<command<<"\n";
-
         if(command == "add")
             this->show_add_menu();
         else if(command == "remove")
