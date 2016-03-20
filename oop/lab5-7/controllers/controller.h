@@ -11,5 +11,6 @@ public:
     Repository get_repo() const;
     void add_dog(Dog what);
     void remove_dog(Dog what);
+    vector <Dog> get_dogs();
 };
 

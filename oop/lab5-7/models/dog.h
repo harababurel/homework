@@ -20,6 +20,7 @@ public:
     string get_breed() const;
     int get_age() const;
     string get_photograph() const;
+    string represent() const;
 
 };
 

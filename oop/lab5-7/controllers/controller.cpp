@@ -15,3 +15,8 @@ void Controller::remove_dog(Dog what) {
     this->repo.remove_dog(what);
 }
 
+vector <Dog> Controller::get_dogs() {
+    return this->repo.get_dogs();
+}
+
+

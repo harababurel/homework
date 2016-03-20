@@ -11,5 +11,7 @@ private:
 public:
     void run();
     Controller get_controller();
+    void show_add_menu();
+    void show_dogs();
 };
 
