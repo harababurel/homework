@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <climits>
 #include "../controllers/controller.h"
 #include "ui.h"
 using namespace std;
@@ -9,6 +10,8 @@ Controller UI::get_controller() {
 
 void UI::run() {
     string command;
+
+    this->controller.populate_from_file("dogs.in");
 
     while(true) {
         cout<<"> ";
@@ -40,7 +43,7 @@ void UI::show_add_menu() {
     getline(cin, breed);
 
     cout<<"Age: ";
-    cin>>age;
+    age = this->read_int();
     cin.get();
 
     cout<<"Photograph: ";
@@ -60,7 +63,8 @@ void UI::show_remove_menu() {
     getline(cin, breed);
 
     cout<<"Age: ";
-    cin>>age;
+    age = this->read_int();
+    //cin>>age;
     cin.get();
 
     cout<<"Photograph: ";
@@ -83,7 +87,8 @@ void UI::show_update_menu() {
     getline(cin, breed);
 
     cout<<"Age: ";
-    cin>>age;
+    age = this->read_int();
+    //cin>>age;
     cin.get();
 
     cout<<"Photograph: ";
@@ -103,7 +108,8 @@ void UI::show_update_menu() {
     getline(cin, new_breed);
 
     cout<<"New age: ";
-    cin>>new_age;
+    //cin>>new_age;
+    new_age = this->read_int();
     cin.get();
 
     cout<<"New photograph: ";
@@ -116,8 +122,27 @@ void UI::show_update_menu() {
 }
 
 void UI::show_dogs() {
+    cout<<"\n";
     for(auto i:this->controller.get_dogs())
         cout<<i.represent()<<"\n";
     return;
 }
 
+int UI::read_int() {
+    int input = -1;
+    bool valid = false;
+    do {
+        cin >> input;
+        if (cin.good())
+            valid = true;
+        else {
+            //something went wrong, reset the buffer's state to good
+            cin.clear();
+            //and empty it
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cout<<"Not a number. Please re-enter: ";
+        }
+    } while (!valid);
+
+    return input;
+}

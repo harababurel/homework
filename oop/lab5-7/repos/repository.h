@@ -1,5 +1,6 @@
 #pragma once
 #include <bits/stdc++.h>
+#include <fstream>
 #include "../models/dog.h"
 using namespace std;
 
@@ -19,6 +20,7 @@ public:
     void update_dog(int pos, Dog what);
 
     int get_population();
+    void populate_from_file(string filename);
 };
 
 vector <Dog> operator+(vector <Dog> &v, const Dog &b);

@@ -11,7 +11,6 @@ bool Repository::add_dog(Dog what) {
     if(this->find_dog(what) != -1)
         return false;
 
-
     this->dogs = this->dogs + what;
     return true;
 }
@@ -71,4 +70,18 @@ vector <Dog> operator-(vector <Dog> &v, const Dog &b) {
 
     v.erase(remove(v.begin(), v.end(), b), v.end());
     return v;
+}
+
+void Repository::populate_from_file(string filename) {
+    ifstream f(filename);
+    cout<<"File opened :).\n";
+
+    string breed;
+    int age;
+    string photograph;
+
+    while(f>>breed>>age>>photograph)
+        this->add_dog(Dog(breed, age, photograph));
+
+    f.close();
 }

@@ -15,5 +15,6 @@ public:
     int find_dog(Dog what);
     void update_dog(int pos, Dog what);
     vector <Dog> get_dogs();
+    void populate_from_file(string filename);
 };
 

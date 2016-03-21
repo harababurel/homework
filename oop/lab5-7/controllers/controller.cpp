@@ -31,4 +31,6 @@ vector <Dog> Controller::get_dogs() {
     return this->repo.get_dogs();
 }
 
-
+void Controller::populate_from_file(string filename) {
+    this->repo.populate_from_file(filename);
+}
