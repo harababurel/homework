@@ -45,8 +45,8 @@ string Dog::get_photograph() const {
 
 string Dog::represent() const {
     ostringstream ret;
-    ret << "\\  Breed: " << this->breed << "\n";
-    ret << " > Age: " << this->age << "\n";
+    ret << "\\  Breed:      " << this->breed << "\n";
+    ret << " > Age:        " << this->age << "\n";
     ret << "/  Photograph: " << this->photograph << "\n";
     return ret.str();
 }

@@ -21,7 +21,6 @@ public:
     int get_age() const;
     string get_photograph() const;
     string represent() const;
-
 };
 
 inline bool operator==(const Dog &a, const Dog &b) {
@@ -31,4 +30,3 @@ inline bool operator==(const Dog &a, const Dog &b) {
 
     return equal;
 }
-

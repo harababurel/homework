@@ -7,7 +7,6 @@ class UI {
 private:
     Controller controller;
 
-
 public:
     void run();
     Controller get_controller();
@@ -15,6 +14,8 @@ public:
     void show_remove_menu();
     void show_update_menu();
     void show_dogs();
+
+    // Validates user input for reading ints
     int read_int();
 };
 
