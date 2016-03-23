@@ -1,10 +1,16 @@
 #!/usr/bin/python3
 import sys
 from models.digraph import DiGraph
+from tests.test import Test
+
 
 sys.setrecursionlimit(2*10**9)
-
 DEBUG = "-d" in sys.argv or "--debug" in sys.argv
+
+
+Test().testConnectedComponents()
+exit(0)
+
 
 G = DiGraph(DEBUG=DEBUG)
 G.populateFromFile("samples/graph1k.txt")

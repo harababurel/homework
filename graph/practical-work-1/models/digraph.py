@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 import os
-from collections import defaultdict
+from collections import defaultdict, deque, OrderedDict
 from copy import deepcopy
+from math import inf
 
 class DiGraph:
-    def __init__(self, vertices=set(), outEdges=defaultdict(list), inEdges=defaultdict(list), DEBUG=False):
+    def __init__(self, vertices=set(), outEdges=defaultdict(list), inEdges=defaultdict(list), undirected=False, DEBUG=False):
         self.vertices = vertices
         self.outEdges = outEdges
         self.inEdges = inEdges
+        self.undirected = undirected
         self.DEBUG = DEBUG
 
     def numberOfVertices(self):
@@ -78,8 +80,17 @@ class DiGraph:
         self.outEdges[source].append((target, weight))
         self.inEdges[target].append((source, weight))
 
+        if self.undirected:
+            self.outEdges[target].append((source, weight))
+            self.inEdges[source].append((target, weight))
+
+
         if self.DEBUG:
-            print("Added edge %i -> %i with weight %i." % (source, target, weight))
+            if self.undirected:
+                print("Added edge %i <-> %i with weight %i." % (source, target, weight))
+            else:
+                print("Added edge %i -> %i with weight %i." % (source, target, weight))
+
 
     def removeEdge(self, source, target):
         if not self.isEdge(source, target):
@@ -153,11 +164,18 @@ class DiGraph:
             with open(path, 'r') as f:
                 n, m = map(int, f.readline().split())
 
-                for node in range(n):
+                for node in range(1, n+1):
                     self.addNode(node)
 
                 for edge in range(m):
-                    source, target, weight = map(int, f.readline().split())
+                    data = list(map(int, f.readline().split()))
+
+                    source, target = data[0], data[1]
+                    if len(data) == 3:
+                        weight = data[2]
+                    else:
+                        weight = 1
+
                     self.addEdge(source, target, weight)
 
         except Exception as e:
@@ -230,7 +248,44 @@ class DiGraph:
                         S.append(neighbor)
         return data
 
+    def bfs(self, source, data=None):
+        if data is None:
+            data = {
+                    'wasVisited': { x: False for x in self.vertices },
+                    'visitedVertices': [],
+                    }
 
+        S = deque([source])
+
+        while len(S) > 0:
+            current = S.popleft()
+
+            data['wasVisited'][current] = True
+            data['visitedVertices'].append(current)
+
+            for edge in self.outboundEdges(current):
+                neighbor = edge[0]
+
+                if not data['wasVisited'][neighbor]:
+                    data['wasVisited'][neighbor] = True
+                    S.append(neighbor)
+        return data
+
+    def connectedComponents(self):
+        data = {
+            'wasVisited': { x: False for x in self.vertices },
+            'visitedVertices': [],
+            }
+
+        components = []
+        for x in self.vertices:
+            if not data['wasVisited'][x]:
+                data['visitedVertices'] = []
+                data = self.bfs(x, data)
+
+                components.append(data['visitedVertices'])
+
+        return components
 
     def scc(self):
         data = {
@@ -282,8 +337,11 @@ class DiGraph:
         return ret
 
 
-    """
-    def Dijkstra(self, source, target):
-        best = {x: 1
-    """
+    def Dijkstra(self, source):
+        best = {x: inf for x in self.vertices}
 
+        best[source] = 0
+        S = OrderedDict([(best[source], source)])
+
+        while len(S) > 0:
+            # TODO: find some ordered data structure
