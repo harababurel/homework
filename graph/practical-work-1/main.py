@@ -2,15 +2,13 @@
 import sys
 from models.digraph import DiGraph
 from tests.test import Test
+import pprint
 
 
 sys.setrecursionlimit(2*10**9)
 DEBUG = "-d" in sys.argv or "--debug" in sys.argv
 
-
 Test().testConnectedComponents()
-exit(0)
-
 
 G = DiGraph(DEBUG=DEBUG)
 G.populateFromFile("samples/graph1k.txt")
@@ -27,6 +25,9 @@ def showMenu():
     print("7 - remove vertex")
     print("8 - add edge")
     print("9 - remove edge")
+    print("10 - get shortest path (Dijkstra)")
+    print("11 - get connected components (if undirected)")
+    print("12 - get strongly connected components (if directed)")
     print("0 - exit")
     print()
 
@@ -73,6 +74,20 @@ while True:
         source = int(input("source: "))
         target = int(input("target: "))
         G.removeEdge(source, target)
+    elif command == '10':
+        source = int(input("source: "))
+        target = int(input("target: "))
+        print(G.Dijkstra(source)[target])
+    elif command == '11':
+        components = G.connectedComponents()
+        for comp in components:
+            print(comp)
+        print("There are %i connected components." % len(components))
+    elif command == '12':
+        components = G.scc()
+        for comp in components:
+            print(comp)
+        print("There are %i strongly connected components." % len(components))
     elif command == '0':
         exit(0)
     else:

@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 import os
-from collections import defaultdict, deque, OrderedDict
+from collections import defaultdict, deque
 from copy import deepcopy
 from math import inf
+from queue import PriorityQueue
 
 class DiGraph:
     def __init__(self, vertices=set(), outEdges=defaultdict(list), inEdges=defaultdict(list), undirected=False, DEBUG=False):
@@ -14,6 +15,9 @@ class DiGraph:
 
     def numberOfVertices(self):
         return len(self.vertices)
+
+    def getVertices(self):
+        return self.vertices
 
     def inDegree(self, node):
         if self.isNode(node):
@@ -341,7 +345,18 @@ class DiGraph:
         best = {x: inf for x in self.vertices}
 
         best[source] = 0
-        S = OrderedDict([(best[source], source)])
+        S = PriorityQueue()
+        S.put((0, source))
 
-        while len(S) > 0:
-            # TODO: find some ordered data structure
+        while not S.empty():
+            (_, x) = S.get_nowait()
+
+            for (y, weight) in self.outboundEdges(x):
+                alternativeCost = best[x] + weight
+
+                if alternativeCost < best[y]:
+                    #print("best[%i] = best[%i] + weight(%i, %i) = %i + %i = %i" % (y, x, x, y, best[x], weight, alternativeCost))
+                    best[y] = alternativeCost
+                    S.put((best[y], y))
+
+        return best
