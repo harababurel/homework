@@ -19,19 +19,31 @@ void UI::run() {
         cout<<"> ";
         getline(cin, command);
 
-        if(command == "add") {
+        if(command == "add")
             this->show_add_menu();
-            continue;
-        }
         else if(command == "remove")
             this->show_remove_menu();
         else if(command == "list")
             this->show_clubs();
+        else if(command == "filter")
+            this->show_filter_menu();
+        else if(command == "help")
+            this->show_help();
         else if(command == "exit")
             exit(0);
         else
-            cout<<"Invalid command.\n";
+            cout<<"Invalid command. Try 'help'.\n";
     }
+}
+
+void UI::show_help() {
+    cout<<"Commands:\n";
+    cout<<"\tadd\n";
+    cout<<"\tremove\n";
+    cout<<"\tlist\n";
+    cout<<"\tfilter\n";
+    cout<<"\thelp\n";
+    cout<<"\texit\n";
 }
 
 void UI::show_add_menu() {
@@ -75,3 +87,17 @@ void UI::show_clubs() {
     for(auto x:this->get_controller().get_clubs())
         x.show();
 }
+
+void UI::show_filter_menu() {
+    cout<<"You want to filter clubs.\n";
+
+    string dance;
+    cout<<"Dance: ";
+    getline(cin, dance);
+
+    for(auto x:this->get_controller().get_clubs())
+        if(x.get_dance() == dance)
+            x.show();
+
+}
+

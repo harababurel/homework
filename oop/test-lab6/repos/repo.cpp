@@ -8,6 +8,10 @@ vector <Club> &Repo::get_clubs() {
     return this->v;
 }
 
+bool cmp(Club a, Club b) {
+    return a.get_rating() < b.get_rating();
+}
+
 int Repo::get_size() {
     return this->get_clubs().size();
 }
@@ -28,11 +32,14 @@ bool Repo::has_club(const Club T) {
     return (this->find_club(T) != -1);
 }
 
+
 bool Repo::add_club(const Club T) {
     if(this->has_club(T))
         return false;
 
     this->get_clubs().push_back(T);
+    sort(this->v.begin(), this->v.end(), cmp);
+
     return true;
 }
 
@@ -43,6 +50,7 @@ bool Repo::remove_club(const Club T) {
     int i = this->find_club(T);
     this->v[i] = this->v[this->v.size()-1];
     this->v.pop_back();
+    sort(this->v.begin(), this->v.end(), cmp);
 
     return true;
 }
