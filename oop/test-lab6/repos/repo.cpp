@@ -36,6 +36,17 @@ bool Repo::add_club(const Club T) {
     return true;
 }
 
+bool Repo::remove_club(const Club T) {
+    if(!this->has_club(T))
+        return false;
+
+    int i = this->find_club(T);
+    this->v[i] = this->v[this->v.size()-1];
+    this->v.pop_back();
+
+    return true;
+}
+
 void Repo::populate_from_file(string filename) {
     ifstream f(filename);
     cout<<"File opened :).\n";

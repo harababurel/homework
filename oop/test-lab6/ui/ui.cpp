@@ -19,8 +19,10 @@ void UI::run() {
         cout<<"> ";
         getline(cin, command);
 
-        if(command == "add")
+        if(command == "add") {
             this->show_add_menu();
+            continue;
+        }
         else if(command == "remove")
             this->show_remove_menu();
         else if(command == "list")
@@ -34,10 +36,37 @@ void UI::run() {
 
 void UI::show_add_menu() {
     cout<<"You want to add a club.\n";
+
+    string name, dance;
+    int rating;
+
+    cout<<"Name: ";
+    getline(cin, name);
+
+    cout<<"Dance: ";
+    getline(cin, dance);
+
+    cout<<"Rating: ";
+    cin>>rating;
+    cin.get();
+
+    if(this->get_controller().add_club(Club(name, dance, rating)))
+        cout<<"Club successfully added. :)\n";
+    else
+        cout<<"Club already exists. :(\n";
 }
 
 void UI::show_remove_menu() {
     cout<<"You want to remove a club.\n";
+
+    string name;
+    cout<<"Name: ";
+    getline(cin, name);
+
+    if(this->get_controller().remove_club(Club(name, "", 0)))
+        cout<<"Club successfully removed. :)\n";
+    else
+        cout<<"Club doesn't exist. :(\n";
 }
 
 void UI::show_clubs() {

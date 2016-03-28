@@ -13,6 +13,10 @@ bool Controller::add_club(const Club T) {
     return this->get_repo().add_club(T);
 }
 
+bool Controller::remove_club(const Club T) {
+    return this->get_repo().remove_club(T);
+}
+
 vector <Club> &Controller::get_clubs() {
     return this->get_repo().get_clubs();
 }

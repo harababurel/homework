@@ -12,5 +12,6 @@ public:
     Repo& get_repo();
     vector <Club>& get_clubs();
     bool add_club(const Club T);
+    bool remove_club(const Club T);
     void populate_from_file(string filename);
 };
