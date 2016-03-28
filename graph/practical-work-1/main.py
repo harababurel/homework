@@ -8,10 +8,10 @@ import pprint
 sys.setrecursionlimit(2*10**9)
 DEBUG = "-d" in sys.argv or "--debug" in sys.argv
 
-Test().testConnectedComponents()
+#Test().testConnectedComponents()
 
-G = DiGraph(DEBUG=DEBUG)
-G.populateFromFile("samples/graph1k.txt")
+G = DiGraph(DEBUG=DEBUG, undirected=False)
+G.populateFromFile("samples/scc-infoarena5.txt")
 #G.populateFromFile("samples/graph1m.txt")
 
 def showMenu():
