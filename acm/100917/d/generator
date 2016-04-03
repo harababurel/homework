@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+from random import randint
+
+n = 20
+w = 20
+
+v = [randint(1, 10) for i in range(n)]
+
+print("%i %i" % (n, w))
+print("%s" % ' '.join([str(x) for x in v]))

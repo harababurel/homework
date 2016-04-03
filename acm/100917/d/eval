@@ -1,0 +1,10 @@
+#!/bin/bash
+
+g++ -std=c++11 -o d d.cpp
+
+while true; do
+    ./generator > d.in
+    cat d.in | ./d
+
+    read
+done
