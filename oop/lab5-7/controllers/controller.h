@@ -1,14 +1,18 @@
 #pragma once
 #include <bits/stdc++.h>
 #include "../repos/repository.h"
+#include "../models/user.h"
 using namespace std;
 
 class Controller {
 private:
     Repository repo;
+    User user;
 
 public:
     Repository get_repo() const;
+
+    User* get_user();
 
     /* Returns true if dog was added,
      * false otherwise.

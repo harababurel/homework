@@ -9,12 +9,50 @@ Controller UI::get_controller() {
 }
 
 void UI::run() {
-    string command;
+    string mode;
 
     this->controller.populate_from_file("dogs.in");
 
     while(true) {
-        cout<<"> ";
+        cout<<"[A]dministrator\n";
+        cout<<"[U]ser\n";
+        cout<<"\n";
+        cout<<"Mode: ";
+
+        getline(cin, mode);
+
+        if(mode == "A" || mode == "a" ) {
+            this->run_admin_mode();
+            return;
+        }
+        else if(mode == "U" || mode == "u") {
+            this->run_user_mode();
+            return;
+        }
+    }
+}
+
+void UI::run_user_mode() {
+    string command;
+
+    while(true) {
+        cout<<"user> ";
+        getline(cin, command);
+
+        if(command == "browse")
+            this->show_browse();
+        else if(command == "exit")
+            exit(0);
+        else
+            cout<<"Invalid command.\n";
+    }
+}
+
+void UI::run_admin_mode() {
+    string command;
+
+    while(true) {
+        cout<<"admin> ";
         getline(cin, command);
 
         if(command == "add")
@@ -146,3 +184,32 @@ int UI::read_int() {
 
     return input;
 }
+
+void UI::show_browse() {
+    cout<<"You want to browse dogs.\n";
+    string command;
+
+    while(true) {
+        this->show_current_dog();
+
+        cout<<"next/adopt> ";
+        getline(cin, command);
+
+        if(command == "next") {
+            cout<<"before next: "<<this->controller.get_user()->current_dog_id<<"\n";
+            auto user = this->controller.get_user();
+            user->current_dog_id = (user->current_dog_id + 1) % this->controller.get_dogs().size();
+            cout<<"after next: "<<this->controller.get_user()->current_dog_id<<"\n";
+        }
+        else if(command == "adopt") {
+            this->controller.get_user()->adoption_list.push_back(this->controller.get_dogs()[this->controller.get_user()->current_dog_id]);
+            cout<<"Dog was adopted. :)\n";
+            return;
+        }
+    }
+}
+
+void UI::show_current_dog() {
+    cout<<this->controller.get_dogs()[this->controller.get_user()->current_dog_id].represent();
+}
+

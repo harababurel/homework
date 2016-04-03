@@ -1,10 +1,15 @@
 #include <bits/stdc++.h>
 #include "controller.h"
 #include "../repos/repository.h"
+#include "../models/user.h"
 using namespace std;
 
 Repository Controller::get_repo() const {
     return this->repo;
+}
+
+User* Controller::get_user() {
+    return &(this->user);
 }
 
 bool Controller::add_dog(Dog what) {
