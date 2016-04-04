@@ -7,7 +7,10 @@ class User {
 public:
     User() {
         this->current_dog_id = 0;
+        this->breed = "";
+        this->maximum_age = 99999;
     }
-    int current_dog_id;
+    string breed;
+    int current_dog_id, maximum_age;
     vector <Dog> adoption_list;
 };

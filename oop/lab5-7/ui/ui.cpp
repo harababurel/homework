@@ -41,6 +41,12 @@ void UI::run_user_mode() {
 
         if(command == "browse")
             this->show_browse();
+        else if(command == "list")
+            this->show_adoption_list();
+        else if(command == "filter") {
+            this->filter();
+            continue;
+        }
         else if(command == "exit")
             exit(0);
         else
@@ -67,7 +73,6 @@ void UI::run_admin_mode() {
             exit(0);
         else
             cout<<"Invalid command.\n";
-
     }
 }
 
@@ -190,26 +195,59 @@ void UI::show_browse() {
     string command;
 
     while(true) {
+        auto current_dog = this->controller.get_dogs()[this->controller.get_user()->current_dog_id];
+
+        while(current_dog.get_age() > this->controller.get_user()->maximum_age || (this->controller.get_user()->breed != "" && this->controller.get_user()->breed != current_dog.get_breed())) {
+            auto user = this->controller.get_user();
+            //cout<<"skipping\n";
+            user->current_dog_id = (user->current_dog_id + 1) % this->controller.get_dogs().size();
+            current_dog = this->controller.get_dogs()[this->controller.get_user()->current_dog_id];
+        }
+
         this->show_current_dog();
 
-        cout<<"next/adopt> ";
+        cout<<"cancel/next/adopt> ";
         getline(cin, command);
 
         if(command == "next") {
-            cout<<"before next: "<<this->controller.get_user()->current_dog_id<<"\n";
+            //cout<<"before next: "<<this->controller.get_user()->current_dog_id<<"\n";
             auto user = this->controller.get_user();
             user->current_dog_id = (user->current_dog_id + 1) % this->controller.get_dogs().size();
-            cout<<"after next: "<<this->controller.get_user()->current_dog_id<<"\n";
+            //cout<<"after next: "<<this->controller.get_user()->current_dog_id<<"\n";
         }
         else if(command == "adopt") {
             this->controller.get_user()->adoption_list.push_back(this->controller.get_dogs()[this->controller.get_user()->current_dog_id]);
             cout<<"Dog was adopted. :)\n";
             return;
         }
+        else if(command == "cancel")
+            return;
     }
+}
+
+void UI::show_adoption_list() {
+    cout<<"You want to see your adoption list.\n";
+
+    for(auto dog:this->controller.get_user()->adoption_list)
+        cout<<dog.represent()<<"\n";
 }
 
 void UI::show_current_dog() {
     cout<<this->controller.get_dogs()[this->controller.get_user()->current_dog_id].represent();
 }
 
+void UI::filter() {
+    string breed;
+    int age;
+
+    cout<<"Breed: ";
+    getline(cin, breed);
+
+    cout<<"Maximum age: ";
+    age = this->read_int();
+
+    this->controller.get_user()->breed = breed;
+    this->controller.get_user()->maximum_age = age;
+
+    cout<<"Dogs have been filtered.\n";
+}

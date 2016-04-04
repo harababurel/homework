@@ -18,6 +18,8 @@ public:
     void show_dogs();
     void show_browse();
     void show_current_dog();
+    void show_adoption_list();
+    void filter();
 
     // Validates user input for reading ints
     int read_int();
