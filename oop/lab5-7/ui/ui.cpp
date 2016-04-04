@@ -194,6 +194,9 @@ void UI::show_browse() {
     cout<<"You want to browse dogs.\n";
     string command;
 
+    // TODO: move this to controller
+    // add a simple "next dog"
+
     while(true) {
         auto current_dog = this->controller.get_dogs()[this->controller.get_user()->current_dog_id];
 
