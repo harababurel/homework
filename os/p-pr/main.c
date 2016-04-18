@@ -1,64 +1,83 @@
+/* The main process reads from standard input numbers as long as the user
+ * enters positive numbers. For each N number it will launch a new process that
+ * will double the number DN and creates a new process. The new process will
+ * establish the Fibonacci number found on the DN position. Eg. for N=4, ND=8
+ * the Fibonacci number is 21. The Fibonacci number will be send as a response,
+ * using a pipe channel, to the main process. In order to establish the
+ * Fibonacci number on a given place the subprocess will use a shell script
+ * launched with popen.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-int x;
+#include <sys/types.h>
 
 int main() {
+    int x;
+    int back2root[2];
 
     while(scanf("%d", &x)) {
         if(x < 0)
             return 0;
 
-        printf("x = %d\n", x);
+        printf("parent has read x = %d.\n", x);
 
-        int pid = fork();
-        if(pid == 0) { // child
+        pipe(back2root);
+
+        if(fork() == 0) {
+            close(back2root[0]);
+
             int dx = 2 * x;
-            printf("child has computed dx = %d\n", dx);
+            printf("child has computed dx = %d.\n", dx);
 
-            int fd[2];  // create the communication channel
-            pipe(fd);
+            if(fork() == 0) {
+                printf("grandson is busy generating fibo(%d).\n", dx);
 
-            write(fd[1], &dx, sizeof(int));
+                char *command = malloc(30 * sizeof(char));
+                char *nstr = malloc(10 * sizeof(char));
+                sprintf(nstr, "%d", dx);
 
-            int pid = fork();
-            if(pid == 0) {
-                int n;
-                read(fd[0], &n, sizeof(int));
+                strcpy(command, "./fibo.sh ");
+                strcat(command, nstr);
 
-                printf("the grandson will be busy generating fibo(%d)\n", n);
+                FILE *p = popen(command, "r");
+                if(p == NULL) {
+                    printf("something went wrong when running popen().\n");
+                    exit(1);
+                }
 
-                /*
-                int a=1, b=1, c;
-                for(int i=3; i<=n; i++) {
-                    c = a+b;
-                    b = a;
-                    a = c;
-                }*/
+                free(nstr);
+                free(command);
 
-                execl("/bin/bash", "/bin/bash", "fibo.sh", "3");
+                char c;
+                while(fread(&c, 1, 1, p))
+                    write(back2root[1], &c, 1);
 
-                // ^TODO: make this communicate properly
+                fclose(p);
+                close(back2root[1]);
 
-
-                //write(fd[1], &c, sizeof(int));
                 exit(0);
             }
 
-            wait(0);
-
-
-            int result;
-            read(fd[0], &result, sizeof(int));
-            printf("result from grandson is %d", result);
-
             exit(0);
         }
+        else {
+            close(back2root[1]);
 
-        wait(0);
+            printf("parent has read from grandchild: ");
 
+            char c;
+            while(read(back2root[0], &c, 1))
+                if(c != 10) // no newline please
+                    printf("%c", c);
+            printf(".\n");
+
+            wait(0);
+            wait(0);
+        }
     }
 
     return 0;
