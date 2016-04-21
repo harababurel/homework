@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -o p2
+CFLAGS=-Wall -o test-coronita
 
 all:
-	$(CC) $(CFLAGS) p2.c
+	$(CC) $(CFLAGS) test-coronita.c
