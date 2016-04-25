@@ -11,7 +11,8 @@ DEBUG = "-d" in sys.argv or "--debug" in sys.argv
 #Test().testConnectedComponents()
 
 G = DiGraph(DEBUG=DEBUG, undirected=False)
-G.populateFromFile("samples/scc-infoarena5.txt")
+G.populateFromFile("samples/topsort-infoarena.txt")
+print(G.topSort())
 #G.populateFromFile("samples/graph1m.txt")
 
 def showMenu():

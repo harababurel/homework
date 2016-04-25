@@ -360,3 +360,37 @@ class DiGraph:
                     S.put((best[y], y))
 
         return best
+
+    def topSort(self, x=None, seen=None, order=deque([]), cycle=False):
+        """
+            Topologically sorts a single component of the graph (the one
+            determined by x). If it finds a cycle, returns False. Otherwise, it
+            returns a deque containing a valid topological order of said
+            component.
+        """
+
+        if x is None:
+            for x in self.getVertices():    # choose an arbitrary vertex
+                break
+
+        if seen is None:
+            seen = {vertex: False for vertex in self.getVertices()}
+
+        seen[x] = True
+
+        for y, weight in self.outboundEdges(x):
+            if seen[y]:
+                cycle = True
+                return False
+
+            order = self.topSort(y, seen, order, cycle)
+
+            if order == False:
+                cycle = True
+                return False
+
+
+        order.appendleft(x)
+        return order
+
+        # print("%i " % x, end='')
