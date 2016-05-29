@@ -3,7 +3,7 @@
 using namespace std;
 
 const int nmax = 100005;
-const int samples = 10;
+const int samples = 10000;
 
 int n, m, x, y;
 vector <int> v[nmax];
@@ -120,9 +120,11 @@ int main() {
         v[y].push_back(x);
     }
 
+    cerr<<"Running dumb greedy.\n";
+    vector <int> dumb_vertex_cover = greedy(false);
 
     cerr<<"Running "<<samples<<" dumb greedy instances.\n";
-    vector <int> dumb_vertex_cover = get_best_dumb_greedy();
+    vector <int> best_dumb_vertex_cover = get_best_dumb_greedy();
 
     cerr<<"Running smart greedy.\n";
     vector <int> smart_vertex_cover = greedy(true);
@@ -130,27 +132,38 @@ int main() {
     cerr<<"Running backtracking.\n";
     vector <int> back_vertex_cover = back();
 
-
-
     sort(dumb_vertex_cover.begin(), dumb_vertex_cover.end());
+    sort(best_dumb_vertex_cover.begin(), best_dumb_vertex_cover.end());
     sort(smart_vertex_cover.begin(), smart_vertex_cover.end());
     sort(back_vertex_cover.begin(), back_vertex_cover.end());
 
-    cout<<"Dumb greedy -- ("<<dumb_vertex_cover.size()<<") ";
+    cout<<"Dumb greedy once - ("<<dumb_vertex_cover.size()<<") ";
+    if(dumb_vertex_cover.size() < 10)
+        cout<<" ";
     for(auto x:dumb_vertex_cover)
         cout<<x<<" ";
     cout<<"\n";
 
-    cout<<"Smart greedy - ("<<smart_vertex_cover.size()<<") ";
+    cout<<"Dumb greedy x"<<samples/1000<<"k - ("<<best_dumb_vertex_cover.size()<<") ";
+    if(best_dumb_vertex_cover.size() < 10)
+        cout<<" ";
+    for(auto x:best_dumb_vertex_cover)
+        cout<<x<<" ";
+    cout<<"\n";
+
+    cout<<"Smart greedy ----- ("<<smart_vertex_cover.size()<<") ";
+    if(smart_vertex_cover.size() < 10)
+        cout<<" ";
     for(auto x:smart_vertex_cover)
         cout<<x<<" ";
     cout<<"\n";
 
-    cout<<"Backtracking - ("<<back_vertex_cover.size()<<") ";
+    cout<<"Backtracking ----- ("<<back_vertex_cover.size()<<") ";
+    if(back_vertex_cover.size() < 10)
+        cout<<" ";
     for(auto x:back_vertex_cover)
         cout<<x<<" ";
     cout<<"\n";
-
 
     return 0;
 }
