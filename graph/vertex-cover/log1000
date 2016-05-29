@@ -1,0 +1,80 @@
+samples/in/berge.in
+Dumb greedy -- (46): 
+Smart greedy - (59): 
+
+samples/in/bondy-murty2.in
+Dumb greedy -- (7): 
+Smart greedy - (10): 
+
+samples/in/bondy-murty3.in
+Dumb greedy -- (7): 
+Smart greedy - (13): 
+
+samples/in/bondy-murty4.in
+Dumb greedy -- (7): 
+Smart greedy - (10): 
+
+samples/in/bondy-murty.in
+Dumb greedy -- (4): 
+Smart greedy - (6): 
+
+samples/in/cube.in
+Dumb greedy -- (4): 
+Smart greedy - (7): 
+
+samples/in/dodecahedron.in
+Dumb greedy -- (12): 
+Smart greedy - (19): 
+
+samples/in/folkman.in
+Dumb greedy -- (12): 
+Smart greedy - (10): 
+
+samples/in/grotzsch.in
+Dumb greedy -- (6): 
+Smart greedy - (6): 
+
+samples/in/herschel.in
+Dumb greedy -- (5): 
+Smart greedy - (8): 
+
+samples/in/icosahedron.in
+Dumb greedy -- (9): 
+Smart greedy - (11): 
+
+samples/in/kuratowski.in
+Dumb greedy -- (3): 
+Smart greedy - (3): 
+
+samples/in/octahedron.in
+Dumb greedy -- (4): 
+Smart greedy - (5): 
+
+samples/in/petersen.in
+Dumb greedy -- (6): 
+Smart greedy - (8): 
+
+samples/in/ramsey.in
+Dumb greedy -- (14): 
+Smart greedy - (16): 
+
+samples/in/tetrahedron.in
+Dumb greedy -- (3): 
+Smart greedy - (3): 
+
+samples/in/thomassen.in
+Dumb greedy -- (23): 
+Smart greedy - (32): 
+
+samples/in/tutte-coxeter.in
+Dumb greedy -- (19): 
+Smart greedy - (29): 
+
+samples/in/wheel.in
+Dumb greedy -- (5): 
+Smart greedy - (7): 
+
+samples/in/witzel.in
+Dumb greedy -- (441): 
+Smart greedy - (449): 
+
