@@ -107,9 +107,42 @@ public:
         _back->_prev = _front;
     }
 
+    void bubble_sort() {
+        bool sorted = false;
+
+        while(!sorted) {
+            sorted = true;
+
+            for(auto it = _front->_next; it->_next != _back; ) {
+                if(it->_data > it->_next->_data) {
+                    sorted = false;
+
+                    node <T> *a = it->_prev;
+                    node <T> *b = it;
+                    node <T> *c = it->_next;
+                    node <T> *d = it->_next->_next;
+
+                    // a -> b -> c -> d
+                    // should become
+                    // a -> c -> b -> d
+
+                    a->_next = c;
+                    c->_prev = a;
+                    c->_next = b;
+                    b->_prev = c;
+                    b->_next = d;
+                    d->_prev = b;
+                }
+                else
+                    it = it->_next;
+            }
+        }
+    }
+
     void show() {
         for(auto it = _front->_next; it != _back; it=it->_next)
-            std::cout<<it->_data.first<<" "<<it->_data.second<<"\n";
+            //std::cout<<it->_data.first<<" "<<it->_data.second<<"\n";
+            std::cout<<it->_data<<" ";
         std::cout<<"\n";
     }
 };
