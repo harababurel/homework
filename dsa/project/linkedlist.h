@@ -19,6 +19,7 @@ class linkedlist {
 private:
     node <T> *_front;
     node <T> *_back;
+    node <T> *_current;
     int _size;
 
 public:
@@ -30,12 +31,14 @@ public:
         _front->_next = _back;
         _back->_prev = _front;
 
+        _current = _front;
     }
 
     ~linkedlist() {
         clear();
         delete _front;
         delete _back;
+        delete _current;
     }
 
     bool empty() {
@@ -46,7 +49,7 @@ public:
         return _size;
     }
 
-    node <T> *front() {  // ??
+    node <T> *front() {
         return _front;
     }
 
@@ -105,16 +108,17 @@ public:
         }
         _front->_next = _back;
         _back->_prev = _front;
+        _current = _front;
     }
 
-    void bubble_sort() {
+    void bubble_sort(bool cmp(T x, T y)) {
         bool sorted = false;
 
         while(!sorted) {
             sorted = true;
 
             for(auto it = _front->_next; it->_next != _back; ) {
-                if(it->_data > it->_next->_data) {
+                if(!cmp(it->_data, it->_next->_data)) {
                     sorted = false;
 
                     node <T> *a = it->_prev;
@@ -139,10 +143,40 @@ public:
         }
     }
 
+    void bubble_sort() {
+        bubble_sort([](T x, T y) -> bool { return x <= y; });
+    }
+
     void show() {
         for(auto it = _front->_next; it != _back; it=it->_next)
             //std::cout<<it->_data.first<<" "<<it->_data.second<<"\n";
             std::cout<<it->_data<<" ";
         std::cout<<"\n";
     }
+
+    T &get_current_data() {
+        return _current->_next->_data;
+    }
+
+    bool has_next() {
+        return _current->_next->_next != _back;
+    }
+
+    void go_next() {
+        _current = _current->_next;
+    }
+
+    bool has_prev() {
+        return _current != _front;
+    }
+
+    void go_prev() {
+        _current = _current->_prev;
+    }
+
+    void go_to_beginning() {
+        _current = _front;
+    }
+
+
 };

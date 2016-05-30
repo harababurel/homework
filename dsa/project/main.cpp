@@ -23,8 +23,22 @@ int main() {
         l.push_back(rand() % 100);
 
     l.show();
-    l.bubble_sort();
+    l.bubble_sort([](int a, int b) -> bool {
+            return a <= b;
+            });
     l.show();
+
+    l.go_to_beginning();
+    while(true) {
+        cout<<l.get_current_data()<<" ";
+
+        if(l.has_next())
+            l.go_next();
+        else
+            break;
+    }
+    cout<<"\n";
+
 
     return 0;
 }
