@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 
 template <class T>
 class node {
@@ -13,6 +12,10 @@ public:
         _next = nullptr;
     }
 };
+
+/* List format:
+ * dummy front node <-> actual list of nodes <-> dummy back node
+ */
 
 template <class T>
 class linkedlist {
@@ -38,7 +41,7 @@ public:
         clear();
         delete _front;
         delete _back;
-        delete _current;
+        //delete _current; -- this already gets deleted during clear()
     }
 
     bool empty() {
@@ -147,13 +150,6 @@ public:
         bubble_sort([](T x, T y) -> bool { return x <= y; });
     }
 
-    void show() {
-        for(auto it = _front->_next; it != _back; it=it->_next)
-            //std::cout<<it->_data.first<<" "<<it->_data.second<<"\n";
-            std::cout<<it->_data<<" ";
-        std::cout<<"\n";
-    }
-
     T &get_current_data() {
         return _current->_next->_data;
     }
@@ -177,6 +173,4 @@ public:
     void go_to_beginning() {
         _current = _front;
     }
-
-
 };
