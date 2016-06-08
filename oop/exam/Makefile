@@ -190,6 +190,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		exam.pro GUI.h \
 		Programmer.h \
+		StatusException.h \
 		Task.h \
 		TaskController.h \
 		TaskRepository.h main.cpp
@@ -501,7 +502,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents GUI.h Programmer.h Task.h TaskController.h TaskRepository.h $(DISTDIR)/
+	$(COPY_FILE) --parents GUI.h Programmer.h StatusException.h Task.h TaskController.h TaskRepository.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp $(DISTDIR)/
 
 
@@ -532,6 +533,7 @@ moc_GUI.cpp: TaskController.h \
 		Programmer.h \
 		Task.h \
 		TaskRepository.h \
+		StatusException.h \
 		GUI.h
 	/usr/lib/qt/bin/moc $(DEFINES) -I/usr/lib/qt/mkspecs/linux-g++ -I/home/sergiu/work/homework/oop/exam -I/home/sergiu/work/homework/oop/exam -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/6.1.1 -I/usr/include/c++/6.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/6.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.1.1/include-fixed -I/usr/include GUI.h -o moc_GUI.cpp
 
@@ -553,7 +555,8 @@ main.o: main.cpp GUI.h \
 		TaskController.h \
 		Programmer.h \
 		Task.h \
-		TaskRepository.h
+		TaskRepository.h \
+		StatusException.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 moc_GUI.o: moc_GUI.cpp 
