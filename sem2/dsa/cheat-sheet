@@ -1,0 +1,22 @@
+Red-Black Trees
+
+- root & leaves (nil) are black
+- reds have black children (no two adjacent reds)
+- all simple paths from X (not including X) to descendant leaves have the same number of black nodes
+- height <= 2*log(n+1) = O(lg n)
+- insert as red
+- fix color upwards until everything can be fixed with rotations and/or recolorings:
+    while x =/= root and color[x] == red:
+        if p[x] = left[p[p[x]]]: (side A)
+            y = other child of the grandparent = uncle/aunt of x
+            if y is red:
+                (case 1: recolor, go up)
+            else:
+                if x = right[p[x]]:
+                    (case 2 - zig zag)
+                (case 3)
+        else: (side B - same as A but reverse left-right)
+    color[root] = black
+- case 3 is terminal
+- case 2 is followed by case 3, which is terminal
+- case 1 is not
