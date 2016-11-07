@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class ArithExp extends Exp {
     private Exp e1, e2;
@@ -21,6 +21,8 @@ public class ArithExp extends Exp {
             case '*': return partialRes1 * partialRes2;
             case '/': return partialRes1 / partialRes2;
         }
+
+        return 0;
     }
 
     @Override

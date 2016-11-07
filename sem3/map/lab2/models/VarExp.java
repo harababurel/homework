@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class VarExp extends Exp {
     private String id;

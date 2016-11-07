@@ -1,4 +1,7 @@
+package models;
+
 public interface IStmt {
-    String toString();
-    PrgState execute(PrgState state);
+    public PrgState execute(PrgState state);
+    @Override
+    public String toString();
 }

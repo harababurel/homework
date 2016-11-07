@@ -1,6 +1,7 @@
-package model;
+package models;
 
 public abstract class Exp {
-    abstract int eval(MyIDictionary <String, Integer> symTable);
-    abstract String toString();
+    abstract public int eval(MyIDictionary <String, Integer> symTable);
+    @Override
+    abstract public String toString();
 }

@@ -1,4 +1,4 @@
-package model;
+package models;
 
 class PrintStmt implements IStmt {
     private Exp exp;

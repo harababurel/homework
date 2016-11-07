@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class AssignStmt implements IStmt {
     private String id;
@@ -16,7 +16,7 @@ public class AssignStmt implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) {
-        MyIStack <IStmt> stack = state.getStack();
+        MyIStack <IStmt> stack = state.getExeStack();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
 
         int val = exp.eval(symTable);
