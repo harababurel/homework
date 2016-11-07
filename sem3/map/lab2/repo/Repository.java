@@ -8,7 +8,13 @@ public class Repository implements IRepository {
         this.states = new MyList <PrgState>();
     }
 
-    public PrgState getCurrentPrg() {
+    public Repository(PrgState initialState) {
+        this.states = new MyList <PrgState>();
+        this.states.add(initialState);
+    }
+
+
+    public PrgState getCurrentState() {
         // LinkedList implements getLast(), but this is
         // a more general List.
         return this.states.get(this.states.size()-1);

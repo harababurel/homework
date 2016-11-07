@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class IfStmt implements IStmt {
     private Exp exp;
@@ -12,8 +12,8 @@ public class IfStmt implements IStmt {
 
     @Override
     public String toString() {
-        return "IF(" + exp.toString() + ") THEN(" + thenStmt.toStr()
-            + ") ELSE(" + elseStmt.toString() + ")";
+        return "IF(" + this.exp.toString() + ") THEN(" + this.thenStmt.toString()
+            + ") ELSE(" + this.elseStmt.toString() + ")";
     }
 
     @Override

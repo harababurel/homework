@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class ConstExp extends Exp {
     private int value;

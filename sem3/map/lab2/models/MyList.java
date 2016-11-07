@@ -43,4 +43,16 @@ public class MyList <T> implements MyIList <T> {
     public int size() {
         return this.l.size();
     }
+
+    @Override
+    public String toString() {
+        return this.l.size() + " elements";
+
+
+//         String ret = "";
+//         for(T entry:this.l)
+//             ret += entry.toString() + " ";
+//         return ret;
+    }
+
 }

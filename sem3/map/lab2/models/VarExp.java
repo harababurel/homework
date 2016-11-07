@@ -9,7 +9,7 @@ public class VarExp extends Exp {
 
     @Override
     public int eval(MyIDictionary <String, Integer> symTable) {
-        return symTable.lookup(this.id);
+        return symTable.get(this.id);
     }
 
     @Override

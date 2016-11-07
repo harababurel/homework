@@ -4,17 +4,34 @@ public class PrgState {
     private MyIStack <IStmt> exeStack;
     private MyIDictionary <String, Integer> symTable;
     private MyIList <Integer> stdout;
-    private IStmt originalProgram; //optional field, but good to have
+    private IStmt initialProgram; //optional field, but good to have
 
     public PrgState(MyIStack <IStmt> exeStack,
             MyIDictionary <String, Integer> symTable,
             MyIList <Integer> stdout,
-            IStmt originalProgram) {
+            IStmt initialProgram) {
         this.exeStack = exeStack;
         this.symTable = symTable;
         this.stdout = stdout;
-        this.originalProgram = originalProgram;
-        this.exeStack.push(originalProgram);
+        this.initialProgram = initialProgram;
+        this.exeStack.push(initialProgram);
+    }
+
+    public PrgState(IStmt initialProgram) {
+        this.exeStack = new MyStack <IStmt>();
+        this.symTable = new MyDictionary <String, Integer>();
+        this.stdout = new MyList <Integer>();
+        this.initialProgram = initialProgram;
+        this.exeStack.push(initialProgram);
+    }
+
+    @Override
+    public String toString() {
+        return "/============== PrgState =================\n" +
+            "exeStack:\n" + this.exeStack.toString() + "\n" +
+            "symTable:\n" + this.symTable.toString() + "\n" +
+            "stdout:\n" + this.stdout.toString() + "\n" +
+            "\\========================================\n";
     }
 
     public MyIStack <IStmt> getExeStack() {
@@ -29,8 +46,8 @@ public class PrgState {
         return this.stdout;
     }
 
-    public IStmt getOriginalProgram() {
-        return this.originalProgram;
+    public IStmt getinitialProgram() {
+        return this.initialProgram;
     }
 
     public void setExeStack(MyIStack <IStmt> exeStack) {
@@ -45,7 +62,7 @@ public class PrgState {
         this.stdout = stdout;
     }
 
-    public void setOriginalProgram(IStmt originalProgram) {
-        this.originalProgram = originalProgram;
+    public void setinitialProgram(IStmt initialProgram) {
+        this.initialProgram = initialProgram;
     }
 }

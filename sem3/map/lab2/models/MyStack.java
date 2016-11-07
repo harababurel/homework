@@ -20,4 +20,13 @@ public class MyStack <T> implements MyIStack <T> {
     public boolean isEmpty() {
         return this.stack.isEmpty();
     }
+
+    @Override
+    public String toString() {
+        String ret = "";
+        for(T x:this.stack) {
+            ret += x.toString() + "\n";
+        }
+        return ret;
+    }
 }

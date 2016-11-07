@@ -1,6 +1,6 @@
 package models;
 
-class PrintStmt implements IStmt {
+public class PrintStmt implements IStmt {
     private Exp exp;
 
     public PrintStmt(Exp exp) {
@@ -14,6 +14,12 @@ class PrintStmt implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) {
+        MyIStack <IStmt> stack = state.getExeStack();
+        MyIList <Integer> stdout = state.getStdout();
+        MyIDictionary <String, Integer> symTable = state.getSymTable();
+
+        stdout.add(this.exp.eval(symTable));
+
         return state;
     }
  }

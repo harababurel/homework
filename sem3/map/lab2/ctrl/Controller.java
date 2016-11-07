@@ -14,18 +14,22 @@ public class Controller {
     }
 
     public PrgState oneStep(PrgState state) {
+        System.out.println(state.toString());
+
         MyIStack <IStmt> exeStack = state.getExeStack();
 
         // if(exeStack.isEmpty())
-        //     throws MyStmtExecException;
+            // return null;
+            // throws MyStmtExecException;
         IStmt currentStmt = exeStack.pop();
         return currentStmt.execute(state);
     }
 
     public void allStep() {
-        PrgState state = r.getCurrentPrg();
+        PrgState state = r.getCurrentState();
 
         while(!state.getExeStack().isEmpty()) {
+            System.out.println("pula");
             oneStep(state);
         }
     }
