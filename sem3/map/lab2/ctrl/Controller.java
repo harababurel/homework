@@ -14,8 +14,6 @@ public class Controller {
     }
 
     public PrgState oneStep(PrgState state) {
-        System.out.println(state.toString());
-
         MyIStack <IStmt> exeStack = state.getExeStack();
 
         // if(exeStack.isEmpty())
@@ -28,9 +26,12 @@ public class Controller {
     public void allStep() {
         PrgState state = r.getCurrentState();
 
+        // initial state
+        System.out.println(state.toString());
+
         while(!state.getExeStack().isEmpty()) {
-            System.out.println("pula");
             oneStep(state);
+            System.out.println(state.toString());
         }
     }
 }

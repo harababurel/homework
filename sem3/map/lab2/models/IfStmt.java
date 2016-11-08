@@ -18,6 +18,14 @@ public class IfStmt implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) {
+        MyIStack <IStmt> exeStack = state.getExeStack();
+        MyIDictionary <String, Integer> symTable = state.getSymTable();
+
+        if(this.exp.eval(symTable) != 0)
+            exeStack.push(this.thenStmt);
+        else
+            exeStack.push(this.elseStmt);
+
         return state;
     }
 }
