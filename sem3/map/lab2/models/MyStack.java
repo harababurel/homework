@@ -25,7 +25,7 @@ public class MyStack <T> implements MyIStack <T> {
     public String toString() {
         String ret = "";
         for(T x:this.stack) {
-            ret += x.toString() + "\n";
+            ret += "  " + x.toString() + "\n";
         }
         return ret;
     }

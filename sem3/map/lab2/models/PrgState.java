@@ -30,8 +30,8 @@ public class PrgState {
         return "/============== PrgState =================\n" +
             "exeStack:\n" + this.exeStack.toString() + "\n" +
             "symTable:\n" + this.symTable.toString() + "\n" +
-            "stdout:\n" + this.stdout.toString() + "\n" +
-            "\\========================================\n";
+            "stdout:\n" + this.stdout.toString() +
+            "\\=========================================\n";
     }
 
     public MyIStack <IStmt> getExeStack() {

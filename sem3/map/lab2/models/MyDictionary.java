@@ -44,7 +44,7 @@ public class MyDictionary <K, V> implements MyIDictionary <K, V> {
     public String toString() {
         String ret = "";
         for(Map.Entry <K, V> entry:this.map.entrySet()) {
-            ret += entry.getKey().toString() + " -> " + entry.getValue().toString() + "\n";
+            ret += "  " + entry.getKey().toString() + " -> " + entry.getValue().toString() + "\n";
         }
 
         return ret;
