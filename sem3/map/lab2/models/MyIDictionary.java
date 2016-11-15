@@ -1,4 +1,5 @@
 package models;
+import java.util.*;
 
 public interface MyIDictionary <K, V> {
     void clear();
@@ -9,4 +10,5 @@ public interface MyIDictionary <K, V> {
     V put(K key, V value);
     V remove(K key);
     int size();
+    Collection <V> values();
 }

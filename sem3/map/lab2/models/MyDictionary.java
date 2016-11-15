@@ -40,6 +40,10 @@ public class MyDictionary <K, V> implements MyIDictionary <K, V> {
         return this.map.size();
     }
 
+    public Collection <V> values() {
+        return this.map.values();
+    }
+
     @Override
     public String toString() {
         String ret = "";

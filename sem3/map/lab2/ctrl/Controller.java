@@ -1,6 +1,8 @@
 package ctrl;
 import models.*;
 import repo.*;
+import java.io.*;
+import java.util.*;
 
 public class Controller {
     private IRepository r;
@@ -28,10 +30,16 @@ public class Controller {
 
         // initial state
         System.out.println(state.toString());
+		try {
+			this.r.logPrgStateExec();
+		} catch(IOException e) { ; }
 
         while(!state.getExeStack().isEmpty()) {
             oneStep(state);
             System.out.println(state.toString());
+			try {
+				this.r.logPrgStateExec();
+			} catch(IOException e) { ; }
         }
     }
 }
