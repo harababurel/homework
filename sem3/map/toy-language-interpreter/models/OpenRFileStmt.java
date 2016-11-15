@@ -13,6 +13,7 @@ public class OpenRFileStmt implements IStmt {
     @Override
     public PrgState execute(PrgState state) {
         MyIDictionary <Integer, MyFile> fileTable = state.getFileTable();
+        MyIDictionary <String, Integer> symTable = state.getSymTable();
 
         for(MyFile entry:fileTable.values()) {
             if(entry.filename == this.filename) {
@@ -23,12 +24,19 @@ public class OpenRFileStmt implements IStmt {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(this.filename));
-        } catch(Exception e) {
+        } catch(IOException e) {
             System.err.printf("Could not open %s for reading.\n", this.filename);
+            System.exit(1);
         }
+
+        // Assign the first unused file descriptor to this file.
+        for(int i=3; ; i++)
+            if(!fileTable.containsKey(i)) {
+                fileTable[i] = new MyFile(this.filename, reader);
+                symTable[this.var_file_id] = i;
+                break;
+            }
+
         return state;
     }
 }
-
-
-    

@@ -32,6 +32,7 @@ public class Repository implements IRepository {
 
     public void logPrgStateExec() throws IOException {
         try {
+            // TODO: first file open overwrites file.
             PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(this.logFilePath, true)));
 
             logFile.println(this.getCurrentState().toString());
