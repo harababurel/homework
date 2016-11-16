@@ -10,7 +10,7 @@ public class CompStmt implements IStmt {
 
     @Override
     public String toString() {
-        return "(" + this.fst.toString() + "; " + this.snd.toString() + ")";
+        return "(" + this.fst.toString() + ";\n" + this.snd.toString() + ")";
     }
 
     @Override

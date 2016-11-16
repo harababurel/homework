@@ -8,7 +8,7 @@ public class Controller {
     private IRepository r;
 
     public Controller() {
-        this.r = new Repository();
+        this.r = new Repository("");
     }
 
     public Controller(IRepository r) {

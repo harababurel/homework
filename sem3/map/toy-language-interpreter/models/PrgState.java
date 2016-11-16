@@ -33,6 +33,7 @@ public class PrgState {
     public String toString() {
         return "exeStack:\n" + this.exeStack.toString() +
                "symTable:\n" + this.symTable.toString() +
+               "fileTable:\n" + this.fileTable.toString() +
                "stdout:\n" + this.stdout.toString();
             
     }

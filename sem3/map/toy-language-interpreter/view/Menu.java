@@ -10,12 +10,14 @@ public class Menu {
         System.out.println("\t(1): v=2; print(v)");
         System.out.println("\t(2): a=2+3*5; b=a-4/2+7; print(b)");
         System.out.println("\t(3): a=2-2; if a then v=2 else v=3; print(v)");
+        System.out.println("\t(4): lab5ex1");
+        System.out.println("\t(5): lab5ex2");
 
         System.out.print("Program: ");
     }
 
-    public static void runExample(IStmt initialStmt) {
-        IRepository r = new Repository(new PrgState(initialStmt));
+    public static void runExample(String logFilePath, IStmt initialStmt) {
+        IRepository r = new Repository(logFilePath, new PrgState(initialStmt));
         Controller c = new Controller(r);
         c.allStep();
     }
@@ -97,6 +99,63 @@ public class Menu {
         return lab2ex3;
     }
 
+    public static IStmt generateExample4() {
+        /* openRFile(var_f,"test.in");
+         * readFile(var_f,var_c);print(var_c);
+         * (if var_c then readFile(var_f,var_c);print(var_c)
+         *  else print(0));
+         * closeRFile(var_f)
+         */ 
+        IStmt lab5ex1 = new CompStmt(
+                new OpenRFileStmt("var_f", "test.in"),
+                new CompStmt(
+                    new ReadFileStmt(new VarExp("var_f"), "var_c"),
+                    new CompStmt(
+                        new PrintStmt(new VarExp("var_c")),
+                        new CompStmt(
+                            new IfStmt(
+                                new VarExp("var_c"),
+                                new CompStmt(
+                                    new ReadFileStmt(
+                                        new VarExp("var_f"),
+                                        "var_c"),
+                                    new PrintStmt(new VarExp("var_c"))),
+                                new PrintStmt(new ConstExp(0))),
+                            new CloseRFileStmt(new VarExp("var_f"))))));
+        return lab5ex1;
+    }
+
+    public static IStmt generateExample5() {
+        /* openRFile(var_f,"test.in");
+         * readFile(var_f+2,var_c);print(var_c);
+         * (if var_c then readFile(var_f,var_c);print(var_c)
+         * else print(0));
+         * closeRFile(var_f)
+         */
+
+        IStmt lab5ex2 = new CompStmt(
+                new OpenRFileStmt("var_f", "test.in"),
+                new CompStmt(
+                    new ReadFileStmt(
+                        new ArithExp(
+                            new VarExp("var_f"),
+                            new ConstExp(2),
+                            '+'),
+                        "var_c"),
+                    new CompStmt(
+                        new PrintStmt(new VarExp("var_c")),
+                        new CompStmt(
+                            new IfStmt(
+                                new VarExp("var_c"),
+                                new CompStmt(
+                                    new ReadFileStmt(
+                                        new VarExp("var_f"),
+                                        "var_c"),
+                                    new PrintStmt(new VarExp("var_c"))),
+                                new PrintStmt(new ConstExp(0))),
+                            new PrintStmt(new VarExp("var_f"))))));
+        return lab5ex2;
+    }
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -107,13 +166,19 @@ public class Menu {
             String choice = scanner.nextLine();
             switch(choice) {
                 case "1":
-                    runExample(generateExample1());
+                    runExample("main.log", generateExample1());
                     break;
                 case "2":
-                    runExample(generateExample2());
+                    runExample("main.log", generateExample2());
                     break;
                 case "3":
-                    runExample(generateExample3());
+                    runExample("main.log", generateExample3());
+                    break;
+                case "4":
+                    runExample("main.log", generateExample4());
+                    break;
+                case "5":
+                    runExample("main.log", generateExample5());
                     break;
             }
         }

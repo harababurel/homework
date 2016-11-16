@@ -12,8 +12,7 @@ public class IfStmt implements IStmt {
 
     @Override
     public String toString() {
-        return "IF(" + this.exp.toString() + ") THEN(" + this.thenStmt.toString()
-            + ") ELSE(" + this.elseStmt.toString() + ")";
+        return "if(" + this.exp.toString() + ") then(" + this.thenStmt.toString() + ") else(" + this.elseStmt.toString() + ")";
     }
 
     @Override

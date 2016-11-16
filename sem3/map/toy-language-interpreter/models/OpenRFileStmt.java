@@ -2,11 +2,11 @@ package models;
 import java.io.*;
 
 public class OpenRFileStmt implements IStmt {
-    private String var_file_id; // name of variable
+    private String variable; // name of variable
     private String filename;
 
-    public OpenRFileStmt(String var_file_id, String filename) {
-        this.var_file_id = var_file_id;
+    public OpenRFileStmt(String variable, String filename) {
+        this.variable = variable;
         this.filename = filename;
     }
 
@@ -16,7 +16,7 @@ public class OpenRFileStmt implements IStmt {
         MyIDictionary <String, Integer> symTable = state.getSymTable();
 
         for(MyFile entry:fileTable.values()) {
-            if(entry.filename == this.filename) {
+            if(entry.getFilename() == this.filename) {
                 System.err.println("File is already open");
                 System.exit(1);
             }
@@ -24,19 +24,25 @@ public class OpenRFileStmt implements IStmt {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(this.filename));
+            // Assign the first unused file descriptor to this file.
+            for(int fd=3; ; fd++)
+                if(!fileTable.containsKey(fd)) {
+                    fileTable.put(fd, new MyFile(this.filename, reader));
+                    symTable.put(this.variable, fd);
+                    break;
+                }
         } catch(IOException e) {
             System.err.printf("Could not open %s for reading.\n", this.filename);
+            System.err.printf(e.toString());
             System.exit(1);
         }
 
-        // Assign the first unused file descriptor to this file.
-        for(int i=3; ; i++)
-            if(!fileTable.containsKey(i)) {
-                fileTable[i] = new MyFile(this.filename, reader);
-                symTable[this.var_file_id] = i;
-                break;
-            }
-
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "OpenRFile(" + this.variable + ", \"" + this.filename + "\")";
+    }
+
 }
