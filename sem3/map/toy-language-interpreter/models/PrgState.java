@@ -5,6 +5,7 @@ public class PrgState {
     private MyIDictionary <String, Integer> symTable;
     private MyIList <Integer> stdout;
     private MyIDictionary <Integer, MyFile> fileTable;
+    /* private MyIDictionary <Integer, Integer> heap; */
     private IStmt initialProgram; //optional field, but good to have
 
     public PrgState(MyIStack <IStmt> exeStack,

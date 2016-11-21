@@ -4,22 +4,55 @@ import repo.*;
 import ctrl.*;
 import java.util.*;
 
-public class Menu {
-    public void showOptions() {
-        System.out.println("Choose sample program:");
-        System.out.println("\t(1): v=2; print(v)");
-        System.out.println("\t(2): a=2+3*5; b=a-4/2+7; print(b)");
-        System.out.println("\t(3): a=2-2; if a then v=2 else v=3; print(v)");
-        System.out.println("\t(4): lab5ex1");
-        System.out.println("\t(5): lab5ex2");
+public class TextMenu {
+    private Map <String, Command> commands;
 
-        System.out.print("Program: ");
+    public TextMenu() {
+        this.commands = new HashMap <String, Command>();
     }
 
-    public static void runExample(String logFilePath, IStmt initialStmt) {
-        IRepository r = new Repository(logFilePath, new PrgState(initialStmt));
-        Controller c = new Controller(r);
-        c.allStep();
+    public void addCommand(Command c) {
+        this.commands.put(c.getKey(), c);
+    }
+
+    private void printMenu() {
+        for(Command c:commands.values()) {
+            String line = String.format("%4s: %s", c.getKey(), c.getDescription());
+            System.out.println(line);
+        }
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+
+        while(true) {
+            printMenu();
+
+            String choice = scanner.nextLine();
+            Command c = commands.get(choice);
+
+            if(c == null) {
+                System.out.println("Invalid command");
+                continue;
+            }
+
+            c.execute();
+        }
+    }
+
+    /* public void showOptions() { */
+    /*     System.out.println("Choose sample program:"); */
+    /*     System.out.println("\t(1): v=2; print(v)"); */
+    /*     System.out.println("\t(2): a=2+3*5; b=a-4/2+7; print(b)"); */
+    /*     System.out.println("\t(3): a=2-2; if a then v=2 else v=3; print(v)"); */
+    /*     System.out.println("\t(4): lab5ex1"); */
+    /*     System.out.println("\t(5): lab5ex2"); */
+
+    /*     System.out.print("Program: "); */
+    /* } */
+
+    public static Controller generateController(String logFilePath, IStmt initialStmt) {
+        return new Controller(new Repository(logFilePath, new PrgState(initialStmt)));
     }
 
     public static IStmt generateExample1() {
@@ -157,30 +190,31 @@ public class Menu {
         return lab5ex2;
     }
 
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
+    /* public void run() { */
+    /*     Scanner scanner = new Scanner(System.in); */
 
-        while(true) {
-            showOptions();
+    /*     while(true) { */
+    /*         showOptions(); */
 
-            String choice = scanner.nextLine();
-            switch(choice) {
-                case "1":
-                    runExample("main.log", generateExample1());
-                    break;
-                case "2":
-                    runExample("main.log", generateExample2());
-                    break;
-                case "3":
-                    runExample("main.log", generateExample3());
-                    break;
-                case "4":
-                    runExample("main.log", generateExample4());
-                    break;
-                case "5":
-                    runExample("main.log", generateExample5());
-                    break;
-            }
-        }
-    }
+    /*         String choice = scanner.nextLine(); */
+
+    /*         switch(choice) { */
+    /*             case "1": */
+    /*                 runExample("main.log", generateExample1()); */
+    /*                 break; */
+    /*             case "2": */
+    /*                 runExample("main.log", generateExample2()); */
+    /*                 break; */
+    /*             case "3": */
+    /*                 runExample("main.log", generateExample3()); */
+    /*                 break; */
+    /*             case "4": */
+    /*                 runExample("main.log", generateExample4()); */
+    /*                 break; */
+    /*             case "5": */
+    /*                 runExample("main.log", generateExample5()); */
+    /*                 break; */
+    /*         } */
+    /*     } */
+    /* } */
 }
