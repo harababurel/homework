@@ -8,7 +8,8 @@ public class ConstExp extends Exp {
     }
 
     @Override
-    public int eval(MyIDictionary <String, Integer> symTable) {
+    public int eval(MyIDictionary <String, Integer> symTable,
+                    MyIHeap heap) {
         return this.value;
     }
 

@@ -8,7 +8,7 @@ public class VarExp extends Exp {
     }
 
     @Override
-    public int eval(MyIDictionary <String, Integer> symTable) {
+    public int eval(MyIDictionary <String, Integer> symTable, MyIHeap heap) {
         return symTable.get(this.id);
     }
 

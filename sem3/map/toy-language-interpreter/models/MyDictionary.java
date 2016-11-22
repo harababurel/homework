@@ -44,11 +44,15 @@ public class MyDictionary <K, V> implements MyIDictionary <K, V> {
         return this.map.values();
     }
 
+    public Set <Map.Entry <K, V>> entrySet() {
+        return this.map.entrySet();
+    }
+
     @Override
     public String toString() {
         String ret = "";
         for(Map.Entry <K, V> entry:this.map.entrySet()) {
-            ret += "  " + entry.getKey().toString() + " -> " + entry.getValue().toString() + "\n";
+            ret += entry.getKey().toString() + " -> " + entry.getValue().toString() + "\n";
         }
 
         return ret;

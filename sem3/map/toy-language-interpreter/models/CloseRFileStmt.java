@@ -12,10 +12,11 @@ public class CloseRFileStmt implements IStmt {
     public PrgState execute(PrgState state) {
         MyIDictionary <Integer, MyFile> fileTable = state.getFileTable();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
+        MyIHeap heap = state.getHeap();
 
         int fd = 0;
         try {
-            fd = this.fd.eval(symTable);
+            fd = this.fd.eval(symTable, heap);
         } catch(Exception e) {
             System.err.printf("Could not evaluate expression: %s\n", this.fd.toString());
             System.exit(1);

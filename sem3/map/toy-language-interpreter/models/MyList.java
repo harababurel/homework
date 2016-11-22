@@ -48,7 +48,7 @@ public class MyList <T> implements MyIList <T> {
     public String toString() {
         String ret = "";
         for(T entry:this.l)
-            ret += "  " + entry.toString() + "\n";
+            ret += entry.toString() + "\n";
         return ret;
     }
 

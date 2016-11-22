@@ -13,12 +13,13 @@ public class PrintStmt implements IStmt {
     }
 
     @Override
-    public PrgState execute(PrgState state) {
+    public PrgState execute(PrgState state) throws Exception {
         MyIStack <IStmt> stack = state.getExeStack();
         MyIList <Integer> stdout = state.getStdout();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
+        MyIHeap heap = state.getHeap();
 
-        stdout.add(this.exp.eval(symTable));
+        stdout.add(this.exp.eval(symTable, heap));
 
         return state;
     }

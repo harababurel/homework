@@ -16,11 +16,12 @@ public class IfStmt implements IStmt {
     }
 
     @Override
-    public PrgState execute(PrgState state) {
+    public PrgState execute(PrgState state) throws Exception {
         MyIStack <IStmt> exeStack = state.getExeStack();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
+        MyIHeap heap = state.getHeap();
 
-        if(this.exp.eval(symTable) != 0)
+        if(this.exp.eval(symTable, heap) != 0)
             exeStack.push(this.thenStmt);
         else
             exeStack.push(this.elseStmt);

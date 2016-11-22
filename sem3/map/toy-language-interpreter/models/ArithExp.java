@@ -11,9 +11,10 @@ public class ArithExp extends Exp {
     }
 
     @Override
-    public int eval(MyIDictionary <String, Integer> symTable) {
-        int partialRes1 = this.e1.eval(symTable);
-        int partialRes2 = this.e2.eval(symTable);
+    public int eval(MyIDictionary <String, Integer> symTable,
+                    MyIHeap heap) throws Exception {
+        int partialRes1 = this.e1.eval(symTable, heap);
+        int partialRes2 = this.e2.eval(symTable, heap);
 
         switch(this.op) {
             case '+': return partialRes1 + partialRes2;

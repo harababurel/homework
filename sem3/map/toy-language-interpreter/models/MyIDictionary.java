@@ -11,4 +11,5 @@ public interface MyIDictionary <K, V> {
     V remove(K key);
     int size();
     Collection <V> values();
+    Set <Map.Entry <K, V>> entrySet();
 }

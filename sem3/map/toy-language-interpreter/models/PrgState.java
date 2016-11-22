@@ -5,18 +5,20 @@ public class PrgState {
     private MyIDictionary <String, Integer> symTable;
     private MyIList <Integer> stdout;
     private MyIDictionary <Integer, MyFile> fileTable;
-    /* private MyIDictionary <Integer, Integer> heap; */
+    private MyIHeap heap;
     private IStmt initialProgram; //optional field, but good to have
 
     public PrgState(MyIStack <IStmt> exeStack,
             MyIDictionary <String, Integer> symTable,
             MyIList <Integer> stdout,
             MyIDictionary <Integer, MyFile> fileTable,
+            MyIHeap heap,
             IStmt initialProgram) {
         this.exeStack = exeStack;
         this.symTable = symTable;
         this.stdout = stdout;
         this.fileTable = fileTable;
+        this.heap = heap;
         this.initialProgram = initialProgram;
         this.exeStack.push(initialProgram);
     }
@@ -26,6 +28,7 @@ public class PrgState {
         this.symTable = new MyDictionary <String, Integer>();
         this.stdout = new MyList <Integer>();
         this.fileTable = new MyDictionary <Integer, MyFile>();
+        this.heap = new MyHeap();
         this.initialProgram = initialProgram;
         this.exeStack.push(initialProgram);
     }
@@ -35,6 +38,7 @@ public class PrgState {
         return "exeStack:\n" + this.exeStack.toString() +
                "symTable:\n" + this.symTable.toString() +
                "fileTable:\n" + this.fileTable.toString() +
+               "heap:\n" + this.heap.toString() +
                "stdout:\n" + this.stdout.toString();
             
     }
@@ -55,7 +59,11 @@ public class PrgState {
         return this.fileTable;
     }
 
-    public IStmt getinitialProgram() {
+    public MyIHeap getHeap() {
+        return this.heap;
+    }
+
+    public IStmt getInitialProgram() {
         return this.initialProgram;
     }
 
@@ -75,7 +83,11 @@ public class PrgState {
         this.fileTable = fileTable;
     }
 
-    public void setinitialProgram(IStmt initialProgram) {
+    public void setHeap(MyIHeap heap) {
+        this.heap = heap;
+    }
+
+    public void setInitialProgram(IStmt initialProgram) {
         this.initialProgram = initialProgram;
     }
 }

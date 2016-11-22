@@ -11,11 +11,12 @@ public class ReadFileStmt implements IStmt {
     }
 
     @Override
-    public PrgState execute(PrgState state) {
+    public PrgState execute(PrgState state) throws Exception {
         MyIDictionary <Integer, MyFile> fileTable = state.getFileTable();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
+        MyIHeap heap = state.getHeap();
 
-        int fd = this.fd.eval(symTable);
+        int fd = this.fd.eval(symTable, heap);
 
         if(!fileTable.containsKey(fd)) {
             System.err.printf("File descriptor %d does not exist.\n", fd);

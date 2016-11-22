@@ -190,6 +190,35 @@ public class TextMenu {
         return lab5ex2;
     }
 
+    public static IStmt generateExample6() {
+        /* v=10;
+         * new(v,20);
+         * new(a,22);
+         * wH(a,30);
+         * print(a);
+         * print(rH(a));
+         * a=0
+         *
+         * At the end of execution:
+         * Heap={1->20}, SymTable={v->1, a->0} and Out={2,30}
+         */
+
+        IStmt lab6ex1 = new CompStmt(
+                new AssignStmt("v", new ConstExp(10)),
+                new CompStmt(
+                    new NewStmt("v", new ConstExp(20)),
+                    new CompStmt(
+                        new NewStmt("a", new ConstExp(22)),
+                        new CompStmt(
+                            new WriteHeapStmt("a", new ConstExp(30)),
+                            new CompStmt(
+                                new PrintStmt(new VarExp("a")),
+                                new CompStmt(
+                                    new PrintStmt(new ReadHeapExp("a")),
+                                    new AssignStmt("a", new ConstExp(0))))))));
+        return lab6ex1;
+    }
+
     /* public void run() { */
     /*     Scanner scanner = new Scanner(System.in); */
 

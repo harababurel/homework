@@ -15,6 +15,7 @@ public class RunExample extends Command {
             ctrl.allStep();
         } catch(Exception e) {
             System.err.println("Errors occurred when running the program.");
+            System.err.println(e.toString());
             System.exit(1);
         }
     }

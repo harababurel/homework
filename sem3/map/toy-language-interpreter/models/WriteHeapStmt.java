@@ -1,17 +1,17 @@
 package models;
 
-public class AssignStmt implements IStmt {
-    private String id;
+public class WriteHeapStmt implements IStmt {
+    private String var_name;
     private Exp exp;
 
-    public AssignStmt(String id, Exp exp) {
-        this.id = id;
+    public WriteHeapStmt(String var_name, Exp exp) {
+        this.var_name = var_name;
         this.exp = exp;
     }
 
     @Override
     public String toString() {
-        return id + " = " + exp.toString();
+        return "*" + var_name + " = " + exp.toString();
     }
 
     @Override
@@ -20,12 +20,10 @@ public class AssignStmt implements IStmt {
         MyIDictionary <String, Integer> symTable = state.getSymTable();
         MyIHeap heap = state.getHeap();
 
+        int location = symTable.get(var_name);
         int val = this.exp.eval(symTable, heap);
-        // if(symTable.containsKey(id))
-        //     symTable.put(id, val);
-        // else
-        symTable.put(this.id, val);
 
+        heap.write_location(location, val);
         return state;
     }
 }
