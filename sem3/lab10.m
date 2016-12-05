@@ -48,3 +48,14 @@ miu_diff_lo2 = avg1 - avg2 - t2 * sqrt(s1_sq/n1 + s2_sq/n2);
 miu_diff_hi2 = avg1 - avg2 + t2 * sqrt(s1_sq/n1 + s2_sq/n2);
 
 fprintf('confidence interval for the mean difference (sigma1 =/= sigma2): (%3.5f, %3.5f)\n', miu_diff_lo2, miu_diff_hi2);
+
+% CASE 3: for the ratio of two population variances, sigma1^2 / sigma2^2
+
+
+f1 = finv(1 - alpha/2, n1-1, n2-1);
+f2 = finv(    alpha/2, n1-1, n2-1);
+
+lo = (1/f1) * (var1 / var2);
+hi = (1/f2) * (var1 / var2);
+
+fprintf('confidence interval for the variance ratio: (%3.5f, %3.5f)\n', lo, hi);
