@@ -219,6 +219,34 @@ public class TextMenu {
         return lab6ex1;
     }
 
+    public static IStmt generateExample7() {
+        /* v = 6;
+         * (while(v-4) print(v); v=v-1);
+         * print(v);
+         */
+
+        IStmt lab7ex1 = new CompStmt(
+                new AssignStmt("v", new ConstExp(6)),
+                new CompStmt(
+                    new WhileStmt(
+                        new ArithExp(
+                            new VarExp("v"),
+                            new ConstExp(4),
+                            '-'),
+                        new CompStmt(
+                            new PrintStmt(new VarExp("v")),
+                            new AssignStmt(
+                                "v",
+                                new ArithExp(
+                                    new VarExp("v"),
+                                    new ConstExp(1),
+                                    '-')))),
+                    new PrintStmt(new VarExp("v"))));
+
+        return lab7ex1;
+    }
+
+
     /* public void run() { */
     /*     Scanner scanner = new Scanner(System.in); */
 

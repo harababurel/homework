@@ -44,9 +44,9 @@ public class Repository implements IRepository, Serializable {
             out.close();
             fileOut.close();
 
-            System.out.printf("Serialized data is saved in %s\n", filename);
-        } catch(IOException i) {
-            i.printStackTrace();
+            System.out.printf("Serialized data saved as %s\n", filename);
+        } catch(IOException e) {
+            e.printStackTrace();
         }
     }
 

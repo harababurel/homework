@@ -54,9 +54,10 @@ public class Controller {
             System.out.println(state.toString());
             try {
                 this.r.logPrgStateExec();
-
                 this.r.serialize(File.createTempFile("toy_language_interpreter_", ".ser").getAbsolutePath());
-            } catch(IOException e) { ; }
+            } catch(IOException e) {
+                System.out.println(e);
+            }
         }
     }
 }

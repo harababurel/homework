@@ -28,7 +28,7 @@ public class ReadFileStmt implements IStmt, Serializable {
 
         try {
             val = Integer.parseInt(reader.readLine());
-        } catch(Exception e) { 
+        } catch(Exception e) {
             val = 0;
         }
 
