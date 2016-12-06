@@ -1,9 +1,9 @@
 package models;
 import java.io.*;
 
-public class MyFile {
+public class MyFile implements Serializable {
     private String filename;
-    private BufferedReader reader;
+    transient private BufferedReader reader;
 
     public MyFile(String filename, BufferedReader reader) {
         this.filename = filename;

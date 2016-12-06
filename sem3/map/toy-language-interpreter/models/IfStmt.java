@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class IfStmt implements IStmt {
+public class IfStmt implements IStmt, Serializable {
     private Exp exp;
     private IStmt thenStmt, elseStmt;
 

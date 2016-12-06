@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class NewStmt implements IStmt {
+public class NewStmt implements IStmt, Serializable {
     private String var_name;
     private Exp exp;
 

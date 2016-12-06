@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class ArithExp extends Exp {
+public class ArithExp extends Exp implements Serializable {
     private Exp e1, e2;
     private char op;
 

@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class VarExp extends Exp {
+public class VarExp extends Exp implements Serializable {
     private String id;
 
     public VarExp(String id) {

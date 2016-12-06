@@ -1,7 +1,7 @@
 package models;
 import java.io.*;
 
-public class OpenRFileStmt implements IStmt {
+public class OpenRFileStmt implements IStmt, Serializable {
     private String variable; // name of variable
     private String filename;
 

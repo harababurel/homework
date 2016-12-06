@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class ConstExp extends Exp {
+public class ConstExp extends Exp implements Serializable {
     private int value;
 
     public ConstExp(int value) {

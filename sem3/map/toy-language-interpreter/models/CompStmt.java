@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class CompStmt implements IStmt {
+public class CompStmt implements IStmt, Serializable {
     private IStmt fst, snd;
 
     public CompStmt(IStmt fst, IStmt snd) {

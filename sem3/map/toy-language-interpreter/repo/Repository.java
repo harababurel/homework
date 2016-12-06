@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 import java.nio.file.*;
 
-public class Repository implements IRepository {
+public class Repository implements IRepository, Serializable {
     private MyList <PrgState> states;
     private String logFilePath;
 
@@ -32,6 +32,43 @@ public class Repository implements IRepository {
         prepareLogFilePath(logFilePath);
         this.states = new MyList <PrgState>();
         this.states.add(initialState);
+    }
+
+    public void serialize(String filename) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+            out.writeObject(this);
+
+            out.close();
+            fileOut.close();
+
+            System.out.printf("Serialized data is saved in %s\n", filename);
+        } catch(IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    public static Repository deserialize(String filename) {
+        Repository deserializedRepo = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+
+            deserializedRepo = (Repository)in.readObject();
+
+            in.close();
+            fileIn.close();
+
+            System.out.printf("Deserialized repository from %s.\n", filename);
+        } catch(IOException i) {
+            i.printStackTrace();
+        } catch(ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+
+        return deserializedRepo;
     }
 
     public PrgState getCurrentState() {

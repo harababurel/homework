@@ -1,7 +1,7 @@
 package models;
 import java.io.*;
 
-public class ReadFileStmt implements IStmt {
+public class ReadFileStmt implements IStmt, Serializable {
     private Exp fd;
     private String target_var;
 

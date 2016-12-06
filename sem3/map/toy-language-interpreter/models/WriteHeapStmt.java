@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class WriteHeapStmt implements IStmt {
+public class WriteHeapStmt implements IStmt, Serializable {
     private String var_name;
     private Exp exp;
 

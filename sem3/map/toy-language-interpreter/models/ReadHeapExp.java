@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class ReadHeapExp extends Exp {
+public class ReadHeapExp extends Exp implements Serializable {
     private String var_name;
 
     public ReadHeapExp(String var_name) {

@@ -1,7 +1,8 @@
 package models;
 import java.util.*;
+import java.io.*;
 
-public class MyList <T> implements MyIList <T> {
+public class MyList <T> implements MyIList <T>, Serializable  {
     private List <T> l;
 
     public MyList() {

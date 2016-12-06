@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class AssignStmt implements IStmt {
+public class AssignStmt implements IStmt, Serializable {
     private String id;
     private Exp exp;
 

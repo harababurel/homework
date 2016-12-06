@@ -16,7 +16,7 @@ public class Controller {
         this.r = r;
     }
 
-    MyDictionary <Integer,Integer> conservativeGarbageCollector(Collection <Integer> symTableValues, 
+    MyDictionary <Integer,Integer> conservativeGarbageCollector(Collection <Integer> symTableValues,
                                                       MyIHeap heap) {
         MyDictionary <Integer, Integer> new_content = new MyDictionary <Integer, Integer>();
         for(Map.Entry <Integer, Integer> x:heap.entrySet().stream()
@@ -25,8 +25,8 @@ public class Controller {
                                                           .entrySet())
             new_content.put(x.getKey(), x.getValue());
         return new_content;
-    } 
- 
+    }
+
     public PrgState oneStep(PrgState state) throws Exception {
         MyIStack <IStmt> exeStack = state.getExeStack();
 
@@ -42,9 +42,9 @@ public class Controller {
 
         // initial state
         System.out.println(state.toString());
-		try {
-			this.r.logPrgStateExec();
-		} catch(IOException e) { ; }
+        try {
+            this.r.logPrgStateExec();
+        } catch(IOException e) { ; }
 
         while(!state.getExeStack().isEmpty()) {
             oneStep(state);
@@ -52,9 +52,11 @@ public class Controller {
                         state.getSymTable().values(),
                         state.getHeap()));
             System.out.println(state.toString());
-			try {
-				this.r.logPrgStateExec();
-			} catch(IOException e) { ; }
+            try {
+                this.r.logPrgStateExec();
+
+                this.r.serialize(File.createTempFile("toy_language_interpreter_", ".ser").getAbsolutePath());
+            } catch(IOException e) { ; }
         }
     }
 }

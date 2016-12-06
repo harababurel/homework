@@ -1,7 +1,7 @@
 package models;
 import java.io.*;
 
-public class CloseRFileStmt implements IStmt {
+public class CloseRFileStmt implements IStmt, Serializable {
     private Exp fd;
 
     public CloseRFileStmt(Exp fd) {

@@ -138,7 +138,7 @@ public class TextMenu {
          * (if var_c then readFile(var_f,var_c);print(var_c)
          *  else print(0));
          * closeRFile(var_f)
-         */ 
+         */
         IStmt lab5ex1 = new CompStmt(
                 new OpenRFileStmt("var_f", "test.in"),
                 new CompStmt(

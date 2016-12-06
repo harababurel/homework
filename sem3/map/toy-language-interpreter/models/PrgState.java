@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class PrgState {
+public class PrgState implements Serializable {
     private MyIStack <IStmt> exeStack;
     private MyIDictionary <String, Integer> symTable;
     private MyIList <Integer> stdout;

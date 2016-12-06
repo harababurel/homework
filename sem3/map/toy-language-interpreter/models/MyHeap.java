@@ -1,7 +1,8 @@
 package models;
 import java.util.*;
+import java.io.*;
 
-public class MyHeap implements MyIHeap {
+public class MyHeap implements MyIHeap, Serializable {
     private MyDictionary <Integer, Integer> locations;
     private int next_free_location;
 

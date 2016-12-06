@@ -1,6 +1,7 @@
 package models;
+import java.io.*;
 
-public class PrintStmt implements IStmt {
+public class PrintStmt implements IStmt, Serializable {
     private Exp exp;
 
     public PrintStmt(Exp exp) {

@@ -1,8 +1,9 @@
 package models;
 import java.util.*;
+import java.io.*;
 
 
-public class MyStack <T> implements MyIStack <T> {
+public class MyStack <T> implements MyIStack <T>, Serializable {
     private Stack <T> stack;
 
     public MyStack() {
