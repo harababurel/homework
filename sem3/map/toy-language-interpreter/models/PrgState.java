@@ -41,7 +41,7 @@ public class PrgState implements Serializable {
                "fileTable:\n" + this.fileTable.toString() +
                "heap:\n" + this.heap.toString() +
                "stdout:\n" + this.stdout.toString();
-            
+
     }
 
     public MyIStack <IStmt> getExeStack() {
