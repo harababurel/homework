@@ -8,6 +8,7 @@ public class PrgState implements Serializable {
     private MyIDictionary <Integer, MyFile> fileTable;
     private MyIHeap heap;
     private IStmt initialProgram; //optional field, but good to have
+    private int id;
 
     public PrgState(MyIStack <IStmt> exeStack,
             MyIDictionary <String, Integer> symTable,
@@ -36,12 +37,17 @@ public class PrgState implements Serializable {
 
     @Override
     public String toString() {
-        return "exeStack:\n" + this.exeStack.toString() +
+        return "PrgState id = " + Integer.toString(this.id) + "\n" +
+               "exeStack:\n" + this.exeStack.toString() +
                "symTable:\n" + this.symTable.toString() +
                "fileTable:\n" + this.fileTable.toString() +
                "heap:\n" + this.heap.toString() +
                "stdout:\n" + this.stdout.toString();
 
+    }
+
+    public int getID() {
+        return this.id;
     }
 
     public MyIStack <IStmt> getExeStack() {
@@ -68,6 +74,10 @@ public class PrgState implements Serializable {
         return this.initialProgram;
     }
 
+    public void setID(int id) {
+        this.id = id;
+    }
+
     public void setExeStack(MyIStack <IStmt> exeStack) {
         this.exeStack = exeStack;
     }
@@ -90,5 +100,17 @@ public class PrgState implements Serializable {
 
     public void setInitialProgram(IStmt initialProgram) {
         this.initialProgram = initialProgram;
+    }
+
+    public boolean isNotCompleted() {
+        return this.exeStack.isEmpty();
+    }
+
+    public PrgState oneStep() throws Exception {
+        if(!this.isNotCompleted())
+            throw new Exception("Execution stack is empty. Can't oneStep().");
+
+        // execute the top statement
+        return this.exeStack.pop().execute(this);
     }
 }

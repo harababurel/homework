@@ -27,16 +27,6 @@ public class Controller {
         return new_content;
     }
 
-    public PrgState oneStep(PrgState state) throws Exception {
-        MyIStack <IStmt> exeStack = state.getExeStack();
-
-        // if(exeStack.isEmpty())
-            // return null;
-            // throws MyStmtExecException;
-        IStmt currentStmt = exeStack.pop();
-        return currentStmt.execute(state);
-    }
-
     public void allStep() throws Exception {
         PrgState state = r.getCurrentState();
 

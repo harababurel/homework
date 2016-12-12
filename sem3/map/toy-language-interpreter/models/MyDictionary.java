@@ -2,7 +2,7 @@ package models;
 import java.util.*;
 import java.io.*;
 
-public class MyDictionary <K, V> implements MyIDictionary <K, V>, Serializable {
+public class MyDictionary <K, V> implements MyIDictionary <K, V>, Serializable, Cloneable {
     private Map <K, V> map;
 
     public MyDictionary() {

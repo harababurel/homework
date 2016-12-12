@@ -71,22 +71,30 @@ public class Repository implements IRepository, Serializable {
         return deserializedRepo;
     }
 
-    public PrgState getCurrentState() {
+    /* Starting with lab 8, this is no longer used. */
+    /* public PrgState getCurrentState() { */
         // LinkedList implements getLast(), but this is
         // a more general List.
-        return this.states.get(this.states.size()-1);
+        /* return this.states.get(this.states.size()-1); */
+    /* } */
+
+    public MyList <PrgState> getPrgList() {
+        return this.states;
     }
 
-    public void logPrgStateExec() throws IOException {
+    public void setPrgList(MyList <PrgState> newPrgList) {
+        this.states = newPrgList;
+    }
+
+    public void logPrgStateExec(PrgState state) throws IOException {
         try {
-            // TODO: first file open overwrites file.
             PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(this.logFilePath, true)));
 
-            logFile.println(this.getCurrentState().toString());
+            logFile.println(state.toString());
             logFile.close();
         } catch(Exception e) {
-                System.err.println(e);
-                throw e;
+            System.err.println(e);
+            throw e;
         }
     }
 }
