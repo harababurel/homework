@@ -5,7 +5,7 @@ import java.io.*;
 import java.nio.file.*;
 
 public class Repository implements IRepository, Serializable {
-    private MyList <PrgState> states;
+    private List <PrgState> states;
     private String logFilePath;
 
     public void prepareLogFilePath(String logFilePath) {
@@ -25,12 +25,12 @@ public class Repository implements IRepository, Serializable {
 
     public Repository(String logFilePath) {
         prepareLogFilePath(logFilePath);
-        this.states = new MyList <PrgState>();
+        this.states = new LinkedList <PrgState>();
     }
 
     public Repository(String logFilePath, PrgState initialState) {
         prepareLogFilePath(logFilePath);
-        this.states = new MyList <PrgState>();
+        this.states = new LinkedList <PrgState>();
         this.states.add(initialState);
     }
 
@@ -78,15 +78,16 @@ public class Repository implements IRepository, Serializable {
         /* return this.states.get(this.states.size()-1); */
     /* } */
 
-    public MyList <PrgState> getPrgList() {
+    public List <PrgState> getPrgList() {
         return this.states;
     }
 
-    public void setPrgList(MyList <PrgState> newPrgList) {
+    public void setPrgList(List <PrgState> newPrgList) {
         this.states = newPrgList;
     }
 
     public void logPrgStateExec(PrgState state) throws IOException {
+        /* System.out.printf("logPrgState: %d\n", state.getID()); */
         try {
             PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(this.logFilePath, true)));
 

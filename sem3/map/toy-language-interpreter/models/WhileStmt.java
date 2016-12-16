@@ -27,6 +27,6 @@ public class WhileStmt implements IStmt, Serializable {
             exeStack.push(this.stmt);
         }
 
-        return state;
+        return null;
     }
 }

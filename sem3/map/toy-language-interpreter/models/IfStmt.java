@@ -27,6 +27,6 @@ public class IfStmt implements IStmt, Serializable {
         else
             exeStack.push(this.elseStmt);
 
-        return state;
+        return null;
     }
 }

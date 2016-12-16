@@ -36,7 +36,7 @@ public class CloseRFileStmt implements IStmt, Serializable {
 
         fileTable.remove(fd);
 
-        return state;
+        return null;
     }
 
     @Override

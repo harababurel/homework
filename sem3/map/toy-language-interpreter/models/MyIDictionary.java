@@ -12,4 +12,5 @@ public interface MyIDictionary <K, V> {
     int size();
     Collection <V> values();
     Set <Map.Entry <K, V>> entrySet();
+    MyIDictionary <K, V> clone();
 }

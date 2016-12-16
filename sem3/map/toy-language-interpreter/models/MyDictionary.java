@@ -2,11 +2,20 @@ package models;
 import java.util.*;
 import java.io.*;
 
-public class MyDictionary <K, V> implements MyIDictionary <K, V>, Serializable, Cloneable {
+public class MyDictionary <K, V> implements MyIDictionary <K, V>, Serializable {
     private Map <K, V> map;
 
     public MyDictionary() {
         this.map = new HashMap <K, V>();
+    }
+
+    public MyDictionary <K, V> clone() {
+        MyDictionary <K, V> clonedMap = new MyDictionary <K, V>();
+
+        for(Map.Entry <K, V> entry:this.map.entrySet())
+             clonedMap.put(entry.getKey(), entry.getValue());
+
+        return clonedMap;
     }
 
     public void clear() {
@@ -48,6 +57,7 @@ public class MyDictionary <K, V> implements MyIDictionary <K, V>, Serializable, 
     public Set <Map.Entry <K, V>> entrySet() {
         return this.map.entrySet();
     }
+
 
     @Override
     public String toString() {

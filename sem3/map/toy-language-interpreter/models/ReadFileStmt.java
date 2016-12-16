@@ -33,7 +33,7 @@ public class ReadFileStmt implements IStmt, Serializable {
         }
 
         symTable.put(this.target_var, val);
-        return state;
+        return null;
     }
 
     @Override

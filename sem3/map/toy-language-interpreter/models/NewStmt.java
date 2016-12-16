@@ -27,6 +27,6 @@ public class NewStmt implements IStmt, Serializable {
         heap.write_location(new_location, new_value);
         symTable.put(this.var_name, new_location);
 
-        return state;
+        return null;
     }
 }

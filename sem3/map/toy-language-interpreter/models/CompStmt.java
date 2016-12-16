@@ -21,6 +21,6 @@ public class CompStmt implements IStmt, Serializable {
         stack.push(this.snd);
         stack.push(this.fst);
 
-        return state;
+        return null;
     }
 }

@@ -1,10 +1,12 @@
 package models;
 import java.io.*;
+import java.math.*;
+import java.util.*;
 
-public class PrgState implements Serializable {
+public class PrgState implements Serializable, Cloneable {
     private MyIStack <IStmt> exeStack;
     private MyIDictionary <String, Integer> symTable;
-    private MyIList <Integer> stdout;
+    private List <Integer> stdout;
     private MyIDictionary <Integer, MyFile> fileTable;
     private MyIHeap heap;
     private IStmt initialProgram; //optional field, but good to have
@@ -12,7 +14,7 @@ public class PrgState implements Serializable {
 
     public PrgState(MyIStack <IStmt> exeStack,
             MyIDictionary <String, Integer> symTable,
-            MyIList <Integer> stdout,
+            List <Integer> stdout,
             MyIDictionary <Integer, MyFile> fileTable,
             MyIHeap heap,
             IStmt initialProgram) {
@@ -23,16 +25,18 @@ public class PrgState implements Serializable {
         this.heap = heap;
         this.initialProgram = initialProgram;
         this.exeStack.push(initialProgram);
+        this.id = (int)(Math.random() * 100 + 1);
     }
 
     public PrgState(IStmt initialProgram) {
         this.exeStack = new MyStack <IStmt>();
         this.symTable = new MyDictionary <String, Integer>();
-        this.stdout = new MyList <Integer>();
+        this.stdout = new LinkedList <Integer>();
         this.fileTable = new MyDictionary <Integer, MyFile>();
         this.heap = new MyHeap();
         this.initialProgram = initialProgram;
         this.exeStack.push(initialProgram);
+        this.id = (int)(Math.random() * 100 + 1);
     }
 
     @Override
@@ -43,7 +47,6 @@ public class PrgState implements Serializable {
                "fileTable:\n" + this.fileTable.toString() +
                "heap:\n" + this.heap.toString() +
                "stdout:\n" + this.stdout.toString();
-
     }
 
     public int getID() {
@@ -58,7 +61,7 @@ public class PrgState implements Serializable {
         return this.symTable;
     }
 
-    public MyIList <Integer> getStdout() {
+    public List <Integer> getStdout() {
         return this.stdout;
     }
 
@@ -86,7 +89,7 @@ public class PrgState implements Serializable {
         this.symTable = symTable;
     }
 
-    public void setStdout(MyIList <Integer> stdout) {
+    public void setStdout(List <Integer> stdout) {
         this.stdout = stdout;
     }
 
@@ -103,7 +106,7 @@ public class PrgState implements Serializable {
     }
 
     public boolean isNotCompleted() {
-        return this.exeStack.isEmpty();
+        return !this.exeStack.isEmpty();
     }
 
     public PrgState oneStep() throws Exception {

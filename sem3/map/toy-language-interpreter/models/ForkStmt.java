@@ -15,13 +15,17 @@ public class ForkStmt implements IStmt, Serializable {
 
     @Override
     public PrgState execute(PrgState state) throws Exception {
+        PrgState forkedState = new PrgState(
+                new MyStack <IStmt>(),
+                state.getSymTable().clone(),
+                state.getStdout(),
+                state.getFileTable(),
+                state.getHeap(),
+                this.forkedStmt);
 
-        PrgState forkedState = new PrgState(this.ForkStmt);
-        forkedState.setSymTable(state.getSymTable().clone());
-        forkedState.setHeap(state.getHeap());
-        forkedState.setFileTable(state.getFileTable());
-        forkedState.setStdout(state.getStdout());
         forkedState.setID(state.getID() * 10);
+
+        /* System.out.println(forkedState.getExeStack()); */
 
         return forkedState;
     }

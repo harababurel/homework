@@ -1,5 +1,6 @@
 package models;
 import java.io.*;
+import java.util.*;
 
 public class PrintStmt implements IStmt, Serializable {
     private Exp exp;
@@ -16,12 +17,12 @@ public class PrintStmt implements IStmt, Serializable {
     @Override
     public PrgState execute(PrgState state) throws Exception {
         MyIStack <IStmt> stack = state.getExeStack();
-        MyIList <Integer> stdout = state.getStdout();
+        List <Integer> stdout = state.getStdout();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
         MyIHeap heap = state.getHeap();
 
         stdout.add(this.exp.eval(symTable, heap));
 
-        return state;
+        return null;
     }
  }

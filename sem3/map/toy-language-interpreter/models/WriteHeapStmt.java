@@ -25,6 +25,6 @@ public class WriteHeapStmt implements IStmt, Serializable {
         int val = this.exp.eval(symTable, heap);
 
         heap.write_location(location, val);
-        return state;
+        return null;
     }
 }

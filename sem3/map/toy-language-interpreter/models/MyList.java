@@ -9,6 +9,14 @@ public class MyList <T> implements MyIList <T>, Serializable  {
         this.l = new LinkedList <T>();
     }
 
+    public MyList(List <T> l) {
+        this.l = l;
+    }
+
+    public List <T> getList() {
+        return this.l;  // hack: easier to work on this directly
+    }
+
     public boolean add(T value) {
         return this.l.add(value);
     }

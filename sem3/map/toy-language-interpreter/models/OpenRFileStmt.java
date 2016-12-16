@@ -37,7 +37,7 @@ public class OpenRFileStmt implements IStmt, Serializable {
             System.exit(1);
         }
 
-        return state;
+        return null;
     }
 
     @Override

@@ -246,6 +246,31 @@ public class TextMenu {
         return lab7ex1;
     }
 
+    public static IStmt generateExample8() {
+        /* v=10;new(a,22);
+         * fork(wH(a,30);v=32;print(v);print(rH(a)));
+         * print(v);print(rH(a))
+         */
+
+        IStmt lab8ex1 = new CompStmt(
+                new AssignStmt("v", new ConstExp(10)),
+                new CompStmt(
+                    new NewStmt("a", new ConstExp(22)),
+                    new CompStmt(
+                        new ForkStmt(
+                            new CompStmt(
+                                new WriteHeapStmt("a", new ConstExp(30)),
+                                new CompStmt(
+                                    new AssignStmt("v", new ConstExp(32)),
+                                    new CompStmt(
+                                        new PrintStmt(new VarExp("v")),
+                                        new PrintStmt(new ReadHeapExp("a")))))),
+                        new CompStmt(
+                            new PrintStmt(new VarExp("v")),
+                            new PrintStmt(new ReadHeapExp("a"))))));
+
+        return lab8ex1;
+    }
 
     /* public void run() { */
     /*     Scanner scanner = new Scanner(System.in); */

@@ -27,6 +27,6 @@ public class AssignStmt implements IStmt, Serializable {
         // else
         symTable.put(this.id, val);
 
-        return state;
+        return null;
     }
 }
