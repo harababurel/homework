@@ -109,7 +109,6 @@ public class Controller {
                 .filter(p -> p != null)
                 .collect(Collectors.toList());
 
-            /* TODO */
             for(PrgState x:newPrgList) {
                 prgList.add(x);
             }
@@ -117,7 +116,6 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         //prgList.addAll(newPrgList);
 
