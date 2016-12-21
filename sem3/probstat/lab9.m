@@ -35,10 +35,10 @@ clear all;
 
 xs = [99.8 * ones(1, 2), 99.9 * ones(1, 5), 98.0 * ones(1, 3), 100.1 * ones(1, 4), ...
       100.5 * ones(1, 2), 100.0 * ones(1, 2), 100.2 * ones(1, 2)];
-  
+
 confidence_level = input('PROBLEM 2: confidence level = '); % 1 - alfa
 alpha = 1 - confidence_level;
-  
+
 avg = mean(xs);
 n = length(xs);
 
@@ -61,7 +61,7 @@ xs = [1.48 1.26 1.52 1.56 1.48 1.46 ...
       1.51 1.53 1.68 1.37 1.47 1.61 ...
       1.49 1.43 1.64 1.51 1.60 1.65 ...
       1.60 1.64 1.51 1.51 1.53 1.74];
-  
+
 n = length(xs);
 
 confidence_level = input('PROBLEM 3: confidence level = '); % 1 - alfa
