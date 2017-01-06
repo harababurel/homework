@@ -22,7 +22,7 @@ public class TextMenu {
         }
     }
 
-    public void run() {
+    public void run(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         while(true) {

@@ -77,6 +77,23 @@ public class Controller {
         executor.shutdownNow();
     }
 
+    public void allStepGUI() {
+        executor = Executors.newFixedThreadPool(2);
+
+        // remove completed programs
+        List <PrgState> prgList = removeCompletedPrg(r.getPrgList());
+
+        if(prgList.size() == 0) {
+
+            // display a window message saying that the execution terminates
+            executor.shutdownNow();
+        }
+        else {
+            oneStepForAllPrg(prgList);
+            executor.shutdownNow();
+        }
+    }
+
 
     public void oneStepForAllPrg(List <PrgState> prgList) {
         // Log each program state

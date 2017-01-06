@@ -3,11 +3,13 @@ import repo.*;
 import ctrl.*;
 import view.*;
 import view.TextMenu.*;
+import view.GraphicalMenu.*;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        TextMenu menu = new TextMenu();
+        GraphicalMenu menu = new GraphicalMenu();
+        /* TextMenu menu = new TextMenu(); */
 
         String logFilePath = "main.log";
 
@@ -21,6 +23,6 @@ public class Main {
         menu.addCommand(new RunExample("8", "Lab8ex1", TextMenu.generateController(logFilePath, TextMenu.generateExample8())));
         menu.addCommand(new DeserializeCommand());
 
-        menu.run();
+        menu.run(args);
     }
 }
