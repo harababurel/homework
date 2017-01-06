@@ -16,6 +16,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 
 public class FormExample extends Application {
@@ -47,13 +49,31 @@ public class FormExample extends Application {
         TextField usernameTextField = new TextField();
         PasswordField passwordField = new PasswordField();
 
+        Button btn = new Button("Sign in");
+        HBox hbbtn = new HBox(10);
+        hbbtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbbtn.getChildren().add(btn);
+
+
         grid.add(usernameLabel, 0, 1);
         grid.add(usernameTextField, 1, 1);
         grid.add(passwordLabel, 0, 2);
         grid.add(passwordField, 1, 2);
+        grid.add(hbbtn, 1, 4);
 
-
+        /* grid.setGridLinesVisible(true); */
         grid.add(sceneTitle, 0, 0, 2, 1);
+
+        final Text actionTarget = new Text();
+        grid.add(actionTarget, 1, 6);   // not shown yet
+
+        btn.setOnAction(new EventHandler <ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                actionTarget.setFill(Color.FIREBRICK);
+                actionTarget.setText("Button pressed.");
+            }
+        });
 
         primaryStage.setScene(scene);
         primaryStage.show();
