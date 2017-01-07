@@ -69,7 +69,10 @@ public class GraphicalMenu extends Application {
         hbbtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbbtn.getChildren().add(btn);
 
-        ObservableList <String> programs = FXCollections.observableArrayList("pula", "mea");
+        ObservableList <String> programs = FXCollections.observableArrayList("ana", "are", "doua", "mere");
+
+        System.out.println(this.commands.values().size());
+
 
         ListView <String> programList = new ListView <String>(programs);
 
@@ -96,7 +99,8 @@ public class GraphicalMenu extends Application {
 
     }
 
-    public static void run(String[] args) {
+    public void run(String[] args) {
+        System.out.println(this.commands.values().size());
         launch(args);
 
         /*
