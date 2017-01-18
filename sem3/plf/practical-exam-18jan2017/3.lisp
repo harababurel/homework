@@ -38,5 +38,8 @@
 ;(format t "~D~%" (nonNumericAtoms '(A 2 B 3 C D 1)))
 ;(format t "~D~%" (generatePairsWith 'A '(A 2 B 3 C D 1)))
 (format t "~D~%" (solve '(A 2 B 3 C D 1)))
+(format t "~D~%" (solve '(A B C D)))
+(format t "~D~%" (solve '(1 2 3 4 5)))
+(format t "~D~%" (solve '(1 A 2 B 3 4 5 C)))
 
 ;(format t "~D~%" (solve '(A B C D E F G H I J K L)))
