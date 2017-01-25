@@ -6,6 +6,39 @@ import java.util.*;
 import java.util.stream.*;
 import java.util.concurrent.*;
 
+import javafx.fxml.FXML;
+
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.geometry.Pos;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.geometry.Insets;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.control.ListView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Group;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
+
 public class Controller {
     private IRepository r;
     private ExecutorService executor;
@@ -22,6 +55,10 @@ public class Controller {
         return prgList.stream()
                 .filter(p -> p.isNotCompleted())
                 .collect(Collectors.toList());
+    }
+
+    public IRepository getRepo() {
+        return this.r;
     }
 
     /* No longer works for concurrent programs
@@ -84,7 +121,6 @@ public class Controller {
         List <PrgState> prgList = removeCompletedPrg(r.getPrgList());
 
         if(prgList.size() == 0) {
-
             // display a window message saying that the execution terminates
             executor.shutdownNow();
         }

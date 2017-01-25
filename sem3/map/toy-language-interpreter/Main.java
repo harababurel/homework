@@ -43,6 +43,7 @@ public class Main extends Application {
     @Override
     public void start (Stage prgListStage) {
         Stage mainStage = new Stage();
+        Controller ctrl = new Controller();
         /*
         Group root = new Group();
         Scene scene = new Scene(root, 500, 500, Color.PINK);
@@ -61,19 +62,26 @@ public class Main extends Application {
 
         try {
             FXMLLoader prgListLoader = new FXMLLoader();
-            prgListLoader.setLocation(Main.class.getResource("fxml/prglist.fxml"));
+            prgListLoader.setLocation(Main.class.getResource("fxml/PrgList.fxml"));
             AnchorPane prgListLayout = (AnchorPane) prgListLoader.load();
+            PrgListCtrl prgListCtrl = prgListLoader.getController();
+            prgListCtrl.setSuperCtrl(ctrl);
             Scene prgListScene = new Scene(prgListLayout);
             prgListStage.setScene(prgListScene);
             prgListStage.show();
 
 
             FXMLLoader mainLoader = new FXMLLoader();
-            mainLoader.setLocation(Main.class.getResource("fxml/main.fxml"));
+            mainLoader.setLocation(Main.class.getResource("fxml/Main.fxml"));
             AnchorPane mainLayout = (AnchorPane) mainLoader.load();
+            MainCtrl mainCtrl = mainLoader.getController();
+            mainCtrl.setSuperCtrl(ctrl);
             Scene mainScene = new Scene(mainLayout);
             mainStage.setScene(mainScene);
-            mainStage.show();
+
+            prgListCtrl.setMainStage(mainStage);
+
+            //mainStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();

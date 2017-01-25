@@ -10,9 +10,10 @@ public class Repository implements IRepository, Serializable {
 
     public void prepareLogFilePath(String logFilePath) {
         if(logFilePath == "") {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Log file: ");
-            logFilePath = scanner.nextLine();
+            /* Scanner scanner = new Scanner(System.in); */
+            /* System.out.print("Log file: "); */
+            /* logFilePath = scanner.nextLine(); */
+            logFilePath = "defaultLogFile.log";
         }
         this.logFilePath = logFilePath;
 
