@@ -25,16 +25,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.ListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+
 
 public class GraphicalMenu extends Application {
-    private Map <String, Command> commands;
+    private static Map <String, Command> commands = new HashMap <String, Command>();
 
     public GraphicalMenu() {
-        this.commands = new HashMap <String, Command>();
+        if(commands == null) {
+            commands = new HashMap <String, Command>();
+        }
     }
 
-    public void addCommand(Command c) {
-        this.commands.put(c.getKey(), c);
+    public static void addCommand(Command c) {
+        commands.put(c.getKey(), c);
     }
 
 
@@ -52,10 +58,8 @@ public class GraphicalMenu extends Application {
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-
         grid.setHgap(10);
         grid.setVgap(10);
-
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         Scene scene = new Scene(grid, 300, 200);
@@ -69,10 +73,11 @@ public class GraphicalMenu extends Application {
         hbbtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbbtn.getChildren().add(btn);
 
-        ObservableList <String> programs = FXCollections.observableArrayList("ana", "are", "doua", "mere");
+        ObservableList <String> programs = FXCollections.observableArrayList();
 
-        System.out.println(this.commands.values().size());
-
+        // add the initial program entries
+        for(Map.Entry <String, Command> e:commands.entrySet())
+            programs.add(e.getValue().getDescription());
 
         ListView <String> programList = new ListView <String>(programs);
 
@@ -89,8 +94,22 @@ public class GraphicalMenu extends Application {
         btn.setOnAction(new EventHandler <ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                actionTarget.setFill(Color.FIREBRICK);
-                actionTarget.setText("Button pressed.");
+                /* actionTarget.setFill(Color.FIREBRICK); */
+                /* actionTarget.setText("Button pressed."); */
+
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("RunProgram.fxml"));
+                    Stage stage = new Stage();
+                    stage.setTitle("My New Stage Title");
+                    stage.setScene(new Scene(root, 450, 450));
+                    stage.show();
+                    // Hide this current window (if this is what you want)
+                    ((Node)(e.getSource())).getScene().getWindow().hide();
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -99,8 +118,9 @@ public class GraphicalMenu extends Application {
 
     }
 
-    public void run(String[] args) {
-        System.out.println(this.commands.values().size());
+    public static void run(String[] args) {
+        System.out.println(commands.values().size());
+        System.out.println("will launch now");
         launch(args);
 
         /*
