@@ -36,13 +36,30 @@ import javafx.scene.Parent;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
+import javafx.scene.control.Alert;
+import javafx.beans.property.SimpleStringProperty;
+
+/* import static java.util.stream.Collectors.toList; */
 
 
 public class MainCtrl {
     private Controller superCtrl;
 
     @FXML
-    private ListView programStates;
+    private ListView <String> prgStatesView;
+
+    @FXML
+    private TableView <Map.Entry <Integer, Integer>> heapTableView;
+
+    @FXML
+    private TableColumn <Map.Entry <Integer, Integer>, String> heapTableAddressColumn;
+
+    @FXML
+    private TableColumn <Map.Entry <Integer, Integer>, String> heapTableValueColumn;
+
+
+    @FXML
+    private Button runOneStepButton;
 
     /* Initializes the controller class. This method is */
     /* automatically called */
@@ -50,21 +67,80 @@ public class MainCtrl {
     @FXML
     private void initialize() {
         System.out.println("main window controller initialized");
+
+        heapTableAddressColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getKey() + ""));
+
+        heapTableValueColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getValue() + ""));
     }
 
     public void update() {
         populatePrgStates();
+
+        int index = prgStatesView.getFocusModel().getFocusedIndex();
+
+        if (index < 0 && !prgStatesView.getItems().isEmpty()) {
+            prgStatesView.getFocusModel().focus(0);
+            index = 0;
+        }
+
+        populateHeapTable(index);
+
     }
 
     private void populatePrgStates() {
         List <PrgState> programs = superCtrl.getRepo().getPrgList();
+
         ObservableList<String> shownItems = FXCollections.observableArrayList(
-                programs.stream().map(p -> "Program #" + p.getID()).collect(Collectors.toList())
+                programs.stream()
+                        .map(p -> "Program #" + p.getID())
+                        .collect(Collectors.toList())
         );
 
         /* programStatesTitle.setText("Program States: " + programs.size()); */
-        programStates.setItems(shownItems);
-        programStates.refresh();
+        this.prgStatesView.setItems(shownItems);
+        this.prgStatesView.refresh();
+    }
+
+    private void populateHeapTable(int index) {
+        ObservableList <Map.Entry<Integer, Integer>> shownItems;
+
+        if (index == -1) {
+            shownItems = FXCollections.observableArrayList(new ArrayList<>());
+        } else {
+            List <PrgState> programs = superCtrl.getRepo().getPrgList();
+            PrgState program = programs.get(index);
+            /* List <Map.Entry <Integer, Integer>> elements = new ArrayList(program.getHeap().entrySet()); */
+
+            shownItems = FXCollections.observableArrayList(program.getHeap().entrySet());
+        }
+
+        for(Map.Entry <Integer, Integer> entry:shownItems) {
+            System.out.println(entry);
+        }
+
+        this.heapTableView.setItems(shownItems);
+        this.heapTableView.refresh();
+    }
+
+    @FXML
+    private void handleRunOneStep() {
+        System.out.println("one step button was pressed.");
+        try {
+            superCtrl.oneStepGUI();
+        } catch (Exception e) {
+            showMessage(e.toString());
+        }
+
+        update();
+    }
+
+    static void showMessage(String text) {
+        Alert message = new Alert(Alert.AlertType.INFORMATION);
+        message.setTitle("Message");
+        message.setContentText(text);
+        message.showAndWait();
     }
 
     public void setSuperCtrl(Controller ctrl) {

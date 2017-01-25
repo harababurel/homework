@@ -68,7 +68,6 @@ public class Main extends Application {
             prgListCtrl.setSuperCtrl(ctrl);
             Scene prgListScene = new Scene(prgListLayout);
             prgListStage.setScene(prgListScene);
-            prgListStage.show();
 
 
             FXMLLoader mainLoader = new FXMLLoader();
@@ -82,6 +81,7 @@ public class Main extends Application {
             prgListCtrl.setMainCtrl(mainCtrl);
             prgListCtrl.setMainStage(mainStage);
 
+            prgListStage.show();
             //mainStage.show();
 
         } catch (Exception e) {

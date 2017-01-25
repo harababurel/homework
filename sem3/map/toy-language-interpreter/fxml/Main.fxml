@@ -11,10 +11,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ctrl.MainCtrl">
    <children>
-      <TableView layoutX="14.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0">
+      <TableView fx:id="heapTableView" layoutX="14.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="address" />
-          <TableColumn prefWidth="75.0" text="value" />
+          <TableColumn fx:id="heapTableAddressColumn" prefWidth="75.0" text="address" />
+          <TableColumn fx:id="heapTableValueColumn" prefWidth="75.0" text="value" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -33,21 +33,21 @@
          </columnResizePolicy>
       </TableView>
       <Label layoutX="358.0" layoutY="43.0" text="FileTable" />
-      <ListView fx:id="programStates" layoutX="528.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
+      <ListView fx:id="prgStatesView" layoutX="528.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
       <Label layoutX="528.0" layoutY="45.0" text="PrgStates" />
       <ListView layoutX="359.0" layoutY="407.0" prefHeight="179.0" prefWidth="329.0" />
       <Label layoutX="359.0" layoutY="384.0" text="ExeStack of PrgState" />
       <Label layoutX="14.0" layoutY="384.0" text="SymTable of PrgState" />
-      <TableView layoutX="14.0" layoutY="405.0" prefHeight="179.0" prefWidth="329.0">
+      <TableView fx:id="symTableView" layoutX="14.0" layoutY="405.0" prefHeight="179.0" prefWidth="329.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="varname" />
-            <TableColumn prefWidth="75.0" text="value" />
+            <TableColumn fx:id="symTableVarnameColumn" prefWidth="75.0" text="varname" />
+            <TableColumn fx:id="symTableValueColumn" prefWidth="75.0" text="value" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="582.0" layoutY="605.0" mnemonicParsing="false" text="Run one step" />
+      <Button fx:id="runOneStepButton" layoutX="582.0" layoutY="605.0" mnemonicParsing="false" onAction="#handleRunOneStep" text="Run one step" />
       <TextField layoutX="16.0" layoutY="605.0" />
    </children>
    <padding>

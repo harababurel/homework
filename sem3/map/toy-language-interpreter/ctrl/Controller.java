@@ -39,9 +39,10 @@ import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 
+
 public class Controller {
     private IRepository r;
-    private ExecutorService executor;
+    private ExecutorService executor = Executors.newFixedThreadPool(2);
 
     public Controller() {
         this.r = new Repository("");
@@ -114,7 +115,7 @@ public class Controller {
         executor.shutdownNow();
     }
 
-    public void allStepGUI() {
+    public void oneStepGUI() throws Exception {
         executor = Executors.newFixedThreadPool(2);
 
         // remove completed programs
@@ -123,6 +124,7 @@ public class Controller {
         if(prgList.size() == 0) {
             // display a window message saying that the execution terminates
             executor.shutdownNow();
+            throw new Exception("Execution finished.");
         }
         else {
             oneStepForAllPrg(prgList);
@@ -150,6 +152,7 @@ public class Controller {
             .collect(Collectors.toList());
 
         try {
+            /* System.out.printf("call list are %d elemente\n", callList.size()); */
             List <PrgState> newPrgList = executor.invokeAll(callList).stream()
                 .map(future -> {
                     try {
@@ -162,6 +165,7 @@ public class Controller {
                 .filter(p -> p != null)
                 .collect(Collectors.toList());
 
+            /* System.out.printf("newPrgList are %d elemente\n", newPrgList.size()); */
             for(PrgState x:newPrgList) {
                 prgList.add(x);
             }
