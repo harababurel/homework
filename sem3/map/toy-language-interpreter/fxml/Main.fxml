@@ -23,10 +23,10 @@
       <Label layoutX="14.0" layoutY="45.0" text="HeapTable" />
       <ListView layoutX="187.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
       <Label layoutX="187.0" layoutY="43.0" text="Out" />
-      <TableView layoutX="358.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0">
+      <TableView fx:id="fileTableView" layoutX="358.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="fd" />
-            <TableColumn prefWidth="75.0" text="filename" />
+            <TableColumn fx:id="fileTableFdColumn" prefWidth="75.0" text="fd" />
+            <TableColumn fx:id="fileTableFilenameColumn" prefWidth="75.0" text="filename" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

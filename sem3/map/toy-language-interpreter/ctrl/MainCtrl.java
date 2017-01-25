@@ -62,6 +62,15 @@ public class MainCtrl {
     private TableColumn <Map.Entry <Integer, Integer>, String> heapTableValueColumn;
 
     @FXML
+    private TableView <Map.Entry <Integer, String>> fileTableView;
+
+    @FXML
+    private TableColumn <Map.Entry <Integer, String>, String> fileTableFdColumn;
+
+    @FXML
+    private TableColumn <Map.Entry <Integer, String>, String> fileTableFilenameColumn;
+
+    @FXML
     private TableView <Map.Entry <String, Integer>> symTableView;
 
     @FXML
@@ -87,6 +96,12 @@ public class MainCtrl {
         heapTableValueColumn.setCellValueFactory(
             p -> new SimpleStringProperty(p.getValue().getValue() + ""));
 
+        fileTableFdColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getKey() + ""));
+
+        fileTableFilenameColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getValue() + ""));
+
         symTableVarnameColumn.setCellValueFactory(
             p -> new SimpleStringProperty(p.getValue().getKey() + ""));
 
@@ -107,6 +122,7 @@ public class MainCtrl {
 
         populateHeapTable(index);
         populateSymTable(index);
+        populateFileTable(index);
         populateExeStack(index);
     }
 
@@ -167,6 +183,35 @@ public class MainCtrl {
         this.heapTableView.setItems(shownItems);
         this.heapTableView.refresh();
     }
+
+    private void populateFileTable(int index) {
+        ObservableList <Map.Entry <Integer, String>> shownItems;
+
+        if (index == -1) {
+            shownItems = FXCollections.observableArrayList(new ArrayList<>());
+        } else {
+            List <PrgState> programs = superCtrl.getRepo().getPrgList();
+            PrgState program = programs.get(index);
+
+            Map <Integer, String> processedItems = new HashMap <Integer, String>();
+
+            program.getFileTable()
+                   .entrySet()
+                   .stream().
+                   forEach(p -> processedItems.put(p.getKey(), p.getValue().getFilename()));
+
+            shownItems = FXCollections.observableArrayList(new ArrayList<>());
+            //TODO: make this work
+            //shownItems = FXCollections.observableArrayList(processedItems);
+        }
+
+        /* for(Map.Entry <Integer, Integer> entry:shownItems) */
+        /*     System.out.println(entry); */
+
+        this.fileTableView.setItems(shownItems);
+        this.fileTableView.refresh();
+    }
+
 
     private void populateSymTable(int index) {
         ObservableList <Map.Entry<String, Integer>> shownItems;
