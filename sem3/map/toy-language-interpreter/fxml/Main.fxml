@@ -33,7 +33,7 @@
          </columnResizePolicy>
       </TableView>
       <Label layoutX="358.0" layoutY="43.0" text="FileTable" />
-      <ListView layoutX="528.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
+      <ListView fx:id="programStates" layoutX="528.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
       <Label layoutX="528.0" layoutY="45.0" text="PrgStates" />
       <ListView layoutX="359.0" layoutY="407.0" prefHeight="179.0" prefWidth="329.0" />
       <Label layoutX="359.0" layoutY="384.0" text="ExeStack of PrgState" />

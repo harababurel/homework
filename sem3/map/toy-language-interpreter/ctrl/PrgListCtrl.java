@@ -42,7 +42,7 @@ import javafx.scene.shape.Circle;
 
 public class PrgListCtrl {
     private Controller superCtrl;
-    /* private MainCtrl mainCtrl; */
+    private MainCtrl mainCtrl;
     private Stage mainStage;
     @FXML
     private ListView prgStateList;
@@ -80,7 +80,6 @@ public class PrgListCtrl {
     }
 
 
-
     @FXML
     private void handleRunButton() {
         System.out.println("run button was clicked");
@@ -101,13 +100,18 @@ public class PrgListCtrl {
         this.superCtrl.getRepo().setPrgList(
                 Arrays.asList(new PrgState(chosenProgram)));
 
-        //mainCtrl.update();
+        this.mainCtrl.update();
         mainStage.show();
     }
 
     public void setSuperCtrl(Controller ctrl) {
         this.superCtrl = ctrl;
     }
+
+    public void setMainCtrl(MainCtrl mainCtrl) {
+        this.mainCtrl = mainCtrl;
+    }
+
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;

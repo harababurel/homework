@@ -79,6 +79,7 @@ public class Main extends Application {
             Scene mainScene = new Scene(mainLayout);
             mainStage.setScene(mainScene);
 
+            prgListCtrl.setMainCtrl(mainCtrl);
             prgListCtrl.setMainStage(mainStage);
 
             //mainStage.show();

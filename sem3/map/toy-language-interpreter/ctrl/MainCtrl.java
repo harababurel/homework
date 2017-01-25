@@ -1,6 +1,9 @@
 package ctrl;
 
+import models.*;
+
 import java.util.*;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 
 import javafx.application.Application;
@@ -38,6 +41,9 @@ import javafx.scene.shape.Circle;
 public class MainCtrl {
     private Controller superCtrl;
 
+    @FXML
+    private ListView programStates;
+
     /* Initializes the controller class. This method is */
     /* automatically called */
     /* after the fxml file has been loaded. */
@@ -46,6 +52,20 @@ public class MainCtrl {
         System.out.println("main window controller initialized");
     }
 
+    public void update() {
+        populatePrgStates();
+    }
+
+    private void populatePrgStates() {
+        List <PrgState> programs = superCtrl.getRepo().getPrgList();
+        ObservableList<String> shownItems = FXCollections.observableArrayList(
+                programs.stream().map(p -> "Program #" + p.getID()).collect(Collectors.toList())
+        );
+
+        /* programStatesTitle.setText("Program States: " + programs.size()); */
+        programStates.setItems(shownItems);
+        programStates.refresh();
+    }
 
     public void setSuperCtrl(Controller ctrl) {
         this.superCtrl = ctrl;
