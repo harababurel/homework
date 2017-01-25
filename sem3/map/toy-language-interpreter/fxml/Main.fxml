@@ -35,7 +35,7 @@
       <Label layoutX="358.0" layoutY="43.0" text="FileTable" />
       <ListView fx:id="prgStatesView" layoutX="528.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
       <Label layoutX="528.0" layoutY="45.0" text="PrgStates" />
-      <ListView layoutX="359.0" layoutY="407.0" prefHeight="179.0" prefWidth="329.0" />
+      <ListView fx:id="exeStackView" layoutX="359.0" layoutY="407.0" prefHeight="179.0" prefWidth="329.0" />
       <Label layoutX="359.0" layoutY="384.0" text="ExeStack of PrgState" />
       <Label layoutX="14.0" layoutY="384.0" text="SymTable of PrgState" />
       <TableView fx:id="symTableView" layoutX="14.0" layoutY="405.0" prefHeight="179.0" prefWidth="329.0">

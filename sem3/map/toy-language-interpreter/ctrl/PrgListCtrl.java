@@ -44,8 +44,9 @@ public class PrgListCtrl {
     private Controller superCtrl;
     private MainCtrl mainCtrl;
     private Stage mainStage;
+
     @FXML
-    private ListView prgStateList;
+    private ListView prgStatesView;
 
     @FXML
     private Button runButton;
@@ -55,7 +56,6 @@ public class PrgListCtrl {
     /* after the fxml file has been loaded. */
     @FXML
     private void initialize() {
-        System.out.println("pulapulapula");
         populatePrgList();
     }
 
@@ -76,7 +76,7 @@ public class PrgListCtrl {
             programs.stream().map(p -> p.toString()).collect(Collectors.toList())
         );
 
-        prgStateList.setItems(shownItems);
+        prgStatesView.setItems(shownItems);
     }
 
 
@@ -84,7 +84,7 @@ public class PrgListCtrl {
     private void handleRunButton() {
         System.out.println("run button was clicked");
 
-        int chosenProgramIndex = prgStateList.getSelectionModel().getSelectedIndex() + 1;
+        int chosenProgramIndex = prgStatesView.getSelectionModel().getSelectedIndex() + 1;
         IStmt chosenProgram = null;
         switch(chosenProgramIndex) {
             case 1: chosenProgram = TextMenu.generateExample1(); break;

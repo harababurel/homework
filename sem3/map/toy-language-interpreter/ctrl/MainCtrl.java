@@ -3,6 +3,7 @@ package ctrl;
 import models.*;
 
 import java.util.*;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 
@@ -49,6 +50,9 @@ public class MainCtrl {
     private ListView <String> prgStatesView;
 
     @FXML
+    private ListView <String> exeStackView;
+
+    @FXML
     private TableView <Map.Entry <Integer, Integer>> heapTableView;
 
     @FXML
@@ -56,6 +60,15 @@ public class MainCtrl {
 
     @FXML
     private TableColumn <Map.Entry <Integer, Integer>, String> heapTableValueColumn;
+
+    @FXML
+    private TableView <Map.Entry <String, Integer>> symTableView;
+
+    @FXML
+    private TableColumn <Map.Entry <String, Integer>, String> symTableVarnameColumn;
+
+    @FXML
+    private TableColumn <Map.Entry <String, Integer>, String> symTableValueColumn;
 
 
     @FXML
@@ -73,6 +86,13 @@ public class MainCtrl {
 
         heapTableValueColumn.setCellValueFactory(
             p -> new SimpleStringProperty(p.getValue().getValue() + ""));
+
+        symTableVarnameColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getKey() + ""));
+
+        symTableValueColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getValue() + ""));
+
     }
 
     public void update() {
@@ -86,7 +106,8 @@ public class MainCtrl {
         }
 
         populateHeapTable(index);
-
+        populateSymTable(index);
+        populateExeStack(index);
     }
 
     private void populatePrgStates() {
@@ -103,6 +124,30 @@ public class MainCtrl {
         this.prgStatesView.refresh();
     }
 
+    private void populateExeStack(int index) {
+        ObservableList <String> shownItems;
+
+        if (index == -1) {
+            shownItems = FXCollections.observableArrayList(new ArrayList<>());
+        } else {
+            List <PrgState> programs = superCtrl.getRepo().getPrgList();
+            PrgState program = programs.get(index);
+
+            shownItems = FXCollections.observableArrayList(
+                    program.getExeStack().getStack()
+                                         .stream()
+                                         .map(p -> p.toString())
+                                         .collect(Collectors.toList()));
+
+            Collections.reverse(shownItems);
+        }
+
+        exeStackView.setItems(shownItems);
+        exeStackView.refresh();
+    }
+
+
+
     private void populateHeapTable(int index) {
         ObservableList <Map.Entry<Integer, Integer>> shownItems;
 
@@ -116,13 +161,29 @@ public class MainCtrl {
             shownItems = FXCollections.observableArrayList(program.getHeap().entrySet());
         }
 
-        for(Map.Entry <Integer, Integer> entry:shownItems) {
-            System.out.println(entry);
-        }
+        /* for(Map.Entry <Integer, Integer> entry:shownItems) */
+        /*     System.out.println(entry); */
 
         this.heapTableView.setItems(shownItems);
         this.heapTableView.refresh();
     }
+
+    private void populateSymTable(int index) {
+        ObservableList <Map.Entry<String, Integer>> shownItems;
+
+        if (index == -1) {
+            shownItems = FXCollections.observableArrayList(new ArrayList<>());
+        } else {
+            List <PrgState> programs = superCtrl.getRepo().getPrgList();
+            PrgState program = programs.get(index);
+
+            shownItems = FXCollections.observableArrayList(program.getSymTable().entrySet());
+        }
+
+        this.symTableView.setItems(shownItems);
+        this.symTableView.refresh();
+    }
+
 
     @FXML
     private void handleRunOneStep() {

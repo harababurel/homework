@@ -30,4 +30,8 @@ public class MyStack <T> implements MyIStack <T>, Serializable {
         }
         return ret;
     }
+
+    public Stack <T> getStack() {
+        return this.stack;
+    }
 }
