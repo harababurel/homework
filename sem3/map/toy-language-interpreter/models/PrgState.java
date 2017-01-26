@@ -6,6 +6,7 @@ import java.util.*;
 public class PrgState implements Serializable, Cloneable {
     private MyIStack <IStmt> exeStack;
     private MyIDictionary <String, Integer> symTable;
+    private MyIDictionary <Integer, Integer> latchTable;
     private List <Integer> stdout;
     private MyIDictionary <Integer, MyFile> fileTable;
     private MyIHeap heap;
@@ -14,12 +15,14 @@ public class PrgState implements Serializable, Cloneable {
 
     public PrgState(MyIStack <IStmt> exeStack,
             MyIDictionary <String, Integer> symTable,
+            MyIDictionary <Integer, Integer> latchTable,
             List <Integer> stdout,
             MyIDictionary <Integer, MyFile> fileTable,
             MyIHeap heap,
             IStmt initialProgram) {
         this.exeStack = exeStack;
         this.symTable = symTable;
+        this.latchTable = latchTable;
         this.stdout = stdout;
         this.fileTable = fileTable;
         this.heap = heap;
@@ -31,6 +34,7 @@ public class PrgState implements Serializable, Cloneable {
     public PrgState(IStmt initialProgram) {
         this.exeStack = new MyStack <IStmt>();
         this.symTable = new MyDictionary <String, Integer>();
+        this.latchTable = new MyDictionary <Integer, Integer>();
         this.stdout = new LinkedList <Integer>();
         this.fileTable = new MyDictionary <Integer, MyFile>();
         this.heap = new MyHeap();
@@ -44,6 +48,7 @@ public class PrgState implements Serializable, Cloneable {
         return "PrgState id = " + Integer.toString(this.id) + "\n" +
                "exeStack:\n" + this.exeStack.toString() +
                "symTable:\n" + this.symTable.toString() +
+               "latchTable:\n" + this.latchTable.toString() +
                "fileTable:\n" + this.fileTable.toString() +
                "heap:\n" + this.heap.toString() +
                "stdout:\n" + this.stdout.toString();
@@ -59,6 +64,10 @@ public class PrgState implements Serializable, Cloneable {
 
     public MyIDictionary <String, Integer> getSymTable() {
         return this.symTable;
+    }
+
+    public MyIDictionary <Integer, Integer> getLatchTable() {
+        return this.latchTable;
     }
 
     public List <Integer> getStdout() {
@@ -88,6 +97,11 @@ public class PrgState implements Serializable, Cloneable {
     public void setSymTable(MyIDictionary <String, Integer> symTable) {
         this.symTable = symTable;
     }
+
+    public void setLatchTable(MyIDictionary <Integer, Integer> latchTable) {
+        this.latchTable = latchTable;
+    }
+
 
     public void setStdout(List <Integer> stdout) {
         this.stdout = stdout;

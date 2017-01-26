@@ -307,6 +307,65 @@ public class TextMenu {
         return practicalExamStmt;
     }
 
+    public static IStmt generateExample10() {
+        /* new(v1,2);new(v2,3);new(v3,4);newLatch(cnt,rH(v2)); */
+        /* fork( */
+        /*     wh(v1, rh(v1)*10); */
+        /*     print(rh(v1)); */
+        /*     countDown(cnt) */
+        /* ); */
+        /* fork(wh(v2,rh(v2)*10);print(rh(v2));countDown(cnt)); */
+        /* fork(wh(v3,rh(v3)*10);print(rh(v3));countDown(cnt)); */
+        /* await(cnt); */
+        /* print(cnt); */
+        /* countDown(cnt); */
+        /* print(cnt) */
+
+        IStmt practicalExamStmt = new CompStmt(
+                new NewStmt("v1", new ConstExp(2)),
+                new CompStmt(
+                    new NewStmt("v2", new ConstExp(3)),
+                    new CompStmt(
+                        new NewStmt("v3", new ConstExp(4)),
+                        new CompStmt(
+                            new LatchStmt("cnt", new ReadHeapExp("v2")),
+                            new CompStmt(
+                                new ForkStmt(
+                                    new CompStmt(
+                                        new WriteHeapStmt("v1", new ArithExp(new ReadHeapExp("v1"), new ConstExp(10), '*')),
+                                        new CompStmt(
+                                            new PrintStmt(new ReadHeapExp("v1")),
+                                            new CountdownStmt("cnt")))),
+                                new CompStmt(
+                                    new ForkStmt(
+                                        new CompStmt(
+                                            new WriteHeapStmt("v2", new ArithExp(new ReadHeapExp("v2"), new ConstExp(10), '*')),
+                                            new CompStmt(
+                                                new PrintStmt(new ReadHeapExp("v2")),
+                                                new CountdownStmt("cnt")))),
+                                    new CompStmt(
+                                        new ForkStmt(
+                                            new CompStmt(
+                                                new WriteHeapStmt("v3", new ArithExp(new ReadHeapExp("v3"), new ConstExp(10), '*')),
+                                                new CompStmt(
+                                                    new PrintStmt(new ReadHeapExp("v3")),
+                                                    new CountdownStmt("cnt")))),
+                                        new CompStmt(
+                                            new AwaitStmt("cnt"),
+                                            new CompStmt(
+                                                new PrintStmt(new ReadHeapExp("cnt")),
+                                                /* new PrintStmt(new VarExp("cnt")), */
+
+                                                new CompStmt(
+                                                    new CountdownStmt("cnt"),
+                                                    new PrintStmt(new ReadHeapExp("cnt"))
+                                                    /* new PrintStmt(new VarExp("cnt")) */
+                                                    ))))))))));
+
+        return practicalExamStmt;
+    }
+
+
         /* v=10;new(a,22);
     /* public void run() { */
     /*     Scanner scanner = new Scanner(System.in); */

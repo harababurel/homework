@@ -74,6 +74,15 @@ public class MainCtrl {
     private TableColumn <Map.Entry <Integer, String>, String> fileTableFilenameColumn;
 
     @FXML
+    private TableView <Map.Entry <Integer, Integer>> latchTableView;
+
+    @FXML
+    private TableColumn <Map.Entry <Integer, Integer>, String> latchTableLocationColumn;
+
+    @FXML
+    private TableColumn <Map.Entry <Integer, Integer>, String> latchTableValueColumn;
+
+    @FXML
     private TableView <Map.Entry <String, Integer>> symTableView;
 
     @FXML
@@ -105,6 +114,12 @@ public class MainCtrl {
         fileTableFilenameColumn.setCellValueFactory(
             p -> new SimpleStringProperty(p.getValue().getValue() + ""));
 
+        latchTableLocationColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getKey() + ""));
+
+        latchTableValueColumn.setCellValueFactory(
+            p -> new SimpleStringProperty(p.getValue().getValue() + ""));
+
         symTableVarnameColumn.setCellValueFactory(
             p -> new SimpleStringProperty(p.getValue().getKey() + ""));
 
@@ -124,6 +139,7 @@ public class MainCtrl {
         }
 
         populateHeapTable(index);
+        populateLatchTable(index);
         populateSymTable(index);
         populateFileTable(index);
         populateExeStack(index);
@@ -209,6 +225,28 @@ public class MainCtrl {
         this.heapTableView.setItems(shownItems);
         this.heapTableView.refresh();
     }
+
+    private void populateLatchTable(int index) {
+        ObservableList <Map.Entry<Integer, Integer>> shownItems;
+
+        if (index == -1) {
+            shownItems = FXCollections.observableArrayList(new ArrayList<>());
+        } else {
+            List <PrgState> programs = superCtrl.getRepo().getPrgList();
+            PrgState program = programs.get(index);
+            /* List <Map.Entry <Integer, Integer>> elements = new ArrayList(program.getHeap().entrySet()); */
+
+            shownItems = FXCollections.observableArrayList(program.getLatchTable().entrySet());
+        }
+
+        /* for(Map.Entry <Integer, Integer> entry:shownItems) */
+        /*     System.out.println(entry); */
+
+        this.latchTableView.setItems(shownItems);
+        this.latchTableView.refresh();
+    }
+
+
 
     private void populateFileTable(int index) {
         ObservableList <Map.Entry <Integer, String>> shownItems;
