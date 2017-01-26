@@ -71,6 +71,7 @@ public class PrgListCtrl {
         programs.add(TextMenu.generateExample6());
         programs.add(TextMenu.generateExample7());
         programs.add(TextMenu.generateExample8());
+        programs.add(TextMenu.generateExample9());
 
         ObservableList<String> shownItems = FXCollections.observableArrayList(
             programs.stream().map(p -> p.toString()).collect(Collectors.toList())
@@ -95,6 +96,7 @@ public class PrgListCtrl {
             case 6: chosenProgram = TextMenu.generateExample6(); break;
             case 7: chosenProgram = TextMenu.generateExample7(); break;
             case 8: chosenProgram = TextMenu.generateExample8(); break;
+            case 9: chosenProgram = TextMenu.generateExample9(); break;
         }
 
         this.superCtrl.getRepo().setPrgList(

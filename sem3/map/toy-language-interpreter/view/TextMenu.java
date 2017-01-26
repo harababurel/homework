@@ -272,6 +272,42 @@ public class TextMenu {
         return lab8ex1;
     }
 
+    public static IStmt generateExample9() {
+        /* v=0; */
+        /* (repeat (fork(print(v);v=v-1);v=v+1) until v==3); */
+        /* x=1;y=2;z=3;w=4; */
+        /* print(v*10) */
+
+        IStmt practicalExamStmt = new CompStmt(
+                new AssignStmt("v", new ConstExp(0)),
+                new CompStmt(
+                    new RepeatStmt(
+                        new CompStmt(
+                            new ForkStmt(
+                                new CompStmt(
+                                    new PrintStmt(new VarExp("v")),
+                                    new AssignStmt("v", new ArithExp(new VarExp("v"), new ConstExp(1), '-'))
+                                )
+                            ),
+                            new AssignStmt("v", new ArithExp(new VarExp("v"), new ConstExp(1), '+'))
+                        ),
+                        new CmpExp(new VarExp("v"), "==", new ConstExp(3))),
+                    new CompStmt(
+                        new AssignStmt("x", new ConstExp(1)),
+                        new CompStmt(
+                            new AssignStmt("y", new ConstExp(2)),
+                            new CompStmt(
+                                new AssignStmt("z", new ConstExp(3)),
+                                new CompStmt(
+                                    new AssignStmt("w", new ConstExp(4)),
+                                    new PrintStmt(new ArithExp(new VarExp("v"), new ConstExp(10), '*'))))))));
+
+
+
+        return practicalExamStmt;
+    }
+
+        /* v=10;new(a,22);
     /* public void run() { */
     /*     Scanner scanner = new Scanner(System.in); */
 
