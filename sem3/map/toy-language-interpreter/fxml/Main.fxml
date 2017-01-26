@@ -21,7 +21,7 @@
          </columnResizePolicy>
       </TableView>
       <Label layoutX="14.0" layoutY="45.0" text="HeapTable" />
-      <ListView layoutX="187.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
+      <ListView fx:id="outView" layoutX="187.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
       <Label layoutX="187.0" layoutY="43.0" text="Out" />
       <TableView fx:id="fileTableView" layoutX="358.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0">
          <columns>
@@ -33,7 +33,7 @@
          </columnResizePolicy>
       </TableView>
       <Label layoutX="358.0" layoutY="43.0" text="FileTable" />
-      <ListView fx:id="prgStatesView" layoutX="528.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" />
+      <ListView fx:id="prgStatesView" layoutX="528.0" layoutY="66.0" prefHeight="303.0" prefWidth="159.0" AnchorPane.leftAnchor="513.0" AnchorPane.rightAnchor="31.0" />
       <Label layoutX="528.0" layoutY="45.0" text="PrgStates" />
       <ListView fx:id="exeStackView" layoutX="359.0" layoutY="407.0" prefHeight="179.0" prefWidth="329.0" />
       <Label layoutX="359.0" layoutY="384.0" text="ExeStack of PrgState" />
@@ -48,7 +48,7 @@
          </columnResizePolicy>
       </TableView>
       <Button fx:id="runOneStepButton" layoutX="582.0" layoutY="605.0" mnemonicParsing="false" onAction="#handleRunOneStep" text="Run one step" />
-      <TextField layoutX="16.0" layoutY="605.0" />
+      <TextField editable="false" layoutX="16.0" layoutY="605.0" prefHeight="26.0" prefWidth="184.0" text="Toy Language Interpreter" />
    </children>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

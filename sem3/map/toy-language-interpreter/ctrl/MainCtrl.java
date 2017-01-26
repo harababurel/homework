@@ -50,6 +50,9 @@ public class MainCtrl {
     private ListView <String> prgStatesView;
 
     @FXML
+    private ListView <String> outView;
+
+    @FXML
     private ListView <String> exeStackView;
 
     @FXML
@@ -124,6 +127,7 @@ public class MainCtrl {
         populateSymTable(index);
         populateFileTable(index);
         populateExeStack(index);
+        populateOut(index);
     }
 
     private void populatePrgStates() {
@@ -131,7 +135,8 @@ public class MainCtrl {
 
         ObservableList<String> shownItems = FXCollections.observableArrayList(
                 programs.stream()
-                        .map(p -> "Program #" + p.getID())
+                        .map(//p -> "Program #" + p.getID())
+                             p -> p.toString())
                         .collect(Collectors.toList())
         );
 
@@ -139,6 +144,27 @@ public class MainCtrl {
         this.prgStatesView.setItems(shownItems);
         this.prgStatesView.refresh();
     }
+
+    private void populateOut(int index) {
+        ObservableList <String> shownItems;
+
+        if (index == -1) {
+            shownItems = FXCollections.observableArrayList(new ArrayList<>());
+        } else {
+            List <PrgState> programs = superCtrl.getRepo().getPrgList();
+            PrgState program = programs.get(index);
+
+            shownItems = FXCollections.observableArrayList(
+                    program.getStdout().stream()
+                                       .map(p -> p.toString())
+                                       .collect(Collectors.toList()));
+        }
+
+        outView.setItems(shownItems);
+        outView.refresh();
+    }
+
+
 
     private void populateExeStack(int index) {
         ObservableList <String> shownItems;

@@ -38,6 +38,6 @@ public class CmpExp extends Exp implements Serializable {
 
     @Override
     public String toString() {
-        return this.lterm.toString() + " " + this.op + " " + this.rterm.toString();
+        return "(" + this.lterm.toString() + " " + this.op + " " + this.rterm.toString() + ")";
     }
 }
