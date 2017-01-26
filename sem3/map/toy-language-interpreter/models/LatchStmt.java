@@ -16,7 +16,7 @@ public class LatchStmt implements IStmt, Serializable {
     }
 
     @Override
-    public PrgState execute(PrgState state) throws Exception {
+    public synchronized PrgState execute(PrgState state) throws Exception {
         // MyIStack <IStmt> stack = state.getExeStack();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
         MyIDictionary <Integer, Integer> latchTable = state.getLatchTable();

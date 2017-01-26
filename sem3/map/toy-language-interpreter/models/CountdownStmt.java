@@ -15,7 +15,7 @@ public class CountdownStmt implements IStmt, Serializable {
     }
 
     @Override
-    public PrgState execute(PrgState state) throws Exception {
+    public synchronized PrgState execute(PrgState state) throws Exception {
         MyIStack <IStmt> exeStack = state.getExeStack();
         List <Integer> stdout = state.getStdout();
         MyIDictionary <String, Integer> symTable = state.getSymTable();
@@ -37,7 +37,7 @@ public class CountdownStmt implements IStmt, Serializable {
             latchTable.put(value, latchTable.get(value) - 1);
 
             // might be evil
-            symTable.put(this.var, symTable.get(this.var) - 1);
+            /* symTable.put(this.var, symTable.get(this.var) - 1); */
 
             // write to out
             stdout.add(state.getID());
