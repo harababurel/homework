@@ -2,9 +2,12 @@
 from math import pi, sin, exp, sqrt
 from random import uniform, random
 import itertools
+import numpy
 
 
 # 14. Cross-in-tray function
+#
+# https://www.sfu.ca/~ssurjano/crossit.html
 #
 # Find the optimum point (minimum) for the Cross-in-tray function in the domain
 # -10 ≤ x, y ≤ 10. The function is:
@@ -140,10 +143,23 @@ class Algorithm:
             # print("Best individual in generation %i: %r" % (i+1, self.population.bestIndividual()))
 
     def statistics(self, generations, tests):
+        fitnesses = []
         for test in range(tests):
             self.population = Population(Problem.initialPopulation)
             self.run(Problem.generations)
             print(self.population.bestIndividual())
+
+            fitnesses.append(self.population.bestIndividual().getFitness())
+
+        arr = numpy.array(fitnesses)
+
+        mean = numpy.mean(arr, axis=0)
+        std = numpy.std(arr, axis=0)
+
+        print("Mean: %.4f" % mean)
+        print("Std:  %.4f" % std)
+
+
 
 
 def main():
