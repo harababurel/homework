@@ -1,6 +1,6 @@
 #!/bin/python3
 from random import random, uniform
-from math import sin
+from math import sin, sqrt, exp, pi
 import matplotlib.pyplot as plt
 
 """
@@ -36,7 +36,7 @@ class Problem:
     xBound = abs(xMax - xMin)
     yBound = abs(yMax - yMin)
 
-    population = 100
+    population = 200
     maxAttempts = 500
 
     omega = 0.02
@@ -44,6 +44,10 @@ class Problem:
     phiG = 0.03 * 2
 
     clearBetweenIterations = False
+
+    # def f(position):
+    #     x, y = position
+    #     return -0.0001 * (abs(sin(x) * sin(y) * exp(100 - sqrt(x**2 + y**2) / pi)) + 1) ** 0.1
 
     def f(position):
         return sin(position[0] + position[1]) + (position[0] - position[1])**2.0 \
