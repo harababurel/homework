@@ -33,23 +33,28 @@ class Problem:
     yMin = -3
     yMax = 4
 
-    population = 100
-    maxAttempts = 5000
+    xBound = abs(xMax - xMin)
+    yBound = abs(yMax - yMin)
 
-    omega = 0.01
-    phiP = 0.06
-    phiG = 0.03
+    population = 100
+    maxAttempts = 500
+
+    omega = 0.02
+    phiP = 0.06 * 2
+    phiG = 0.03 * 2
+
+    clearBetweenIterations = False
 
     def f(position):
         return sin(position[0] + position[1]) + (position[0] - position[1])**2.0 \
-                - 1.5 * position[0] + 2.5 * position[1] + 1.0
+               - 1.5 * position[0] + 2.5 * position[1] + 1.0
 
 class Particle:
     def __init__(self, swarm=None):
         self.setRandomPosition()
         self.setRandomVelocity()
 
-        self.bestPosition = (self.position[0], self.position[1])
+        self.bestPosition = self.position
         self.swarm = swarm
 
     def __repr__(self):
@@ -63,21 +68,12 @@ class Particle:
         self.position = (x, y)
 
     def setRandomVelocity(self):
-        xBound = abs(Problem.xMax - Problem.xMin)
-        yBound = abs(Problem.yMax - Problem.yMin)
-
-        dx = uniform(-xBound, xBound)
-        dy = uniform(-yBound, yBound)
+        dx = uniform(-Problem.xBound, Problem.xBound)
+        dy = uniform(-Problem.yBound, Problem.yBound)
 
         self.velocity = (dx, dy)
 
     def updateVelocity(self, dimension, p, g):
-        # print(dimension, p, g)
-        # print(Problem.phiG)
-        # print(self.swarm.bestPosition[dimension])
-        # print(self.position[dimension])
-        # print(self.bestPosition[dimension])
-
         newComponent = Problem.omega * self.velocity[dimension] \
                      + Problem.phiP * p * (self.bestPosition[dimension] - self.position[dimension]) \
                      + Problem.phiG * g * (self.swarm.bestPosition[dimension] - self.position[dimension])
@@ -94,31 +90,32 @@ class Particle:
         self.position = (newX, newY)
 
     def updateBestPosition(self):
-        # self.bestPosition = self.position
-        self.bestPosition = (self.position[0], self.position[1])
+        self.bestPosition = self.position
+        # self.bestPosition = (self.position[0], self.position[1])
 
 
 class Swarm:
-    def __init__(self, n):
-        self.particles = [Particle(swarm=self) for _ in range(n)]
+    def __init__(self, population):
+        self.particles = [Particle(swarm=self) for _ in range(population)]
         self.bestPosition = min([x.position for x in self.particles], key=lambda x: Problem.f(x))
+
 
     def simulate(self):
         attempts = 0
         while attempts <= Problem.maxAttempts:
             attempts += 1
 
-            # plt.clf()
+            if Problem.clearBetweenIterations:
+                plt.clf()
+
             plt.axis([Problem.xMin, Problem.xMax, Problem.yMin, Problem.yMax])
             plt.scatter([particle.position[0] for particle in self.particles], \
                         [particle.position[1] for particle in self.particles], \
-                        s=15)
-            plt.pause(0.1)
+                        s=12)
+            plt.pause(0.0001)
 
 
             print("ATTEMPT #%i" % attempts)
-            for particle in self.particles:
-                print(particle)
 
             for particle in self.particles:
                 for dimension in range(2):
@@ -130,11 +127,15 @@ class Swarm:
                     particle.updateBestPosition()
 
                     if Problem.f(particle.bestPosition) < Problem.f(self.bestPosition):
-                        self.bestPosition = (particle.bestPosition[0], particle.bestPosition[1])
+                        self.bestPosition = particle.bestPosition # (particle.bestPosition[0], particle.bestPosition[1])
+
+            print("BEST POSITION SO FAR: (%.3f, %.3f)" % self.bestPosition)
 
 def main():
     plt.ion() # interactive plotting
 
+    # config = {
+    #         'n': Problem.population,
 
     swarm = Swarm(Problem.population)
     swarm.simulate()
