@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<div class="container">
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img alt="Brand" src="../static/transparent_logo.png">
+      </a>
+      <p class="navbar-text">logged in as {{ session['username'] }}</p>
+      <p class="navbar-text"><a href="{{ url_for('logout') }}">log out</a></p>
+    </div>
+  </div>
+</nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Match</th>
+                <th>Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in matched_users %}
+            <tr>
+                <td>{{ user.name }} ({{ user.age }}) {{ user.bio }}</td>
+                <td><img src="{{ user.photos[0] }}" style="max-width: 300px;"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock %}

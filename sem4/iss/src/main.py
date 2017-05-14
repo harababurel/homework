@@ -177,10 +177,17 @@ def create_pynder_session(FBTOKEN, FBID=None):
     return session
 
 
-
 @app.route("/")
 def index():
     if 'username' in session:
+        pynder_session = load_pynder_session(session['access_token'])
+        current_matches = list(itertools.islice(pynder_session.matches(), 0, 2))
+
+        matched_users = [x.user for x in current_matches]
+
+        return render_template("matches.html", session=session, matched_users=matched_users)
+
+        """
         out = "<body>logged in as %s.<br><a href=\"%s\">log out</a><br>" % \
                 (escape(session['username']), url_for("logout"))
 
@@ -203,8 +210,9 @@ def index():
         out += "</body>"
 
         return out
-
-    return redirect(url_for('login'))
+        """
+    else:
+        return redirect(url_for('login'))
 
 def dump_pynder_session_to_file(access_token):
     with open('sessions/%s' % access_token, 'wb') as g:
