@@ -31,6 +31,11 @@ FBUSER = "xxxxxxxxxxxxxxxx@gmail.com"
 FBPASS = "xxxxxxxxxxxxx"
 PHOTO_DIR = 'tmp/'
 
+app.config['SOCIAL_FACEBOOK'] = {
+    'consumer_key': '1827578677482273',
+    'consumer_secret': '2e7bba43653aba506d1f7e119857643b'
+}
+
 """
 def get_filename_from_url(url):
     return url.split("/")[-1]
@@ -256,6 +261,7 @@ def login():
 @app.route('/fb')
 def fb():
     return render_template('fb.html')
+
 
 @app.route('/logout')
 def logout():
