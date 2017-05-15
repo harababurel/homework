@@ -253,6 +253,10 @@ def login():
         else:
             return render_template('login.html')
 
+@app.route('/fb')
+def fb():
+    return render_template('fb.html')
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)

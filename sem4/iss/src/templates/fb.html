@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1827578677482273',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<br><br>
+<div class="col-md-4"></div>
+<div class="col-md-4">
+    <div class="fb-login-button" data-width="400" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>
+
+    <br>
+    <div
+      class="fb-like"
+      data-share="true"
+      data-width="450"
+      data-show-faces="true">
+    </div>
+
+</div>
+<div class="col-md-4"></div>
+<div id="status">
+</div>
+
+{% endblock %}
