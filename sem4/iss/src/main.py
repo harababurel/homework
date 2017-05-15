@@ -5,6 +5,7 @@ import pynder
 import pickle
 
 from flask import Flask, request, session, g, escape, render_template, abort, redirect, url_for
+from flask_oauth import OAuth
 from flask_debugtoolbar import DebugToolbarExtension
 
 from PIL import Image
@@ -32,9 +33,64 @@ FBPASS = "xxxxxxxxxxxxx"
 PHOTO_DIR = 'tmp/'
 
 app.config['SOCIAL_FACEBOOK'] = {
-    'consumer_key': '1827578677482273',
+    # 'consumer_key': '1827578677482273',
+    'consumer_key': '464891386855067',
     'consumer_secret': '2e7bba43653aba506d1f7e119857643b'
 }
+
+oauth = OAuth()
+
+facebook = oauth.remote_app('facebook',
+    base_url='https://graph.facebook.com/',
+    request_token_url=None,
+    access_token_url='/oauth/access_token',
+    authorize_url='https://www.facebook.com/dialog/oauth',
+    consumer_key=app.config['SOCIAL_FACEBOOK']['consumer_key'],
+    consumer_secret=app.config['SOCIAL_FACEBOOK']['consumer_secret'],
+    request_token_params={'scope': ('email, ')}
+)
+
+@facebook.tokengetter
+def get_facebook_token():
+    return session.get('facebook_token')
+
+def pop_login_session():
+    session.pop('logged_in', None)
+    session.pop('facebook_token', None)
+
+@app.route("/facebook_login")
+def facebook_login():
+    return facebook.authorize(callback=url_for('facebook_authorized',
+        next=request.args.get('next'), _external=True))
+
+@app.route("/facebook_authorized")
+@facebook.authorized_handler
+def facebook_authorized(resp):
+    next_url = request.args.get('next') or url_for('index')
+    if resp is None or 'access_token' not in resp:
+        return redirect(next_url)
+
+    print(resp)
+
+    session['logged_in'] = True
+    session['access_token'] = resp['access_token']
+
+    print("access token: %s" % resp['access_token'])
+    print("!!!!!!!!!!!")
+
+    try:
+        dump_pynder_session_to_file(resp['access_token'])
+    except Exception as e:
+        print("problem: %r" % e)
+
+
+    return redirect(next_url)
+
+@app.route("/logout")
+def logout():
+    pop_login_session()
+    return redirect(url_for('index'))
+
 
 """
 def get_filename_from_url(url):
@@ -262,11 +318,12 @@ def login():
 def fb():
     return render_template('fb.html')
 
-
+"""
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
+"""
 
 @app.errorhandler(404)
 def page_not_found(error):
