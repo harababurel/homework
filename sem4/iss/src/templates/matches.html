@@ -2,37 +2,85 @@
 
 {% block content %}
 <br>
-<div class="container">
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    {% for user in matched_users %}
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        <img alt="Brand" src="../static/transparent_logo.png">
-      </a>
-      <p class="navbar-text">logged in as {{ session['username'] }}</p>
-      <p class="navbar-text"><a href="{{ url_for('logout') }}">log out</a></p>
-    </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">{{ user.name }} ({{ user.age }})
+            {% if user.distance_km %}
+              <span class="label label-warning">{{ "%.0f" % user.distance_km }} km away</span>
+            {% endif %}
+          </h1>
+        </div>
+        <div class="panel-body">
+
+          <div class="media">
+            <div class="media-left media-middle">
+                <img class="img-thumbnail" src="{{ user.photos[0] }}" style="max-width: 300px;">
+            </div>
+            <div class="media-body">
+
+              {% if user.bio %}
+              <div class="alert alert-warning" role="alert">{{ user.bio }}</div>
+
+                <!-- <p>Bio: {{ user.bio }}</p> -->
+              {% endif %}
+
+              {% if user.instagram_username %}
+                <div class="media">
+                  <div class="media-left media-middle">
+                    <img src="static/social-instagram-new-square2-128.png" style="max-width: 15px;">
+                  </div>
+                  <div class="media-body">
+                    <a href="https://www.instagram.com/{{ user.instagram_username }}">{{ user.instagram_username }}</a>
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if user.schools %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h5 class="panel-title">Schools</h5>
+                  </div>
+                  <div class="panel-body">
+                    {% for school in user.schools %}
+                    <h5><span class="label label-default">{{ school }}</span></h5>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if user.jobs %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h5 class="panel-title">Jobs</h5>
+                  </div>
+                  <div class="panel-body">
+                    {% for job in user.jobs %}
+                    <h5><span class="label label-default">{{ job }}</span></h5>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+
+
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    {% endfor %}
+
+
   </div>
-</nav>
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Match</th>
-                <th>Photo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in matched_users %}
-            <tr>
-                <td>{{ user.name }} ({{ user.age }}) {{ user.bio }}</td>
-                <td><img src="{{ user.photos[0] }}" style="max-width: 300px;"></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-
-    </table>
+  <div class="col-md-3"></div>
+  <div class="col-md-3"></div>
 </div>
 
 {% endblock %}

@@ -1,11 +1,70 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="static/login.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
-    </head>
+  <head>
+    <link rel="stylesheet" href="static/login.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
+  </head>
 
-    <body>
-        {% block content %}
-        {% endblock %}
-    </body>
+  <body>
+    <div class="row">
+
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="{{ url_for('index') }}">
+                <img alt="Brand" src="../static/transparent_logo.png">
+              </a>
+              <a class="navbar-brand" href="{{ url_for('index') }}">Pynder</a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Matches <span class="sr-only">(current)</span></a></li>
+                <li><a href="/swipe">Swipe</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Statistics <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                {% if session['username'] %}
+                <li><a href="/logout">Logout</a></li>
+                <li><p class="navbar-text">logged in as <br>{{ session['username'] }}</p></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+
+    {% if error %}
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          {{ error }}<br>
+          <a href="{{ url_for('index') }}">Go back</a>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </body>
 </html>
