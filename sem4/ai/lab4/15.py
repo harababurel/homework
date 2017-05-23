@@ -1,8 +1,7 @@
 #!/bin/python3
-from random import random, uniform
-from math import sin, sqrt, exp, pi
 from collections import deque
-from random import choice
+from math import sin, cos, sqrt, exp, pi
+from random import random, uniform
 
 import matplotlib.pyplot as plt
 import logging
@@ -36,8 +35,10 @@ class Problem:
         'McCormick': {
             'xMin': -1.5,
             'xMax': 4,
+            'xLabel': -1.4,
             'yMin': -3,
             'yMax': 4,
+            'yLabel': 3.2,
             'population': 100,
             'maxIterations': 500,
             'omega': 0.01,
@@ -49,26 +50,75 @@ class Problem:
         'Cross-in-tray': {
             'xMin': -10,
             'xMax': 10,
+            'xLabel': -9.7,
             'yMin': -10,
             'yMax': 10,
+            'yLabel': 7.7,
             'population': 100,
-            'maxIterations': 10000,
+            'maxIterations': 1000,
             'omega': 0.005,
             'phiP': 0.025,
             'phiG': 0.025,
             'particleSize': 3,
             'f': lambda p: -0.0001 * (abs(sin(p[0]) * sin(p[1]) * exp(100 - sqrt(p[0]**2 + p[1]**2) / pi)) + 1) ** 0.1
         },
+        'Eggholder': {
+            'xMin': -512,
+            'xMax': 512,
+            'xLabel': -500,
+            'yMin': -512,
+            'yMax': 512,
+            'yLabel': 410,
+            'population': 500,
+            'maxIterations': 1000,
+            'omega': 0.15,
+            'phiP': 0.01,
+            'phiG': 0.01,
+            'particleSize': 3,
+            'f': lambda p: -(p[1] + 47) * sin(sqrt(abs(p[0] / 2 + (p[1] + 47)))) - p[0] * sin(sqrt(abs(p[0] - (p[1] + 47))))
+        },
+        'Easom': {
+            'xMin': -100,
+            'xMax': 100,
+            'xLabel': -96,
+            'yMin': -100,
+            'yMax': 100,
+            'yLabel': 75,
+            'population': 100,
+            'maxIterations': 1000,
+            'omega': 0.4,
+            'phiP': 0.005,
+            'phiG': 0.015,
+            'particleSize': 4,
+            'f': lambda p: -cos(p[0]) * cos(p[1]) * exp(-((p[0] - pi)**2 + (p[1] - pi)**2))
+        },
+        'Rastrigin': {
+            'xMin': -5.12,
+            'xMax': 5.12,
+            'xLabel': -5,
+            'yMin': -5.12,
+            'yMax': 5.12,
+            'yLabel': 4.1,
+            'population': 100,
+            'maxIterations': 1000,
+            'omega': 0.4,
+            'phiP': 0.005,
+            'phiG': 0.015,
+            'particleSize': 2,
+            'f': lambda p: 10 * 2 + p[0]**2 - 10 * cos(2 * pi * p[0]) + p[1]**2 - 10 * cos(2 * pi * p[1])
+        },
+
     }
 
-    # config = functions['McCormick']
-    config = functions['Cross-in-tray']
+    function = 'McCormick'
+    config = functions[function]
 
     xBound = abs(config['xMax'] - config['xMin'])
     yBound = abs(config['yMax'] - config['yMin'])
 
-    clearBetweenIterations = False
     iterationsShown = 10
+    clearBetweenIterations = False
+    saveFrames = False
 
     def fitness(position):
         return Problem.config['f'](position)
@@ -156,8 +206,8 @@ class SwarmPlot:
                      'Best fitness:  %.6f' % bestFitness
 
         self.currentlyPlotted['text'] = plt.text(
-            Problem.config['xMin'] + 0.1,
-            Problem.config['yMax'] - 0.7,
+            Problem.config['xLabel'],
+            Problem.config['yLabel'],
             figureText,
             bbox=dict(facecolor='blue', alpha=0.4),
             fontsize=10,
@@ -175,6 +225,14 @@ class SwarmPlot:
         self.clearOldPoints()
         self.clearOldText()
         self.plotText(iteration)
+
+        if iteration == 1:
+            plt.tight_layout()
+
+        if Problem.saveFrames:
+            plt.savefig("img/%s-%i.png" % (Problem.function, iteration), dpi=200,
+                        orientation='landscape')
+
         plt.pause(0.0001)
 
 
@@ -187,7 +245,7 @@ class Swarm:
         self.plot = SwarmPlot(self)
 
     def simulate(self):
-        for iteration in range(Problem.config['maxIterations']):
+        for iteration in range(1, 1 + Problem.config['maxIterations']):
             logging.info("ITERATION #%i" % iteration)
 
             self.plot.plotEverything(iteration)
@@ -208,6 +266,8 @@ class Swarm:
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)
+
     swarm = Swarm(Problem.config['population'])
     swarm.simulate()
 
