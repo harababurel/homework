@@ -1,0 +1,35 @@
+<html>
+<head>
+  <style type="text/css">
+    .highlighter{
+      background: lightblue;
+    }
+  </style>
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+    function getSelectedText(){
+      var txt = '';
+          txt = document.getSelection();
+        return txt;
+    }
+
+    $(document).ready(function(){
+      $('#searchable').dblclick(function(){
+        $('.highlighter').removeClass('highlighter');
+        var selectedText = getSelectedText();
+        var regex = new RegExp(selectedText, "gi");
+            this.innerHTML = this.innerHTML.replace(regex, function(matched) {return "<span class=\"highlighter\">" + matched + "</span>";});
+      });
+    });
+
+  </script>
+</head>
+<body>
+<div id="searchable">This sentence will repeat itself.This sentence will repeat itself.ijsdbg ibgsd iubi This sentence will repeat itself.</div>
+</body>
+</html>
