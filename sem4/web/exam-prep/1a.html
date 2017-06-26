@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+<style>
+.d {
+  width:200px;
+  height:50px;
+}
+
+#d1 {
+  background-color: blue;
+}
+#d2 {
+  background-color: red;
+}
+#d3 {
+  background-color: green;
+}
+#d4 {
+  background-color: orange;
+}
+#d5 {
+  background-color: yellow;
+}
+#d6 {
+  background-color: pink;
+}
+#d7 {
+  background-color: lightblue;
+}
+#d8 {
+  background-color: purple;
+}
+#d9 {
+  background-color: darkgrey;
+}
+#d9 {
+  background-color: lightgrey;
+}
+</style>
+
+
+</head>
+<body>
+
+  <div class="d" id="d1" onClick="cycle()"></div>
+  <div class="d" id="d2" onClick="cycle()"></div>
+  <div class="d" id="d3" onClick="cycle()"></div>
+  <div class="d" id="d4" onClick="cycle()"></div>
+  <div class="d" id="d5" onClick="cycle()"></div>
+  <div class="d" id="d6" onClick="cycle()"></div>
+  <div class="d" id="d7" onClick="cycle()"></div>
+  <div class="d" id="d8" onClick="cycle()"></div>
+  <div class="d" id="d9" onClick="cycle()"></div>
+
+  <script>
+function cycle() {
+  for (i=1; i<=9; i++) {
+    x = 'd' + i;
+    y = 'd' + (parseInt(i) + 1)
+
+    if (y == 'd10')
+      break;
+
+    var current = document.getElementById(x);
+    var next = document.getElementById(y);
+    //console.log("current: ", current);
+    //console.log("next:    ", next);
+
+    next.id = [current.id, current.id = next.id][0];
+
+  }
+
+}
+
+
+  </script>
+
+</body>
+</html>
