@@ -1,0 +1,40 @@
+<html>
+<head>
+<style>
+.circle {
+  background: green;
+  border-radius:0;
+  height: 600px;
+  width: 300px;
+  transition: all .3s ease-in-out;
+}
+
+.circle:hover {
+  height: 300px;
+  width: 300px;
+
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.text {
+  color: #fff;
+  opacity: 0;
+  text-align: center;
+  padding-top: 0px;
+  transition: all .3s ease-in-out;
+}
+
+.circle:hover .text {
+  padding-top: 100px;
+  opacity: 1;
+}
+</style>
+</head>
+
+<body>
+  <div class="circle">
+    <div class="text">HELLO</div>
+  </div>
+</body>
+</html>

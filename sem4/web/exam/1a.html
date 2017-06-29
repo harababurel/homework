@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+  <div class="hate">
+    haha I hate forest!
+  </div>
+
+  <div class="hate">
+    haha I hate forest!  I hate forest! I hate forest! I hate forest! I hate forest! I hate forest! I hate forest! I hate forest!
+  </div>
+
+
+  <p class="hate">
+    I don't hate forest!
+  </p>
+
+  <p class="hate">
+    I hate forest!
+  </p>
+
+  <span class="hate">some span where I hate forest!</span>
+
+
+  <script>
+  function solve() {
+  var xs = document.getElementsByClassName("hate");
+
+  console.log(xs);
+
+    for(var i=0; i<xs.length; i++) {
+      var item = xs[i];
+
+      if(item.nodeName == "DIV" || item.nodeName == "P") {
+        console.log(item.innerHTML);
+        //item.innerHTML = item.innerHTML.replace("I hate forest!", "");
+
+        var re = new RegExp('I hate forest!', 'g');
+        item.innerHTML = item.innerHTML.replace(re, '');
+
+        console.log(item.innerHTML);
+      }
+
+    }
+  }
+
+  </script>
+
+  <br>
+  <br>
+  <button onclick="solve()">Hide</button>
+
+</body>
+</html>
