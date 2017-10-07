@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CaesarCipherWidget</class>
+ <widget class="QWidget" name="CaesarCipherWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>590</width>
+    <height>242</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CaesarCipherWidget</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="2">
+      <widget class="QPlainTextEdit" name="code_text_edit"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="key_spin_box">
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+        </font>
+       </property>
+       <property name="minimum">
+        <number>-2147483648</number>
+       </property>
+       <property name="maximum">
+        <number>2147483647</number>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="code_label">
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+        </font>
+       </property>
+       <property name="text">
+        <string>Code</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="key_label">
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Key</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="alphabet_label">
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+        </font>
+       </property>
+       <property name="text">
+        <string>Alphabet</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPlainTextEdit" name="message_text_edit"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="message_label">
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+        </font>
+       </property>
+       <property name="text">
+        <string>Message</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="3">
+      <widget class="QLineEdit" name="alphabet_line_edit">
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
