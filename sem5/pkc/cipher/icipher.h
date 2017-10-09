@@ -46,7 +46,7 @@ class ICipher {
 
  protected:
   std::string alphabet_;
-  int AlphabetSize() { return int(alphabet_.size()); }
+  int base() { return int(alphabet_.size()); }
 };
 
 }  // namespace cipher

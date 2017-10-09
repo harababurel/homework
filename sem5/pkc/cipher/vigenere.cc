@@ -18,7 +18,7 @@ util::Status VigenereCipher::Encode(const std::string& message, const Key& key,
   *code = message;
   for (int i = 0; i < int(message.size()); i++) {
     size_t key_index = alphabet_.find(key[i % int(key.size())]);
-    int delta = (key_index % AlphabetSize() + AlphabetSize()) % AlphabetSize();
+    int delta = (key_index % base() + base()) % base();
 
     size_t old_index = alphabet_.find(message[i]);
     if (old_index == std::string::npos) {
@@ -27,7 +27,7 @@ util::Status VigenereCipher::Encode(const std::string& message, const Key& key,
       return util::Status(util::error::INVALID_ARGUMENT, msg.str());
     }
 
-    size_t new_index = (old_index + delta) % AlphabetSize();
+    size_t new_index = (old_index + delta) % base();
     (*code)[i] = alphabet_[new_index];
   }
 
@@ -47,10 +47,7 @@ util::Status VigenereCipher::Decode(const std::string& code, const Key& key,
       return util::Status(util::error::INVALID_ARGUMENT, msg.str());
     }
 
-    size_t new_index =
-        ((AlphabetSize() - old_index) % AlphabetSize() + AlphabetSize()) %
-        AlphabetSize();
-
+    size_t new_index = (base() - old_index) % base();
     reverse_key[i] = alphabet_[new_index];
   }
 

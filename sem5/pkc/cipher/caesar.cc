@@ -5,7 +5,7 @@ namespace cipher {
 
 util::Status CaesarCipher::Encode(const std::string& message, const int& key,
                                   std::string* code) {
-  int delta = (key % AlphabetSize() + AlphabetSize()) % AlphabetSize();
+  int delta = (key % base() + base()) % base();
 
   *code = message;
   for (int i = 0; i < int(message.size()); i++) {
@@ -17,7 +17,7 @@ util::Status CaesarCipher::Encode(const std::string& message, const int& key,
       return util::Status(util::error::INVALID_ARGUMENT, msg.str());
     }
 
-    size_t new_index = (old_index + delta) % AlphabetSize();
+    size_t new_index = (old_index + delta) % base();
     (*code)[i] = alphabet_[new_index];
   }
 

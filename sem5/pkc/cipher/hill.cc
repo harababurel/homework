@@ -32,7 +32,7 @@ util::Status HillCipher::Encode(const std::string& message,
     block = matrix_key * block;
 
     for (int i = 0; i < block.rows(); i++) {
-      block[i] = (block[i] % AlphabetSize() + AlphabetSize()) % AlphabetSize();
+      block[i] = (block[i] % base() + base()) % base();
     }
   }
 
@@ -67,7 +67,7 @@ Block HillCipher::StringToBlock(const std::string& s, int block_size) {
   Block block(block_size);
 
   for (int i = 0; i < block_size; i++) {
-    block(i) = (i < AlphabetSize() ? int(alphabet_.find(s[i])) : 0);
+    block(i) = (i < base() ? int(alphabet_.find(s[i])) : 0);
   }
 
   return std::move(block);
