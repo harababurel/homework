@@ -10,3 +10,13 @@ new_http_archive(
     strip_prefix = "eigen-eigen-5a0156e40feb",
     url = "http://bitbucket.org/eigen/eigen/get/3.3.4.zip",
 )
+
+git_repository(
+    name = "com_github_nelhage_boost",
+    commit = "d6446dc9de6e43b039af07482a9361bdc6da5237",
+    remote = "https://github.com/nelhage/rules_boost",
+)
+
+load("@com_github_nelhage_boost//:boost/boost.bzl", "boost_deps")
+
+boost_deps()
