@@ -6,6 +6,7 @@
 #include "cipher/caesar.h"
 #include "cipher/cipher.h"
 #include "cipher/hill.h"
+#include "cipher/vigenere.h"
 #include "ui/ui_cipher_widget.h"
 
 namespace Ui {

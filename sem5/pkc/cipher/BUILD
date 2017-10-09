@@ -34,3 +34,13 @@ cc_library(
         "@eigen//:eigen",
     ],
 )
+
+cc_library(
+    name = "vigenere",
+    srcs = ["vigenere.cc"],
+    hdrs = ["vigenere.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cipher",
+    ],
+)

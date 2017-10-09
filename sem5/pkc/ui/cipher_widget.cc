@@ -5,9 +5,15 @@
 CipherWidget::CipherWidget(QWidget* parent)
     : QWidget(parent), ui_(std::make_unique<Ui::CipherWidget>()) {
   ciphers_["Caesar"] = std::make_unique<cipher::CaesarCipher>();
+  ciphers_["Vigenère"] = std::make_unique<cipher::VigenereCipher>();
   ciphers_["Hill"] = std::make_unique<cipher::HillCipher>();
 
   ui_->setupUi(this);
+
+  for (const auto& entry : ciphers_) {
+    ui_->cipher_combo_box->addItem(QString::fromStdString(entry.first));
+  }
+
   ui_->key_line_edit->hide();
   ui_->alphabet_line_edit->setText(
       QString::fromStdString(CurrentCipher().alphabet()));

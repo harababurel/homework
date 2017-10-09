@@ -17,6 +17,7 @@ qt_cc_library(
         "//cipher",
         "//cipher:caesar",
         "//cipher:hill",
+        "//cipher:vigenere",
         "@qt//:qt_core",
         "@qt//:qt_gui",
         "@qt//:qt_widgets",

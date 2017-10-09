@@ -68,6 +68,9 @@
          <property name="text">
           <string>hill</string>
          </property>
+         <property name="placeholderText">
+          <string>key</string>
+         </property>
          <property name="clearButtonEnabled">
           <bool>false</bool>
          </property>
@@ -144,16 +147,6 @@
          <family>Ubuntu Mono</family>
         </font>
        </property>
-       <item>
-        <property name="text">
-         <string>Caesar</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Hill</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="3" column="1">
