@@ -8,8 +8,7 @@ cc_binary(
     deps = [
         "//cipher:caesar",
         "//cipher:hill",
-        "//ui:caesar_cipher_widget",
-        "//ui:main_window",
+        "//ui:cipher_widget",
         "@qt//:qt_gui",
         "@qt//:qt_widgets",
     ],

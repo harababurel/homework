@@ -1,9 +1,16 @@
 cc_library(
     name = "cipher",
-    hdrs = ["cipher.h"],
+    hdrs = [
+        "cipher.h",
+        "icipher.h",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//util:status",
+        "@boost//:detail",
+        "@boost//:static_assert",
+        "@boost//:type_index",
+        "@boost//:type_traits",
     ],
 )
 

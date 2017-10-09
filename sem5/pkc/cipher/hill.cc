@@ -5,22 +5,31 @@
 namespace cipher {
 
 using Block = Eigen::VectorXi;
-using Key = Eigen::MatrixXi;
+using MatrixKey = Eigen::MatrixXi;
+using StringKey = std::string;
 
-util::Status HillCipher::Encode(const std::string& message, const Key& key,
-                                std::string* code) {
-  if (key.rows() != key.cols()) {
-    return util::Status(util::error::INVALID_ARGUMENT,
-                        "The key must be a square matrix.");
+util::Status HillCipher::Encode(const std::string& message,
+                                const StringKey& key, std::string* code) {
+  for (const auto& c : message) {
+    if (alphabet_.find(c) == std::string::npos) {
+      std::stringstream msg;
+      msg << "Character '" << c << "' not in alphabet.";
+      return util::Status(util::error::INVALID_ARGUMENT, msg.str());
+    }
+  }
+
+  MatrixKey matrix_key;
+  auto status = StringKeyToMatrixKey(key, &matrix_key);
+
+  if (!status.ok()) {
+    return status;
   }
 
   std::vector<Block> blocks;
-  SplitMessageIntoBlocks(message, key.rows(), &blocks);
-
-  printf("there are %d blocks.\n", int(blocks.size()));
+  SplitMessageIntoBlocks(message, matrix_key.rows(), &blocks);
 
   for (auto& block : blocks) {
-    block = key * block;
+    block = matrix_key * block;
 
     for (int i = 0; i < block.rows(); i++) {
       block[i] = (block[i] % AlphabetSize() + AlphabetSize()) % AlphabetSize();
@@ -32,9 +41,9 @@ util::Status HillCipher::Encode(const std::string& message, const Key& key,
   return util::OkStatus();
 }
 
-util::Status HillCipher::Decode(const std::string& code, const Key& key,
+util::Status HillCipher::Decode(const std::string& code, const StringKey& key,
                                 std::string* message) {
-  return util::Status(util::error::UNIMPLEMENTED, "Not implemented.");
+  return util::UnimplementedStatus();
 }
 
 void HillCipher::SplitMessageIntoBlocks(const std::string& message,
@@ -50,7 +59,6 @@ void HillCipher::SplitMessageIntoBlocks(const std::string& message,
 
   for (int i = 0; i < block_count; i++) {
     std::string s = message.substr(i * block_size, block_size);
-    printf("new piece: %s\n", s.c_str());
     blocks->push_back(StringToBlock(s, block_size));
   }
 }
@@ -69,13 +77,10 @@ std::string HillCipher::BlockToString(const Block& block) {
   std::string s(block.rows(), 0);
 
   for (int i = 0; i < block.rows(); i++) {
-    printf("block(%d) == %d\n", i, block(i));
     s[i] = alphabet_[block(i)];
   }
 
-  printf("block was converted to <%s>\n", s.c_str());
-
-  return s;
+  return std::move(s);
 }
 
 std::string HillCipher::MergeBlocks(const std::vector<Block>& blocks) {
@@ -85,8 +90,34 @@ std::string HillCipher::MergeBlocks(const std::vector<Block>& blocks) {
     s += BlockToString(block);
   }
 
-  /* return std::move(s); */
-  return s;
+  return std::move(s);
+}
+
+util::Status HillCipher::StringKeyToMatrixKey(const StringKey& key,
+                                              MatrixKey* matrix_key) {
+  for (const auto& c : key) {
+    if (alphabet_.find(c) == std::string::npos) {
+      std::stringstream msg;
+      msg << "Key character '" << c << "' not in alphabet.";
+      return util::Status(util::error::INVALID_ARGUMENT, msg.str());
+    }
+  }
+
+  int matrix_size = ceil(sqrt(int(key.size())));
+  if (matrix_size * matrix_size != int(key.size())) {
+    return util::Status(util::error::INVALID_ARGUMENT,
+                        "The key must have a square length so that it can be "
+                        "transformed into a square matrix.");
+  }
+
+  matrix_key->resize(matrix_size, matrix_size);
+  for (int i = 0; i < matrix_size; i++) {
+    for (int j = 0; j < matrix_size; j++) {
+      (*matrix_key)(i, j) = alphabet_.find(key[i * matrix_size + j]);
+    }
+  }
+
+  return util::OkStatus();
 }
 
 }  // namespace cipher

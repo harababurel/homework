@@ -1,15 +1,17 @@
 #pragma once
+#include <boost/type_index.hpp>
 #include <set>
 #include <string>
+#include "cipher/icipher.h"
 #include "util/status.h"
 
 namespace cipher {
 
 template <class KeyT>
-class Cipher {
+class Cipher : public ICipher {
  public:
-  Cipher() : alphabet_(" abcdefghijklmnopqrstuvwxyz"){};
-  Cipher(const std::string& alphabet) { SetAlphabet(alphabet); }
+  Cipher() : ICipher() {}
+  Cipher(const std::string& alphabet) : ICipher(alphabet) {}
 
   virtual util::Status Encode(const std::string& message, const KeyT& key,
                               std::string* code) = 0;
@@ -17,24 +19,9 @@ class Cipher {
   virtual util::Status Decode(const std::string& code, const KeyT& key,
                               std::string* message) = 0;
 
-  util::Status SetAlphabet(const std::string& alphabet) {
-    if (alphabet.empty()) {
-      return util::Status(util::error::INVALID_ARGUMENT,
-                          "Alphabet must not be empty.");
-    } else if (std::set<char>(alphabet.begin(), alphabet.end()).size() !=
-               alphabet.size()) {
-      return util::Status(util::error::INVALID_ARGUMENT,
-                          "Alphabet must not contain duplicates.");
-    }
-
-    alphabet_ = alphabet;
-    return util::OkStatus();
+  const std::string TypeName() override {
+    return std::string(boost::typeindex::type_id<KeyT>().pretty_name());
   }
-  const std::string& alphabet() { return alphabet_; }
-
- protected:
-  std::string alphabet_;
-  int AlphabetSize() { return int(alphabet_.size()); }
 };
 
 }  // namespace cipher

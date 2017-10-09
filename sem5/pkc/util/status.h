@@ -62,4 +62,8 @@ class Status {
 // Returns an OK status, equivalent to a default constructed instance.
 inline Status OkStatus() { return Status(); }
 
+inline Status UnimplementedStatus() {
+  return util::Status(util::error::UNIMPLEMENTED, "Not implemented.");
+}
+
 }  // namespace util
