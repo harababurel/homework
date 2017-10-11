@@ -3,9 +3,11 @@
 #include <memory>
 #include <qt/QtWidgets/QWidget>
 
+#include "cipher/affine.h"
 #include "cipher/caesar.h"
 #include "cipher/cipher.h"
 #include "cipher/hill.h"
+#include "cipher/substitution.h"
 #include "cipher/vigenere.h"
 #include "ui/ui_cipher_widget.h"
 
@@ -24,6 +26,10 @@ class CipherWidget : public QWidget {
 
   void on_key_spin_box_valueChanged(int x);
 
+  void on_key_a_spin_box_valueChanged(int x);
+
+  void on_key_b_spin_box_valueChanged(int x);
+
   void on_key_line_edit_textChanged(const QString &new_text);
 
   void on_code_text_edit_textChanged();
@@ -36,6 +42,7 @@ class CipherWidget : public QWidget {
   std::unique_ptr<Ui::CipherWidget> ui_;
   std::map<std::string, std::unique_ptr<cipher::ICipher>> ciphers_;
   cipher::ICipher &CurrentCipher();
+  std::string CurrentCipherName();
   void UpdateCodeText();
   void UpdateMessageText();
 };

@@ -28,6 +28,18 @@ class ICipher {
     return util::UnimplementedStatus();
   }
 
+  virtual util::Status Encode(const std::string& message,
+                              const std::pair<int, int>& key,
+                              std::string* code) {
+    return util::UnimplementedStatus();
+  }
+
+  virtual util::Status Decode(const std::string& code,
+                              const std::pair<int, int>& key,
+                              std::string* message) {
+    return util::UnimplementedStatus();
+  }
+
   util::Status SetAlphabet(const std::string& alphabet) {
     if (alphabet.empty()) {
       return util::Status(util::error::INVALID_ARGUMENT,
@@ -47,6 +59,9 @@ class ICipher {
  protected:
   std::string alphabet_;
   int base() { return int(alphabet_.size()); }
+  int normalize(const int index) {
+    return ((index % base()) + base()) % base();
+  }
 };
 
 }  // namespace cipher

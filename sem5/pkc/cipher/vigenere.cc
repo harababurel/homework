@@ -2,6 +2,7 @@
 #include <sstream>
 
 namespace cipher {
+namespace vigenere {
 
 using Key = std::string;
 
@@ -15,7 +16,7 @@ util::Status VigenereCipher::Encode(const std::string& message, const Key& key,
     }
   }
 
-  *code = message;
+  code->resize(message.size(), '.');
   for (int i = 0; i < int(message.size()); i++) {
     size_t key_index = alphabet_.find(key[i % int(key.size())]);
     int delta = (key_index % base() + base()) % base();
@@ -54,4 +55,5 @@ util::Status VigenereCipher::Decode(const std::string& code, const Key& key,
   return Encode(code, reverse_key, message);
 }
 
+}  // namespace vigenere
 }  // namespace cipher

@@ -15,8 +15,10 @@ qt_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//cipher",
+        "//cipher:affine",
         "//cipher:caesar",
         "//cipher:hill",
+        "//cipher:substitution",
         "//cipher:vigenere",
         "@qt//:qt_core",
         "@qt//:qt_gui",

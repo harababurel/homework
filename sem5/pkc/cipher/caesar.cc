@@ -2,12 +2,13 @@
 #include <sstream>
 
 namespace cipher {
+namespace caesar {
 
-util::Status CaesarCipher::Encode(const std::string& message, const int& key,
+util::Status CaesarCipher::Encode(const std::string& message, const Key& key,
                                   std::string* code) {
   int delta = (key % base() + base()) % base();
 
-  *code = message;
+  code->resize(message.size(), '.');
   for (int i = 0; i < int(message.size()); i++) {
     size_t old_index = alphabet_.find(message[i]);
 
@@ -24,9 +25,10 @@ util::Status CaesarCipher::Encode(const std::string& message, const int& key,
   return util::OkStatus();
 }
 
-util::Status CaesarCipher::Decode(const std::string& code, const int& key,
+util::Status CaesarCipher::Decode(const std::string& code, const Key& key,
                                   std::string* message) {
   return Encode(code, -key, message);
 }
 
+}  // namespace caesar
 }  // namespace cipher

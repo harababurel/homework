@@ -4,18 +4,21 @@
 #include "util/status.h"
 
 namespace cipher {
-namespace caesar {
+namespace substitution {
 
-using Key = int;
+using Key = std::string;
 
-class CaesarCipher final : public Cipher<Key> {
+class SubstitutionCipher final : public Cipher<Key> {
  public:
   util::Status Encode(const std::string& message, const Key& key,
                       std::string* code) override;
 
   util::Status Decode(const std::string& code, const Key& key,
                       std::string* message) override;
+
+ private:
+  util::Status CheckValidKey(const Key& key);
 };
 
-}  // namespace caesar
+}  // namespace substitution
 }  // namespace cipher

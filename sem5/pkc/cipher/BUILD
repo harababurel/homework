@@ -44,3 +44,25 @@ cc_library(
         ":cipher",
     ],
 )
+
+cc_library(
+    name = "affine",
+    srcs = ["affine.cc"],
+    hdrs = ["affine.h"],
+    copts = ["-std=c++17"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cipher",
+        "//external:ntl",
+    ],
+)
+
+cc_library(
+    name = "substitution",
+    srcs = ["substitution.cc"],
+    hdrs = ["substitution.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cipher",
+    ],
+)

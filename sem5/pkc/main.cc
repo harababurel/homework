@@ -3,20 +3,21 @@
 #include "cipher/caesar.h"
 #include "cipher/hill.h"
 #include "ui/cipher_widget.h"
-
-#include <NTL/ZZ.h>
-#include <Eigen/Dense>
+#include "util/status.h"
 
 int main(int argc, char *argv[]) {
-  NTL::ZZ x, a(2), n(27);
-  x = NTL::InvMod(a, n);  // functional form
+  /* cipher::affine::AffineCipher cipher; */
 
-  std::stringstream buffer;
-  buffer << x;
+  /* std::string message = "asdf"; */
+  /* std::string code; */
+  /* auto status = cipher.Encode(message, std::make_pair(2, 3), &code); */
+  /* if (!status.ok()) { */
+  /*   std::cout << status.error_message() << "\n"; */
+  /* } else { */
+  /*   std::cout << code << "\n"; */
+  /* } */
 
-  printf("%s\n", buffer.str().c_str());
-
-  return 0;
+  /* return 0; */
 
   QApplication app(argc, argv);
   CipherWidget widget;

@@ -3,6 +3,7 @@
 #include <vector>
 
 namespace cipher {
+namespace hill {
 
 using Block = Eigen::VectorXi;
 using MatrixKey = Eigen::MatrixXi;
@@ -120,4 +121,5 @@ util::Status HillCipher::StringKeyToMatrixKey(const StringKey& key,
   return util::OkStatus();
 }
 
+}  // namespace hill
 }  // namespace cipher

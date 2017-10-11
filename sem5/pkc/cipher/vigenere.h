@@ -4,6 +4,7 @@
 #include "util/status.h"
 
 namespace cipher {
+namespace vigenere {
 
 using Key = std::string;
 
@@ -16,4 +17,5 @@ class VigenereCipher final : public Cipher<Key> {
                       std::string* message) override;
 };
 
+}  // namespace vigenere
 }  // namespace cipher

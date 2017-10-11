@@ -6,6 +6,7 @@
 #include "util/status.h"
 
 namespace cipher {
+namespace hill {
 
 using Block = Eigen::VectorXi;
 using MatrixKey = Eigen::MatrixXi;
@@ -32,4 +33,5 @@ class HillCipher final : public Cipher<StringKey> {
                                     MatrixKey* matrix_key);
 };
 
+}  // namespace hill
 }  // namespace cipher
