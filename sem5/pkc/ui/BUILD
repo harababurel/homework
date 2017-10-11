@@ -18,6 +18,7 @@ qt_cc_library(
         "//cipher:affine",
         "//cipher:caesar",
         "//cipher:hill",
+        "//cipher:permutation",
         "//cipher:substitution",
         "//cipher:vigenere",
         "@qt//:qt_core",

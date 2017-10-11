@@ -7,6 +7,7 @@
 #include "cipher/caesar.h"
 #include "cipher/cipher.h"
 #include "cipher/hill.h"
+#include "cipher/permutation.h"
 #include "cipher/substitution.h"
 #include "cipher/vigenere.h"
 #include "ui/ui_cipher_widget.h"
@@ -38,6 +39,10 @@ class CipherWidget : public QWidget {
 
   void on_cipher_combo_box_currentTextChanged(const QString &new_text);
 
+  void on_permutation_spin_box_valueChanged(int x);
+
+  void on_permutation_keys_currentItemChanged(QListWidgetItem *x);
+
  private:
   std::unique_ptr<Ui::CipherWidget> ui_;
   std::map<std::string, std::unique_ptr<cipher::ICipher>> ciphers_;
@@ -45,4 +50,5 @@ class CipherWidget : public QWidget {
   std::string CurrentCipherName();
   void UpdateCodeText();
   void UpdateMessageText();
+  void PopulatePermutationKeys(int x);
 };

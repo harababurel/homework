@@ -66,3 +66,13 @@ cc_library(
         ":cipher",
     ],
 )
+
+cc_library(
+    name = "permutation",
+    srcs = ["permutation.cc"],
+    hdrs = ["permutation.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cipher",
+    ],
+)

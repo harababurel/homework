@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "util/status.h"
 
 namespace cipher {
@@ -36,6 +37,17 @@ class ICipher {
 
   virtual util::Status Decode(const std::string& code,
                               const std::pair<int, int>& key,
+                              std::string* message) {
+    return util::UnimplementedStatus();
+  }
+
+  virtual util::Status Encode(const std::string& message,
+                              const std::vector<int>& key, std::string* code) {
+    return util::UnimplementedStatus();
+  }
+
+  virtual util::Status Decode(const std::string& code,
+                              const std::vector<int>& key,
                               std::string* message) {
     return util::UnimplementedStatus();
   }
