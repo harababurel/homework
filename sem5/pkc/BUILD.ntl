@@ -1,0 +1,5 @@
+cc_library(
+  name = "ntl",
+  srcs = ["libntl.so"],
+  visibility = ["//visibility:public"],
+)
