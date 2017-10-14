@@ -15,18 +15,22 @@ bind(
     actual = "@linux_ntl//:ntl",
 )
 
+new_local_repository(
+    name = "linux_givaro",
+    build_file = "BUILD.givaro",
+    path = "/usr/lib",
+)
+
+bind(
+    name = "givaro",
+    actual = "@linux_givaro//:givaro",
+)
+
 new_http_archive(
     name = "eigen",
     build_file = "BUILD.eigen",
     strip_prefix = "eigen-eigen-5a0156e40feb",
     url = "http://bitbucket.org/eigen/eigen/get/3.3.4.zip",
-)
-
-new_http_archive(
-    name = "flint",
-    build_file = "BUILD.flint",
-    strip_prefix = "flint-2.5.2",
-    url = "http://www.flintlib.org/flint-2.5.2.zip",
 )
 
 git_repository(

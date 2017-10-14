@@ -1,0 +1,5 @@
+cc_library(
+  name = "givaro",
+  srcs = ["libgivaro.so"],
+  visibility = ["//visibility:public"],
+)
