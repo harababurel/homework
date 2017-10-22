@@ -14,14 +14,12 @@ class Matrix {
  public:
   Matrix() = default;
   Matrix(const Size &size) : Matrix(size.first, size.second) {}
-  Matrix(int n, int m) {
+  Matrix(int n, int m) : size_({n, m}) {
     vals_.resize(n);
 
     for (auto &line : vals_) {
       line.resize(m);
     }
-
-    size_ = {n, m};
   }
 
   const T &operator()(int i, int j) const { return vals_[i][j]; }
@@ -72,7 +70,40 @@ class Matrix {
       thread.join();
     }
 
-    return ret;
+    return std::move(ret);
+  }
+
+  Matrix<T> operator*(const Matrix<T> &other) {
+    CheckSizeForProduct(*this, other);
+
+    Matrix<T> ret(size().first, other.size().second);
+
+    int n_blocks = ceil(size().first / block_size);
+    int m_blocks = ceil(size().second / block_size);
+
+    std::vector<std::thread> threads;
+    threads.reserve(n_blocks * m_blocks);
+
+    for (int i = 0; i < ret.size().first; i += block_size) {
+      for (int j = 0; j < ret.size().second; j += block_size) {
+        threads.emplace_back([&ret, this, &other, i, j]() {
+          for (int x = i; x < std::min(ret.size().first, i + block_size); x++) {
+            for (int y = j; y < std::min(ret.size().second, j + block_size);
+                 y++) {
+              for (int k = 0; k < size().second; k++) {
+                ret[x][y] += (*this)(x, k) * other(k, y);
+              }
+            }
+          }
+        });
+      }
+    }
+
+    for (auto &thread : threads) {
+      thread.join();
+    }
+
+    return std::move(ret);
   }
 
   Matrix<T> SeqAdd(const Matrix<T> &other) {
@@ -85,7 +116,21 @@ class Matrix {
       }
     }
 
-    return ret;
+    return std::move(ret);
+  }
+
+  Matrix<T> SeqMult(const Matrix<T> &other) {
+    CheckSizeForProduct(*this, other);
+
+    Matrix<T> ret(size().first, other.size().second);
+    for (int i = 0; i < ret.size().first; i++) {
+      for (int j = 0; j < ret.size().second; j++) {
+        for (int k = 0; k < size().second; k++) {
+          ret[i][j] += vals_[i][k] * other(k, j);
+        }
+      }
+    }
+    return std::move(ret);
   }
 
   const std::string str() const {
@@ -108,12 +153,17 @@ class Matrix {
   const Size &size() const { return size_; }
 
  private:
-  const int block_size = 100;
+  const int block_size = 200;
   std::vector<std::vector<T>> vals_;
   Size size_;
 
   void CheckSize(const Matrix<T> &A, const Matrix<T> &B) {
     if (A.size() != B.size()) throw std::length_error("Size mismatch");
+  }
+
+  void CheckSizeForProduct(const Matrix<T> &A, const Matrix<T> &B) {
+    if (A.size().second != B.size().first)
+      throw std::length_error("Size mismatch");
   }
 };
 
