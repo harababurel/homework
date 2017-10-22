@@ -1,5 +1,13 @@
 #include "tree.h"
 
+/* a--\ */
+/*     ---c---\ */
+/* b--/        \ */
+/*              ----e */
+/*             / */
+/*            / */
+/*        d--- */
+
 namespace pdp {
 
 const std::vector<Symbol> Tree::symbols() {
@@ -51,10 +59,28 @@ void Tree::UpdateSymbol(const Symbol& symbol, const int value) {
   {
     Node& node = GetNode(symbol);
     std::lock_guard<std::mutex> guard(node.mutex());
+
     delta = value - node.value();
     node.set_value(value);
   }
 
+  PropagateUpdate(symbol, delta);
+}
+
+int Tree::GetValue(const Symbol& symbol) { return GetNode(symbol).value(); }
+
+bool Tree::SymbolExists(const Symbol& symbol) {
+  return symbols_to_nodes_.find(symbol) != symbols_to_nodes_.end();
+}
+
+Node& Tree::GetNode(const Symbol& symbol) {
+  if (!SymbolExists(symbol)) {
+    throw std::invalid_argument("Symbol does not exist!");
+  }
+  return *(symbols_to_nodes_.find(symbol)->second);
+}
+
+void Tree::PropagateUpdate(const Symbol& symbol, const int delta) {
   std::deque<Symbol> q{symbol};
   while (!q.empty()) {
     auto current_symbol = q.front();
@@ -72,17 +98,69 @@ void Tree::UpdateSymbol(const Symbol& symbol, const int value) {
   }
 }
 
-int Tree::GetValue(const Symbol& symbol) { return GetNode(symbol).value(); }
+void Tree::ConsistencyCheck() {
+  std::lock_guard<std::mutex> guard(*symbol_to_nodes_mtx_);
 
-bool Tree::SymbolExists(const Symbol& symbol) {
-  return symbols_to_nodes_.find(symbol) != symbols_to_nodes_.end();
+  std::map<Symbol, int> level;
+  for (const auto& symbol : symbols()) {
+    ComputeLevel(symbol, level);
+  }
+
+  std::map<int, std::vector<Symbol>> on_level;
+
+  for (const auto& entry : level) {
+    /* printf("Symbol %s is on level %d\n", entry.first.c_str(), entry.second);
+     */
+    on_level[entry.second].push_back(entry.first);
+  }
+
+  for (auto entry = on_level.rbegin(); entry != on_level.rend(); entry++) {
+    /* printf("level %d: ", entry->first); */
+
+    for (const auto& symbol : entry->second) {
+      /* printf("%s ", symbol.c_str()); */
+      GetNode(symbol).mutex().lock();
+    }
+    /* printf("\n"); */
+  }
+
+  for (const auto& symbol : symbols()) {
+    Node& node = GetNode(symbol);
+
+    try {
+      CompositeNode& composite_node = dynamic_cast<CompositeNode&>(node);
+
+      int expected_value = 0;
+      for (const auto& ancestor : composite_node.ancestors()) {
+        expected_value += GetNode(ancestor).value();
+      }
+
+      if (expected_value != composite_node.value()) {
+        printf("BAD SUM FOR NODE %s! EXPECTED %d, GOT %d.\n", symbol.c_str(),
+               expected_value, node.value());
+      }
+    } catch (...) {
+      // LiteralNode, not CompositeNode
+    }
+  }
+
+  for (const auto& symbol : symbols()) {
+    GetNode(symbol).mutex().unlock();
+  }
 }
 
-Node& Tree::GetNode(const Symbol& symbol) {
-  if (!SymbolExists(symbol)) {
-    throw std::invalid_argument("Symbol does not exist!");
+void Tree::ComputeLevel(const Symbol& symbol, std::map<Symbol, int>& level) {
+  if (level.find(symbol) != level.end()) {
+    return;
   }
-  return *(symbols_to_nodes_.find(symbol)->second);
+
+  level[symbol] = 1;
+
+  Node& node = GetNode(symbol);
+  for (const auto& descendant : node.descendants()) {
+    ComputeLevel(descendant, level);
+    level[symbol] = std::max(level[symbol], 1 + level[descendant]);
+  }
 }
 
 }  // namespace pdp

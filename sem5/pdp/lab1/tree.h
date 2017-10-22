@@ -15,23 +15,22 @@ using Symbol = std::string;
 class Tree {
  public:
   Tree() : symbol_to_nodes_mtx_(std::make_unique<std::mutex>()) {}
+
   const std::vector<Symbol> symbols();
-
   void AddSymbol(const Symbol& symbol, const int value);
-
   void AddSymbol(const Symbol& symbol, const std::vector<Symbol>& ancestors);
-
   void UpdateSymbol(const Symbol& symbol, const int value);
-
   int GetValue(const Symbol& symbol);
-
   bool SymbolExists(const Symbol& symbol);
+  void ConsistencyCheck();
 
  private:
+  Node& GetNode(const Symbol& symbol);
+  void PropagateUpdate(const Symbol& symbol, const int delta);
+  void ComputeLevel(const Symbol& symbol, std::map<Symbol, int>& level);
+
   std::map<Symbol, std::unique_ptr<Node>> symbols_to_nodes_;
   std::unique_ptr<std::mutex> symbol_to_nodes_mtx_;
-
-  Node& GetNode(const Symbol& symbol);
 };
 
 }  // namespace pdp

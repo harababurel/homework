@@ -10,6 +10,8 @@ class Node {
   Node() : value_(0) {}
   Node(int value) : value_(value) {}
 
+  virtual ~Node() {}
+
   std::mutex& mutex() { return mutex_; }
   int value() { return value_; }
   void set_value(int value) { value_ = value; }
