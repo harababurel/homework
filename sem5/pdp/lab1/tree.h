@@ -26,7 +26,6 @@ class Tree {
 
  private:
   Node& GetNode(const Symbol& symbol);
-  void PropagateUpdate(const Symbol& symbol, const int delta);
   void ComputeLevel(const Symbol& symbol, std::map<Symbol, int>& level);
 
   std::map<Symbol, std::unique_ptr<Node>> symbols_to_nodes_;

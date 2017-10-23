@@ -1,12 +1,5 @@
 #include "tree.h"
-
-/* a--\ */
-/*     ---c---\ */
-/* b--/        \ */
-/*              ----e */
-/*             / */
-/*            / */
-/*        d--- */
+#include <sstream>
 
 namespace pdp {
 
@@ -56,15 +49,35 @@ void Tree::UpdateSymbol(const Symbol& symbol, const int value) {
   }
 
   int delta;
-  {
-    Node& node = GetNode(symbol);
-    std::lock_guard<std::mutex> guard(node.mutex());
 
-    delta = value - node.value();
-    node.set_value(value);
+  GetNode(symbol).mutex().lock();
+  std::deque<Symbol> q{symbol};
+  while (!q.empty()) {
+    auto current_symbol = q.front();
+    q.pop_front();
+
+    Node& node = GetNode(current_symbol);
+
+    // Rules:
+    // 0. node should already be locked
+    // 1. node's value can be safely updated
+    // 2. node can only be unlocked after ALL descendants are locked, in order
+    //    to prevent data races.
+
+    if (current_symbol == symbol) {
+      delta = value - node.value();
+      node.set_value(value);
+    } else {
+      node.increase_value(delta);
+    }
+
+    for (const auto& descendant : node.descendants()) {
+      GetNode(descendant).mutex().lock();
+      q.push_back(descendant);
+    }
+
+    node.mutex().unlock();
   }
-
-  PropagateUpdate(symbol, delta);
 }
 
 int Tree::GetValue(const Symbol& symbol) { return GetNode(symbol).value(); }
@@ -75,27 +88,11 @@ bool Tree::SymbolExists(const Symbol& symbol) {
 
 Node& Tree::GetNode(const Symbol& symbol) {
   if (!SymbolExists(symbol)) {
-    throw std::invalid_argument("Symbol does not exist!");
+    std::stringstream buffer;
+    buffer << "Symbol [" << symbol << "] does not exist.";
+    throw std::invalid_argument(buffer.str());
   }
   return *(symbols_to_nodes_.find(symbol)->second);
-}
-
-void Tree::PropagateUpdate(const Symbol& symbol, const int delta) {
-  std::deque<Symbol> q{symbol};
-  while (!q.empty()) {
-    auto current_symbol = q.front();
-    q.pop_front();
-
-    Node& node = GetNode(current_symbol);
-
-    if (current_symbol != symbol) {
-      std::lock_guard<std::mutex> guard(node.mutex());
-      node.increase_value(delta);
-    }
-
-    std::copy(node.descendants().begin(), node.descendants().end(),
-              std::back_inserter(q));
-  }
 }
 
 void Tree::ConsistencyCheck() {
@@ -118,7 +115,7 @@ void Tree::ConsistencyCheck() {
     /* printf("level %d: ", entry->first); */
 
     for (const auto& symbol : entry->second) {
-      /* printf("%s ", symbol.c_str()); */
+      /* printf("locking node %s\n", symbol.c_str()); */
       GetNode(symbol).mutex().lock();
     }
     /* printf("\n"); */
@@ -131,6 +128,7 @@ void Tree::ConsistencyCheck() {
       CompositeNode& composite_node = dynamic_cast<CompositeNode&>(node);
 
       int expected_value = 0;
+
       for (const auto& ancestor : composite_node.ancestors()) {
         expected_value += GetNode(ancestor).value();
       }
