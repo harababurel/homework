@@ -14,9 +14,11 @@ class Matrix {
  public:
   Matrix() = default;
   Matrix(const Size &size) : Matrix(size.first, size.second) {}
-  Matrix(int n, int m) : size_({n, m}) {
+  Matrix(int n, int m)
+      : n_threads_(std::max(static_cast<unsigned int>(1),
+                            std::thread::hardware_concurrency())),
+        size_({n, m}) {
     vals_.resize(n);
-
     for (auto &line : vals_) {
       line.resize(m);
     }
@@ -47,23 +49,17 @@ class Matrix {
 
     Matrix<T> ret(size());
 
-    int n_blocks = ceil(size().first / block_size);
-    int m_blocks = ceil(size().second / block_size);
-
     std::vector<std::thread> threads;
-    threads.reserve(n_blocks * m_blocks);
+    threads.reserve(n_threads_);
 
-    for (int i = 0; i < ret.size().first; i += block_size) {
-      for (int j = 0; j < ret.size().second; j += block_size) {
-        threads.emplace_back([&ret, this, &other, i, j]() {
-          for (int x = i; x < std::min(ret.size().first, i + block_size); x++) {
-            for (int y = j; y < std::min(ret.size().second, j + block_size);
-                 y++) {
-              ret[x][y] = (*this)(x, y) + other(x, y);
-            }
+    for (unsigned int t = 0; t < n_threads_; t++) {
+      threads.emplace_back([&ret, this, &other, t]() {
+        for (int i = t; i < ret.size().first; i += n_threads_) {
+          for (int j = 0; j < ret.size().second; j++) {
+            ret[i][j] = (*this)(i, j) + other(i, j);
           }
-        });
-      }
+        }
+      });
     }
 
     for (auto &thread : threads) {
@@ -78,25 +74,19 @@ class Matrix {
 
     Matrix<T> ret(size().first, other.size().second);
 
-    int n_blocks = ceil(size().first / block_size);
-    int m_blocks = ceil(size().second / block_size);
-
     std::vector<std::thread> threads;
-    threads.reserve(n_blocks * m_blocks);
+    threads.reserve(n_threads_);
 
-    for (int i = 0; i < ret.size().first; i += block_size) {
-      for (int j = 0; j < ret.size().second; j += block_size) {
-        threads.emplace_back([&ret, this, &other, i, j]() {
-          for (int x = i; x < std::min(ret.size().first, i + block_size); x++) {
-            for (int y = j; y < std::min(ret.size().second, j + block_size);
-                 y++) {
-              for (int k = 0; k < size().second; k++) {
-                ret[x][y] += (*this)(x, k) * other(k, y);
-              }
+    for (unsigned int t = 0; t < n_threads_; t++) {
+      threads.emplace_back([&ret, this, &other, t]() {
+        for (int i = t; i < ret.size().first; i += n_threads_) {
+          for (int j = 0; j < ret.size().second; j++) {
+            for (int k = 0; k < size().second; k++) {
+              ret[i][j] += (*this)(i, k) * other(k, j);
             }
           }
-        });
-      }
+        }
+      });
     }
 
     for (auto &thread : threads) {
@@ -112,7 +102,7 @@ class Matrix {
     Matrix<T> ret(size());
     for (int i = 0; i < size().first; i++) {
       for (int j = 0; j < size().second; j++) {
-        ret[i][j] = vals_[i][j] + other(i, j);
+        ret[i][j] = (*this)(i, j) + other(i, j);
       }
     }
 
@@ -126,7 +116,7 @@ class Matrix {
     for (int i = 0; i < ret.size().first; i++) {
       for (int j = 0; j < ret.size().second; j++) {
         for (int k = 0; k < size().second; k++) {
-          ret[i][j] += vals_[i][k] * other(k, j);
+          ret[i][j] += (*this)(i, k) * other(k, j);
         }
       }
     }
@@ -153,18 +143,27 @@ class Matrix {
   const Size &size() const { return size_; }
 
  private:
-  const int block_size = 200;
-  std::vector<std::vector<T>> vals_;
-  Size size_;
-
   void CheckSize(const Matrix<T> &A, const Matrix<T> &B) {
-    if (A.size() != B.size()) throw std::length_error("Size mismatch");
+    if (A.size() != B.size()) {
+      std::stringstream buffer;
+      buffer << "Size mismatch: (" << A.size().first << ", " << A.size().second
+             << ") and (" << B.size().first << ", " << B.size().second << ")";
+      throw std::length_error(buffer.str());
+    }
   }
 
   void CheckSizeForProduct(const Matrix<T> &A, const Matrix<T> &B) {
-    if (A.size().second != B.size().first)
-      throw std::length_error("Size mismatch");
+    if (A.size().second != B.size().first) {
+      std::stringstream buffer;
+      buffer << "Size mismatch: (" << A.size().first << ", " << A.size().second
+             << ") and (" << B.size().first << ", " << B.size().second << ")";
+      throw std::length_error(buffer.str());
+    }
   }
+
+  const unsigned int n_threads_;
+  std::vector<std::vector<T>> vals_;
+  Size size_;
 };
 
 }  // namespace pdp
