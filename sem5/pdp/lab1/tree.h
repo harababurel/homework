@@ -19,9 +19,22 @@ class Tree {
   const std::vector<Symbol> symbols();
   void AddSymbol(const Symbol& symbol, const int value);
   void AddSymbol(const Symbol& symbol, const std::vector<Symbol>& ancestors);
+
+  /* Rules:
+   * 0. the update source node is initially locked.
+   * 1. a breadth-first exploration is started from the source.
+   * 2. the exploration updates each visited node's value.
+   * 3. at each point in time, the current node can only be unlocked after ALL
+   * descendants are locked, in order to prevent data races.
+   */
   void UpdateSymbol(const Symbol& symbol, const int value);
   int GetValue(const Symbol& symbol);
   bool SymbolExists(const Symbol& symbol);
+
+  /* The consistency check locks the entire tree level by level, starting with
+   * literal nodes (leaves), so that no new updates can start. It potentially
+   * waits for pending updates to finish before locking some nodes.
+   */
   void ConsistencyCheck();
 
  private:

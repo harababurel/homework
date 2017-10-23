@@ -51,18 +51,13 @@ void Tree::UpdateSymbol(const Symbol& symbol, const int value) {
   int delta;
 
   GetNode(symbol).mutex().lock();
+
   std::deque<Symbol> q{symbol};
   while (!q.empty()) {
     auto current_symbol = q.front();
     q.pop_front();
 
     Node& node = GetNode(current_symbol);
-
-    // Rules:
-    // 0. node should already be locked
-    // 1. node's value can be safely updated
-    // 2. node can only be unlocked after ALL descendants are locked, in order
-    //    to prevent data races.
 
     if (current_symbol == symbol) {
       delta = value - node.value();
@@ -115,7 +110,7 @@ void Tree::ConsistencyCheck() {
     /* printf("level %d: ", entry->first); */
 
     for (const auto& symbol : entry->second) {
-      /* printf("locking node %s\n", symbol.c_str()); */
+      /* printf("%s ", symbol.c_str()); */
       GetNode(symbol).mutex().lock();
     }
     /* printf("\n"); */
