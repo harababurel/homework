@@ -4,6 +4,7 @@ cc_binary(
     data = [
         "data/bad_gcd.cc",
         "data/gcd.cc",
+        "data/perimeter.cc",
         "reserved_words.csv",
     ],
     deps = [
