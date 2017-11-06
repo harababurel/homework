@@ -2,9 +2,9 @@ cc_binary(
     name = "main",
     srcs = ["main.cc"],
     data = [
-        "ex1.cc",
-        "ex2.cc",
-        "symbols.csv",
+        "data/bad_gcd.cc",
+        "data/gcd.cc",
+        "reserved_words.csv",
     ],
     deps = [
         ":lexer",
