@@ -1,7 +1,6 @@
 import argparse
 import logging
 from dfa import *
-from dfa_drawer import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -30,11 +29,10 @@ def main():
     logging.info("Automaton:\n%s", automaton)
 
     sequence = "bababaaaaba"
-    logging.info(automaton.longest_accepted_prefix(sequence))
-    logging.info(automaton.accepts(sequence))
+    print(automaton.longest_accepted_prefix(sequence))
+    print(automaton.accepts(sequence))
 
-    drawer = DeterministicFiniteAutomatonDrawer()
-    drawer.draw(automaton)
+    automaton.draw()
 
 
 if __name__ == '__main__':

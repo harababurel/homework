@@ -1,6 +1,9 @@
-import json
+from graphviz import Digraph
 from functools import reduce
 from state import State
+import json
+import os.path
+import logging
 
 
 class DFAException(Exception):
@@ -12,7 +15,6 @@ class DeterministicFiniteAutomaton(object):
     def __init__(self, json_encoding):
         body = json.loads(json_encoding)
 
-        initial_states = []
         self.states = {}
         for (name, properties) in body.items():
             initial = properties.get('initial', False)
@@ -23,15 +25,28 @@ class DeterministicFiniteAutomaton(object):
                 final=final,
                 edges=properties['edges'])
 
-            if initial:
-                initial_states.append(name)
+        self.set_initial_state()
+        self.verify_edges()
 
+    def set_initial_state(self):
+        initial_states = [
+            state for state in self.states.values() if state.initial
+        ]
         if len(initial_states) != 1:
             raise DFAException(
                 "A DeterministicFiniteAutomaton must have exactly one initial "
                 "state.")
         else:
-            self.initial_state = self.get_state(initial_states[0])
+            self.initial_state = initial_states[0]
+
+    def verify_edges(self):
+        for state in self.states.values():
+            for (symbol, target) in state.edges.items():
+                if target not in self.states.keys():
+                    raise DFAException(
+                        "Edge [%s]--%s-->[%s] is invalid because node [%s] "
+                        "does not exist." % (state.name, symbol, target,
+                                             target))
 
     def __str__(self):
         states = ', '.join([str(state) for state in self.states.values()])
@@ -68,3 +83,21 @@ class DeterministicFiniteAutomaton(object):
 
     def accepts(self, sequence):
         return self.longest_accepted_prefix(sequence) == sequence
+
+    def draw(self, filepath='/tmp/dfa.gv'):
+        graph = Digraph(format='png')
+        graph.attr(rankdir='LR', dpi='209')
+
+        for state in self.states.values():
+            graph.attr('node', shape=['circle', 'doublecircle'][state.final])
+            graph.node(state.name)
+
+        for state in self.states.values():
+            for (edge_symbol, neighbor_name) in state.edges.items():
+                graph.edge(state.name, neighbor_name, label=edge_symbol)
+
+        try:
+            (directory, filename) = os.path.split(filepath)
+            graph.render(filename=filename, directory=directory)
+        except Exception as e:
+            logging.error("Could not render graph: %s", e)
