@@ -1,6 +1,7 @@
 import argparse
 import logging
 from dfa import *
+from dfa_drawer import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -22,14 +23,18 @@ def main():
 
     try:
         automaton = DeterministicFiniteAutomaton(encoding)
-        logging.info("Automaton:\n%s", automaton)
-
-        sequence = "bababaaaaba"
-        logging.info(automaton.longest_accepted_prefix(sequence))
-        logging.info(automaton.accepts(sequence))
     except DFAException as e:
         logging.error("Could not construct automaton: %s", e)
         exit(1)
+
+    logging.info("Automaton:\n%s", automaton)
+
+    sequence = "bababaaaaba"
+    logging.info(automaton.longest_accepted_prefix(sequence))
+    logging.info(automaton.accepts(sequence))
+
+    drawer = DeterministicFiniteAutomatonDrawer()
+    drawer.draw(automaton)
 
 
 if __name__ == '__main__':
