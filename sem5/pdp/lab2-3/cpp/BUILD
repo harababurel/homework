@@ -13,6 +13,17 @@ cc_library(
     deps = [":matrix"],
 )
 
+cc_library(
+    name = "matrix_multiplier",
+    hdrs = [
+        "matrix_multiplier.hpp",
+    ],
+    deps = [
+        ":matrix",
+        "@ctpl//:ctpl",
+    ],
+)
+
 cc_binary(
     name = "main",
     srcs = ["main.cc"],
@@ -25,5 +36,6 @@ cc_binary(
     deps = [
         ":matrix",
         ":matrix_generator",
+        ":matrix_multiplier",
     ],
 )

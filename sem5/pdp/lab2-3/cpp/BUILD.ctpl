@@ -1,0 +1,8 @@
+cc_library(
+    name = "ctpl",
+    hdrs = glob(["*.h"]),
+    # "ctpl.h",
+    # "ctpl_stl.h",
+    # ],
+    visibility = ["//visibility:public"],
+)

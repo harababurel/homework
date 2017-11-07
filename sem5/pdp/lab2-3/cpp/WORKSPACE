@@ -1,0 +1,6 @@
+new_http_archive(
+    name = "ctpl",
+    build_file = "BUILD.ctpl",
+    strip_prefix = "CTPL-master",
+    url = "https://github.com/vit-vit/CTPL/archive/master.zip",
+)
