@@ -54,43 +54,31 @@ void test_product() {
   assert(seq_product == async_product);
 }
 
-/* void test_sum() { */
-/*   pdp::MatrixGenerator generator(/1* bounds = *1/ {-1e6, 1e6}, */
-/*                                  /1* seed = *1/ time(0)); */
-
-/*   auto A = generator.RandomUniformMatrix({4000, 4000}); */
-/*   auto B = generator.RandomUniformMatrix(A.size()); */
-
-/*   auto seq_sum = measure_time([&A, &B]() { return A.SeqAdd(B); }); */
-/*   auto par_sum = measure_time([&A, &B]() { return A + B; }); */
-
-/*   if (VERBOSE) { */
-/*     printf("A =\n%s\n", A.str().c_str()); */
-/*     printf("B =\n%s\n", B.str().c_str()); */
-/*     printf("A+B =\n%s\n", par_sum.str().c_str()); */
-/*   } */
-
-/*   assert(seq_sum == par_sum); */
-/* } */
-
 int main(int argc, char* argv[]) {
-  /* printf("Sum:\n"); */
-  /* test_sum(); */
-
-  printf("\nProduct:\n");
-  test_product();
-
-  pdp::MatrixGenerator generator(/* bounds = */ {0, 9},
+  pdp::MatrixGenerator generator(/* bounds = */ {0, 100},
                                  /* seed = */ time(0));
 
-  auto A = generator.RandomUniformMatrix({3, 4});
-  auto B = generator.RandomUniformMatrix({A.size().second, 2});
+  auto A = generator.RandomUniformMatrix({500, 500});
+  auto B = generator.RandomUniformMatrix({A.size().second, 1000});
+  auto C = generator.RandomUniformMatrix({B.size().second, 500});
+  auto mult = pdp::MatrixMultiplier(2);
 
-  pdp::MatrixMultiplier multiplier;
+  auto seq_triple_product =
+      measure_time("Basic triple product", [&mult, &A, &B, &C]() {
+        return mult.ThreadedProduct(mult.ThreadedProduct(A, B), C);
+      });
 
-  printf("A =\n%s\n", A.str().c_str());
-  printf("B =\n%s\n", B.str().c_str());
-  printf("A*B =\n%s\n", (multiplier.ThreadpoolProduct(A, B)).str().c_str());
+  auto par_triple_product = measure_time(
+      "Optimized triple product",
+      [&mult, &A, &B, &C]() { return mult.TripleProduct(A, B, C); });
+
+  /* printf("%s\n", seq_triple_product.str().c_str()); */
+  /* printf("%s\n", par_triple_product.str().c_str()); */
+
+  assert(par_triple_product == seq_triple_product);
+
+  /* printf("\nProduct:\n"); */
+  /* test_product(); */
 
   return 0;
 }

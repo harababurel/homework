@@ -92,6 +92,8 @@ class Matrix {
   }
 
   const Size &size() const { return size_; }
+  const int &rows() const { return size_.first; }
+  const int &cols() const { return size_.second; }
 
   void set_n_threads(const int n_threads) { n_threads_ = n_threads; }
 

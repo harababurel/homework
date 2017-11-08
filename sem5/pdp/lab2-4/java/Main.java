@@ -2,9 +2,9 @@ package pdp;
 
 public class Main {
   public static void main(String[] args) {
-    MatrixMultiplier mult = new MatrixMultiplier(4);
-    Matrix A = new Matrix(500, 500, true);
-    Matrix B = new Matrix(500, 500, true);
+    MatrixMultiplier mult = new MatrixMultiplier(1000);
+    Matrix A = new Matrix(2000, 2000, true);
+    Matrix B = new Matrix(2000, 2000, true);
 
     System.out.println("Starting to do work");
     // Matrix seq_product = mult.SequentialProduct(A, B);
