@@ -166,7 +166,22 @@ const std::string Lexer::ProgramInternalFormStr() {
   buff << " | TOKEN TYPE\n";
   for (const auto& entry : pif_) {
     buff.width(16);
-    buff << entry.first << " | " << entry.second << "\n";
+    buff << entry.first << " |";
+    buff.width(3);
+    buff << entry.second << "  ";
+
+    if (entry.second == 0) {
+      buff << "LITERAL";
+    } else if (entry.second == 1) {
+      buff << "CONSTANT";
+    } else {
+      for (const auto& x : reserved_words_) {
+        if (x.second == entry.second) {
+          buff << x.first;
+        }
+      }
+    }
+    buff << "\n";
   }
 
   return buff.str();
