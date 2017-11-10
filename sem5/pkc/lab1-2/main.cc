@@ -44,22 +44,23 @@ NTL::ZZ measure_time(const std::string& description,
 }
 
 int main(int argc, char* argv[]) {
-  for (int size = 1; size <= 100; size *= 10) {
-    NTL::ZZ a = rand_ZZ(size);
-    NTL::ZZ b = rand_ZZ(size);
+  /* NTL::ZZ a = rand_ZZ(size); */
+  /* NTL::ZZ b = rand_ZZ(size); */
 
-    printf("Size = %d\n", size);
-    NTL::ZZ sub_gcd = measure_time(
-        "subtraction    ", [&a, &b]() { return GCD::subtraction_gcd(a, b); });
-    NTL::ZZ div_gcd = measure_time(
-        "division       ", [&a, &b]() { return GCD::division_gcd(a, b); });
+  NTL::ZZ a = NTL::conv<NTL::ZZ>("1234567891011121314151617181920");
+  NTL::ZZ b = NTL::conv<NTL::ZZ>("9876543211011121314151617181920");
 
-    /* NTL::ZZ fac_gcd = measure_time( */
-    /*     "factorization: ", [&a, &b]() { return GCD::factorization_gcd(a, b);
-     * }); */
+  NTL::ZZ sub_gcd = measure_time(
+      "subtraction    ", [&a, &b]() { return GCD::subtraction_gcd(a, b); });
+  NTL::ZZ div_gcd = measure_time(
+      "division       ", [&a, &b]() { return GCD::division_gcd(a, b); });
+  /* NTL::ZZ fac_gcd = measure_time( */
+  /*     "factorization  ", [&a, &b]() { return GCD::factorization_gcd(a, b);
+   * }); */
 
-    printf("\n");
-  }
+  std::cout << sub_gcd << "\n";
+  std::cout << div_gcd << "\n";
+  /* std::cout << fac_gcd << "\n"; */
 
   return 0;
 
