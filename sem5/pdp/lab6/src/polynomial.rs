@@ -1,7 +1,8 @@
 extern crate rand;
 use self::rand::Rng;
 use std::ops;
-use std::iter::Zip;
+use std::fmt;
+use std::cmp::Ordering;
 
 #[derive(Debug)]
 pub struct Polynomial {
@@ -9,18 +10,16 @@ pub struct Polynomial {
 }
 
 impl Polynomial {
-    pub fn new(size: usize) -> Polynomial {
-        let xs = vec![0; size];
-        Polynomial { xs }
+    pub fn new() -> Polynomial {
+        Polynomial { xs: Vec::new() }
     }
 
-    pub fn new_rand(size: usize, min: i32, max: i32) -> Polynomial {
-        let mut xs = vec![0; size];
+    pub fn new_rand(degree: usize, min: i32, max: i32) -> Polynomial {
         let mut rng = rand::thread_rng();
 
-        for x in xs.iter_mut() {
-            *x = rng.gen_range::<i32>(min, max);
-        }
+        let xs: Vec<i32> = (0..degree)
+            .map(|_| rng.gen_range::<i32>(min, max))
+            .collect();
 
         Polynomial { xs }
 
@@ -31,22 +30,42 @@ impl Polynomial {
     }
 }
 
-impl ops::Add<Polynomial> for Polynomial {
-    type Output = Option<Polynomial>;
+impl<'a, 'b> ops::Add<&'b Polynomial> for &'a Polynomial {
+    type Output = Polynomial;
 
-    fn add(self, _rhs: Polynomial) -> Option<Polynomial> {
-        if self.len() != _rhs.len() {
-            return None;
-        }
-
-        // let ret = Polynomial::new(self.len());
-
-        let ret_xs: Vec<i32> = self.xs
+    fn add(self, _rhs: &'b Polynomial) -> Polynomial {
+        let xs: Vec<i32> = self.xs
             .iter()
             .zip(_rhs.xs.iter())
             .map(|x| x.0 + x.1)
             .collect();
 
-        Some(Polynomial { xs: ret_xs })
+        Polynomial { xs }
+    }
+}
+
+impl fmt::Display for Polynomial {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "(")?;
+
+        for x in self.xs.iter().enumerate().rev() {
+            let exp = x.0;
+
+            let sign = match x.1.cmp(&0) {
+                Ordering::Less => " -",
+                Ordering::Equal => continue,
+                Ordering::Greater => " +",
+            };
+
+            let coef = match x.1 {
+                &-1 => String::new(),
+                &1 => String::new(),
+                &x => x.abs().to_string(),
+            };
+
+            write!(f, "{}{}x^{}", sign, coef, exp)?;
+        }
+
+        write!(f, ")")
     }
 }
