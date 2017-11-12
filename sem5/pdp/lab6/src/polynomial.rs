@@ -2,7 +2,7 @@ extern crate rand;
 use self::rand::Rng;
 use std::ops;
 use std::fmt;
-use std::cmp::Ordering;
+use std::cmp::{Ordering, max};
 
 #[derive(Debug)]
 pub struct Polynomial {
@@ -25,8 +25,32 @@ impl Polynomial {
 
     }
 
-    pub fn len(&self) -> usize {
+    pub fn degree(&self) -> usize {
+        // TODO: find the index of the largest non-zero coefficient
         self.xs.len()
+    }
+
+    // pub fn set_coefficient(&mut self, exponent: usize, coefficient: i32) {
+    //     if self.xs.len() < exponent + 1 {
+    //         self.xs.resize(exponent + 1, 0);
+    //     }
+
+    //     self.xs[exponent] = coefficient;
+    // }
+
+    pub fn get(&self, exponent: usize) -> i32 {
+        match self.xs.get(exponent) {
+            Some(x) => *x,
+            None => 0,
+        }
+    }
+
+    pub fn get_mut(&mut self, exponent: usize) -> &mut i32 {
+        if self.xs.len() < exponent + 1 {
+            self.xs.resize(exponent + 1, 0);
+        }
+
+        self.xs.get_mut(exponent).unwrap()
     }
 }
 
@@ -34,13 +58,19 @@ impl<'a, 'b> ops::Add<&'b Polynomial> for &'a Polynomial {
     type Output = Polynomial;
 
     fn add(self, _rhs: &'b Polynomial) -> Polynomial {
-        let xs: Vec<i32> = self.xs
-            .iter()
-            .zip(_rhs.xs.iter())
-            .map(|x| x.0 + x.1)
-            .collect();
+        // let xs: Vec<i32> = self.xs
+        //     .iter()
+        //     .zip(_rhs.xs.iter())
+        //     .map(|x| x.0 + x.1)
+        //     .collect();
+        let mut ret = Polynomial::new();
 
-        Polynomial { xs }
+        for i in 0..max(self.degree(), _rhs.degree()) {
+            *ret.get_mut(i) = self.get(i) + _rhs.get(i);
+        }
+
+        // Polynomial { xs }
+        ret
     }
 }
 
@@ -50,20 +80,37 @@ impl fmt::Display for Polynomial {
 
         for x in self.xs.iter().enumerate().rev() {
             let exp = x.0;
+            let coef = *x.1;
 
-            let sign = match x.1.cmp(&0) {
-                Ordering::Less => " -",
-                Ordering::Equal => continue,
-                Ordering::Greater => " +",
+            if coef == 0 {
+                continue;
+            }
+
+            let sign = match coef {
+                1 => {
+                    if exp + 1 == self.degree() {
+                        String::new()
+                    } else {
+                        String::from("+")
+                    }
+                }
+                -1 => String::from("-"),
+                x => {
+                    match x.cmp(&0) {
+                        Ordering::Less => String::from(x.to_string()),
+                        Ordering::Greater => format!("+{}", x.to_string()),
+                        _ => String::new(),
+                    }
+                }
             };
 
-            let coef = match x.1 {
-                &-1 => String::new(),
-                &1 => String::new(),
-                &x => x.abs().to_string(),
+            let repr = match exp {
+                0 => format!("{}{}", sign, coef.abs().to_string()),
+                1 => format!("{}x", sign),
+                _ => format!("{}{}{}", sign, &String::from("x^"), &exp.to_string()),
             };
 
-            write!(f, "{}{}x^{}", sign, coef, exp)?;
+            write!(f, "{}", repr)?;
         }
 
         write!(f, ")")

@@ -1,13 +1,18 @@
 extern crate lab6;
-use lab6::polynomial::Polynomial;
+use lab6::polynomial::*;
+use lab6::multiplier;
 
 fn main() {
-    let x = Polynomial::new_rand(3, -4, 4);
-    let y = Polynomial::new_rand(2, -4, 4);
+    let mut x = Polynomial::new();
+    let mut y = Polynomial::new();
 
-    println!("{}", x);
-    println!("{}", y);
+    *x.get_mut(0) = 1;
+    *x.get_mut(1) = 1;
 
-    println!("Sum is: \n{}", &x + &y);
+    *y.get_mut(0) = -1;
+    *y.get_mut(1) = 1;
+
+    println!("{} + {} = {}", &x, &y, &x + &y);
+    println!("{} * {} = {}", &x, &y, multiplier::seq_product(&x, &y));
 
 }

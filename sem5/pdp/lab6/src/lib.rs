@@ -7,3 +7,4 @@ mod tests {
 }
 
 pub mod polynomial;
+pub mod multiplier;
