@@ -26,7 +26,7 @@ mod tests {
 }
 
 pub fn is_carmichael(n: u32) -> bool {
-    if n <= 1 || primal::is_prime(n as u64) {
+    if n <= 1 || n % 2 == 0 || primal::is_prime(n as u64) {
         return false;
     }
 
