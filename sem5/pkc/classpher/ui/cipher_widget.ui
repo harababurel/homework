@@ -12,14 +12,14 @@
   </property>
   <property name="font">
    <font>
-    <family>Ubuntu Mono</family>
+    <family>Monospace</family>
     <pointsize>10</pointsize>
     <weight>50</weight>
     <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
-   <string>Cipher</string>
+   <string>Classpher</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="2" column="0">
@@ -28,7 +28,7 @@
       <widget class="QLabel" name="message_label">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -42,7 +42,7 @@
       <widget class="QPlainTextEdit" name="code_text_edit">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -67,7 +67,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Ubuntu Mono</family>
+           <family>Monospace</family>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -87,7 +87,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Ubuntu Mono</family>
+           <family>Monospace</family>
           </font>
          </property>
          <property name="text">
@@ -111,7 +111,7 @@
            <widget class="QSpinBox" name="key_a_spin_box">
             <property name="font">
              <font>
-              <family>Ubuntu Mono</family>
+              <family>Monospace</family>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -134,7 +134,7 @@
            <widget class="QSpinBox" name="key_b_spin_box">
             <property name="font">
              <font>
-              <family>Ubuntu Mono</family>
+              <family>Monospace</family>
               <weight>50</weight>
               <bold>false</bold>
              </font>
@@ -172,7 +172,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Ubuntu Mono</family>
+           <family>Monospace</family>
           </font>
          </property>
          <layout class="QGridLayout" name="permutation_widget">
@@ -210,7 +210,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Ubuntu Mono</family>
+              <family>Monospace</family>
              </font>
             </property>
             <property name="cursor" stdset="0">
@@ -312,7 +312,7 @@
       <widget class="QLabel" name="code_label">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -326,7 +326,7 @@
       <widget class="QPlainTextEdit" name="message_text_edit">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -340,7 +340,7 @@
       <widget class="QLabel" name="key_label">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -354,7 +354,7 @@
       <widget class="QLabel" name="cipher_label">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -368,7 +368,7 @@
       <widget class="QLabel" name="alphabet_label">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -382,7 +382,7 @@
       <widget class="QComboBox" name="cipher_combo_box">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -393,7 +393,7 @@
       <widget class="QLineEdit" name="alphabet_line_edit">
        <property name="font">
         <font>
-         <family>Ubuntu Mono</family>
+         <family>Monospace</family>
          <weight>50</weight>
          <bold>false</bold>
         </font>
