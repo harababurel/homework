@@ -5,3 +5,5 @@ authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
 
 [dependencies]
 rand = "0.3.18"
+crossbeam = "0.3.0"
+rayon = "0.9"

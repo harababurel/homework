@@ -1,42 +1,53 @@
-extern crate rand;
-use self::rand::Rng;
+use rand;
+use rand::Rng;
 use std::ops;
 use std::fmt;
-use std::cmp::{Ordering, max};
+use std::cmp::max;
 
 #[derive(Debug)]
 pub struct Polynomial {
-    xs: Vec<i32>,
+    pub xs: Vec<i32>,
 }
 
-impl Polynomial {
+impl<'a> Polynomial {
     pub fn new() -> Polynomial {
-        Polynomial { xs: Vec::new() }
+        Polynomial { xs: vec![0] }
+    }
+
+    pub fn new_with_degree(degree: usize) -> Polynomial {
+        Polynomial { xs: vec![0; degree + 1] }
     }
 
     pub fn new_rand(degree: usize, min: i32, max: i32) -> Polynomial {
-        let mut rng = rand::thread_rng();
+        Polynomial {
+            xs: (0..degree)
+                .map(|i| if i + 1 == degree {
+                    let mut x = 0;
+                    while x == 0 {
+                        x = rand::thread_rng().gen_range::<i32>(min, max);
+                    }
+                    x
+                } else {
+                    rand::thread_rng().gen_range::<i32>(min, max)
+                })
+                .collect(),
+        }
 
-        let xs: Vec<i32> = (0..degree)
-            .map(|_| rng.gen_range::<i32>(min, max))
-            .collect();
-
-        Polynomial { xs }
 
     }
 
     pub fn degree(&self) -> usize {
-        // TODO: find the index of the largest non-zero coefficient
-        self.xs.len()
+        match self.xs
+            .iter()
+            .enumerate()
+            .rev()
+            .filter(|&(_, &x)| x != 0)
+            .take(1)
+            .last() {
+            Some((i, _)) => i,
+            None => 0,
+        }
     }
-
-    // pub fn set_coefficient(&mut self, exponent: usize, coefficient: i32) {
-    //     if self.xs.len() < exponent + 1 {
-    //         self.xs.resize(exponent + 1, 0);
-    //     }
-
-    //     self.xs[exponent] = coefficient;
-    // }
 
     pub fn get(&self, exponent: usize) -> i32 {
         match self.xs.get(exponent) {
@@ -52,67 +63,76 @@ impl Polynomial {
 
         self.xs.get_mut(exponent).unwrap()
     }
+
+    pub fn resize(&mut self, exponent: usize) {
+        self.xs.resize(exponent + 1, 0);
+    }
+
+    pub fn resize_to_fit(mut self) -> Self {
+        loop {
+            if self.xs.len() == 1 {
+                break;
+            }
+            match self.xs.last() {
+                Some(&0) => self.xs.pop(),
+                _ => break,
+            };
+        }
+        return self;
+    }
 }
 
 impl<'a, 'b> ops::Add<&'b Polynomial> for &'a Polynomial {
     type Output = Polynomial;
 
     fn add(self, _rhs: &'b Polynomial) -> Polynomial {
-        // let xs: Vec<i32> = self.xs
-        //     .iter()
-        //     .zip(_rhs.xs.iter())
-        //     .map(|x| x.0 + x.1)
-        //     .collect();
         let mut ret = Polynomial::new();
 
-        for i in 0..max(self.degree(), _rhs.degree()) {
-            *ret.get_mut(i) = self.get(i) + _rhs.get(i);
-        }
+        (0..1 + max(self.degree(), _rhs.degree())).for_each(|i| {
+            *ret.get_mut(i) = self.get(i) + _rhs.get(i)
+        });
 
-        // Polynomial { xs }
         ret
     }
 }
 
-impl fmt::Display for Polynomial {
+impl<'a> fmt::Display for Polynomial {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "(")?;
 
-        for x in self.xs.iter().enumerate().rev() {
-            let exp = x.0;
-            let coef = *x.1;
+        for (exp, &coef) in self.xs.iter().enumerate().rev() {
 
             if coef == 0 {
                 continue;
             }
 
-            let sign = match coef {
-                1 => {
-                    if exp + 1 == self.degree() {
-                        String::new()
-                    } else {
-                        String::from("+")
-                    }
-                }
-                -1 => String::from("-"),
-                x => {
-                    match x.cmp(&0) {
-                        Ordering::Less => String::from(x.to_string()),
-                        Ordering::Greater => format!("+{}", x.to_string()),
-                        _ => String::new(),
-                    }
-                }
+            let sign = match (exp == self.degree(), coef < 0) {
+                (true, true) => "-",
+                (true, false) => "",
+                (false, true) => " - ",
+                (false, false) => " + ",
             };
 
-            let repr = match exp {
-                0 => format!("{}{}", sign, coef.abs().to_string()),
-                1 => format!("{}x", sign),
-                _ => format!("{}{}{}", sign, &String::from("x^"), &exp.to_string()),
+            let coef = if coef.abs() == 1 && exp != 0 {
+                String::new()
+            } else {
+                coef.abs().to_string()
             };
 
-            write!(f, "{}", repr)?;
+            match exp {
+                0 => write!(f, "{}{}", sign, coef)?,
+                1 => write!(f, "{}{}x", sign, coef)?,
+                _ => write!(f, "{}{}x^{}", sign, coef, exp)?,
+            };
+
         }
 
         write!(f, ")")
+    }
+}
+
+impl PartialEq for Polynomial {
+    fn eq(&self, other: &Polynomial) -> bool {
+        self.degree() == other.degree() && self.xs == other.xs
     }
 }
