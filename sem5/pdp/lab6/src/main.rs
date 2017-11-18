@@ -20,31 +20,30 @@ where
     product
 }
 
-
 fn main() {
+    let x = Polynomial::new_rand(1e5 as usize, -100, 100);
+    let y = Polynomial::new_rand(1e5 as usize, -100, 100);
+    // let x = Polynomial::from(vec![1, 1, 1, 1]);
+    // let y = Polynomial::from(vec![1, 1, 1, 1]);
 
-    // let x = Polynomial::new_rand(4 as usize, -100, 100);
-    // let y = Polynomial::new_rand(2 as usize, -100, 100);
-    let x = Polynomial { xs: vec![-1, 1] };
-    let y = Polynomial { xs: vec![1, 1] };
-
-    println!("x = {}", x);
-    println!("y = {}", y);
-    println!();
-
-
-    println!("x.degree() = {}", x.degree());
+    // println!("x = {}", x);
+    // println!("y = {}", y);
+    // println!();
 
     println!("Running");
-    let sum = measure_runtime(|| &x + &y);
-    println!("{} + {} = {}", &x, &y, sum);
-
 
     let seq_product = measure_runtime(|| multiplier::seq_product(&x, &y));
     let par_product = measure_runtime(|| multiplier::par_product(&x, &y));
+    let new_product = measure_runtime(|| multiplier::new_product(&x, &y));
+    let seq_karatsuba = measure_runtime(|| multiplier::seq_karatsuba(&x, &y));
+    let par_karatsuba = measure_runtime(|| multiplier::par_karatsuba(&x, &y));
 
-    println!("{} * {} = {:?}", &x, &y, seq_product);
-    println!("{} * {} = {:?}", &x, &y, par_product);
+    // println!("{} * {} = {:?}", &x, &y, seq_product);
+    // println!("{} * {} = {:?}", &x, &y, par_product);
+    // println!("{} * {} = {:?}", &x, &y, new_product);
 
     assert_eq!(seq_product, par_product);
+    assert_eq!(seq_product, new_product);
+    assert_eq!(seq_product, seq_karatsuba);
+    assert_eq!(seq_product, par_karatsuba);
 }
