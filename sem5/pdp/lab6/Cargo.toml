@@ -4,7 +4,6 @@ version = "0.1.0"
 authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
 
 [dependencies]
-rand = "0.3.18"
 crossbeam = "0.3.0"
+rand = "0.3.18"
 rayon = "0.9"
-either = "1.4.0"

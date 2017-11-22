@@ -1,9 +1,8 @@
-// use either::{Either, Left, Right};
+use crossbeam;
 use polynomial::Polynomial;
 use rayon::prelude::*;
 use std::cmp;
 use std::cmp::Ordering;
-use crossbeam;
 
 pub fn seq_product<'a, 'b>(a: &'a Polynomial, b: &Polynomial) -> Polynomial {
     let mut product = Polynomial::with_degree(a.degree() + b.degree());
@@ -18,7 +17,7 @@ pub fn seq_product<'a, 'b>(a: &'a Polynomial, b: &Polynomial) -> Polynomial {
     product
 }
 
-pub fn par_product<'a, 'b>(a: &'a Polynomial, b: &'b Polynomial) -> Polynomial {
+pub fn par_imperative_product<'a, 'b>(a: &'a Polynomial, b: &'b Polynomial) -> Polynomial {
     let (&a, &b) = match a.degree().cmp(&b.degree()) {
         Ordering::Less => (&a, &b),
         _ => (&b, &a),
@@ -35,7 +34,7 @@ pub fn par_product<'a, 'b>(a: &'a Polynomial, b: &'b Polynomial) -> Polynomial {
     product
 }
 
-pub fn new_product<'a, 'b>(a: &'a Polynomial, b: &'b Polynomial) -> Polynomial {
+pub fn par_functional_product<'a, 'b>(a: &'a Polynomial, b: &'b Polynomial) -> Polynomial {
     let (&a, &b) = match a.degree().cmp(&b.degree()) {
         Ordering::Less => (&a, &b),
         _ => (&b, &a),
@@ -58,7 +57,7 @@ pub fn new_product<'a, 'b>(a: &'a Polynomial, b: &'b Polynomial) -> Polynomial {
 
 pub fn seq_karatsuba<'a, 'b>(x: &'a Polynomial, y: &'b Polynomial) -> Polynomial {
     if cmp::min(x.degree(), y.degree()) <= 210 {
-        return par_product(&x, &y);
+        return par_functional_product(&x, &y);
     }
 
     let n = cmp::max(x.degree(), y.degree());
@@ -74,10 +73,6 @@ pub fn seq_karatsuba<'a, 'b>(x: &'a Polynomial, y: &'b Polynomial) -> Polynomial
     let mut y1 = y.clone();
     y1.divide_by_power(m);
 
-    // x1.multiply_by_power(m);
-    // y1.multiply_by_power(m);
-    // par_product(&(&x1 + &x0), &(&y1 + &y0))
-
     let z0 = seq_karatsuba(&x0, &y0);
     let z2 = seq_karatsuba(&x1, &y1);
     let z1 = seq_karatsuba(&(x0 + x1), &(y0 + y1)) - &z2 - &z0;
@@ -88,7 +83,7 @@ pub fn seq_karatsuba<'a, 'b>(x: &'a Polynomial, y: &'b Polynomial) -> Polynomial
 
 pub fn par_karatsuba<'a, 'b>(x: &'a Polynomial, y: &'b Polynomial) -> Polynomial {
     if cmp::min(x.degree(), y.degree()) <= 120 {
-        return par_product(&x, &y);
+        return par_functional_product(&x, &y);
     }
 
     let n = cmp::max(x.degree(), y.degree());
@@ -104,6 +99,7 @@ pub fn par_karatsuba<'a, 'b>(x: &'a Polynomial, y: &'b Polynomial) -> Polynomial
     let mut y1 = y.clone();
     y1.divide_by_power(m);
     let z0_handle = crossbeam::scope(|scope| scope.spawn(|| par_karatsuba(&x0, &y0)));
+
     let z2_handle = crossbeam::scope(|scope| scope.spawn(|| par_karatsuba(&x1, &y1)));
 
     let z0 = z0_handle.join();

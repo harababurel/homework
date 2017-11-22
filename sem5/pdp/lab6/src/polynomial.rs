@@ -156,20 +156,6 @@ impl<'a> ops::Sub<Polynomial> for &'a Polynomial {
     }
 }
 
-
-// impl<'a, 'b> ops::SubAssign<&'b Polynomial> for &'a Polynomial {
-//     fn sub_assign(&mut self, _rhs: &'b Polynomial) {
-//         let mut ret = Polynomial::new();
-
-//         (0..1 + max(self.degree(), _rhs.degree())).for_each(|i| {
-//             *ret.get_mut(i) = self.get(i) - _rhs.get(i)
-//         });
-//         ret.resize_to_fit();
-//         // self.xs = ret.xs;
-//         self = &mut ret.clone();
-//     }
-// }
-
 impl<'a> fmt::Display for Polynomial {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "(")?;
