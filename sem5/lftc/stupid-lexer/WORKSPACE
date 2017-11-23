@@ -1,0 +1,6 @@
+new_http_archive(
+    name = "json",
+    build_file = "BUILD.json",
+    strip_prefix = "json-develop/src",
+    url = "https://github.com/nlohmann/json/archive/develop.zip",
+)

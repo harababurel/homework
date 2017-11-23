@@ -2,7 +2,9 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 #include <vector>
+#include "dfa/dfa.h"
 #include "lexer.h"
 
 void load_reserved_words(const std::string& filename,

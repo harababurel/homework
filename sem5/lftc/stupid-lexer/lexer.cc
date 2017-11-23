@@ -68,11 +68,11 @@ util::Status Lexer::CreateSymbolTable() {
       continue;
     }
 
-    if (isConstant(token)) {
+    if (IsConstant(token)) {
       if (constant_table_.find(token) == constant_table_.end()) {
         constant_table_[token] = constant_table_.size();
       }
-    } else if (isIdentifier(token)) {
+    } else if (IsIdentifier(token)) {
       if (identifier_table_.find(token) == identifier_table_.end()) {
         identifier_table_[token] = identifier_table_.size();
       }
@@ -104,41 +104,43 @@ util::Status Lexer::CreatePIF() {
   return util::OkStatus();
 }
 
-bool Lexer::isConstant(const Symbol& symbol) {
-  if (symbol == "true" || symbol == "false") {
-    return true;
-  }
+bool Lexer::IsConstant(const Symbol& symbol) {
+  return constant_dfa_->Accepts(symbol);
+  /* if (symbol == "true" || symbol == "false") { */
+  /*   return true; */
+  /* } */
 
-  int dots = 0;
-  for (const char& c : symbol) {
-    if (c == '.') {
-      dots++;
-    } else if (!('0' <= c && c <= '9')) {
-      return false;
-    }
-  }
+  /* int dots = 0; */
+  /* for (const char& c : symbol) { */
+  /*   if (c == '.') { */
+  /*     dots++; */
+  /*   } else if (!('0' <= c && c <= '9')) { */
+  /*     return false; */
+  /*   } */
+  /* } */
 
-  if (dots > 1) {
-    return false;
-  }
+  /* if (dots > 1) { */
+  /*   return false; */
+  /* } */
 
-  return true;
+  /* return true; */
 }
 
-bool Lexer::isIdentifier(const Symbol& symbol) {
-  if (symbol.size() > 8) {
-    return false;
-  }
+bool Lexer::IsIdentifier(const Symbol& symbol) {
+  return identifier_dfa_->Accepts(symbol);
+  /* if (symbol.size() > 8) { */
+  /*   return false; */
+  /* } */
 
-  for (const char& c : symbol) {
-    if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')) {
-      continue;
-    } else {
-      return false;
-    }
-  }
+  /* for (const char& c : symbol) { */
+  /*   if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')) { */
+  /*     continue; */
+  /*   } else { */
+  /*     return false; */
+  /*   } */
+  /* } */
 
-  return true;
+  /* return true; */
 }
 
 const std::string Lexer::SymbolTableStr(const std::string& table_name,
