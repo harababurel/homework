@@ -1,0 +1,10 @@
+[package]
+name = "zenda"
+version = "0.1.0"
+authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
+
+[dependencies]
+image = "*"
+
+[[example]]
+name = "transformer"
