@@ -1,0 +1,1 @@
+{"rustc":16448434725525097460,"features":"[]","target":230924066428597476,"profile":731176819336294830,"deps":[["num v0.1.40",17141617569158053915],["rand v0.3.18",8817313936193420661]],"local":[{"MtimeBased":[[1511908635,636379795],"/home/sergiu/work/homework/sem5/pdp/bigsum/target/debug/.fingerprint/bigsum-90dbccf7cfcdd1b5/dep-lib-bigsum-90dbccf7cfcdd1b5"]}],"rustflags":[]}

@@ -1,0 +1,16 @@
+[package]
+name = "bigsum"
+version = "0.1.0"
+authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
+
+[dependencies]
+num = "0.1"
+rand = "*"
+random_choice = "0.3.2"
+lossyq = "0.1.19"
+bounded-spsc-queue = "0.2.0"
+crossbeam = "*"
+cpuprofiler = "0.0.3"
+
+[profile.release]
+debug = true
