@@ -1,8 +1,7 @@
 extern crate crossbeam;
 
-use num::bigint::BigUint;
-use num::traits::{Zero, ToPrimitive};
-use num::integer::Integer;
+//use num::bigint::BigUint;
+use bigint::BigUint;
 use bounded_spsc_queue::Producer;
 use bounded_spsc_queue;
 
@@ -25,7 +24,7 @@ impl Adder {
     }
 
     pub fn compute(&self) -> BigUint {
-        self.xs.iter().fold(Zero::zero(), |acc, x| acc + x)
+        self.xs.iter().fold(BigUint::zero(), |acc, x| acc + x)
     }
 
     pub fn compute_rec(&self) -> BigUint {
@@ -41,7 +40,7 @@ impl Adder {
         let left = self.compute_slice(&_xs[0..mid]);
         let right = self.compute_slice(&_xs[mid..]);
 
-        return left + right;
+        return left + &right;
     }
 
     pub fn compute_par(&self) -> BigUint {
@@ -59,16 +58,8 @@ impl Adder {
 
     fn compute_slice_par(&self, _xs: &[BigUint], producer: Producer<Option<u32>>) {
         if _xs.len() == 1 {
-            let mut x = _xs[0].clone();
-            let mut digit: BigUint;
-
-            let base = BigUint::new(vec![0, 1]);
-
-            while !x.is_zero() {
-                let (quotient, remainder) = x.div_rem(&base);
-                x = quotient;
-                digit = remainder;
-                producer.push(Some(digit.to_u32().unwrap()));
+            for digit in _xs[0].digits() {
+                producer.push(Some(*digit));
             }
             producer.push(None);
             return;
@@ -84,34 +75,33 @@ impl Adder {
             scope.spawn(move || { self.compute_slice_par(&_xs[mid..], producer_right); });
 
             scope.spawn(move || {
-                let mut carry: u32 = 0;
+                let mut carry = 0 as u64;
                 let (mut left_finished, mut right_finished) = (false, false);
                 while !left_finished || !right_finished {
-                    let (mut left_digit, mut right_digit) = (0 as u32, 0 as u32);
+                    let (mut left_digit, mut right_digit) = (0 as u64, 0 as u64);
 
                     if !left_finished {
                         match consumer_left.pop() {
-                            Some(x) => left_digit = x,
+                            Some(x) => left_digit = x as u64,
                             None => left_finished = true,
                         }
                     }
 
                     if !right_finished {
                         match consumer_right.pop() {
-                            Some(x) => right_digit = x,
+                            Some(x) => right_digit = x as u64,
                             None => right_finished = true,
                         }
                     }
 
-                    let base: u64 = 4294967296;
-                    let new_digit: u32 = (((left_digit as u64) + (right_digit as u64) + carry as u64) % base) as u32;
+                    let new_digit = ((left_digit + right_digit + carry) % BigUint::base()) as u32;
 
                     producer.push(Some(new_digit));
-                    carry = (((left_digit as u64) + (right_digit as u64) + (carry as u64)) / base) as u32;
+                    carry = (left_digit + right_digit + carry) / BigUint::base();
                 }
 
                 if carry > 0 {
-                    producer.push(Some(carry));
+                    producer.push(Some(carry as u32));
                 }
                 producer.push(None);
             });

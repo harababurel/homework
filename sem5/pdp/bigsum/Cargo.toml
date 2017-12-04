@@ -11,6 +11,7 @@ lossyq = "0.1.19"
 bounded-spsc-queue = "0.2.0"
 crossbeam = "*"
 cpuprofiler = "0.0.3"
+itertools = "*"
 
 [profile.release]
 debug = true

@@ -3,16 +3,16 @@ extern crate rand;
 extern crate num;
 
 use bigsum::adder::Adder;
-use num::bigint::ToBigUint;
+use bigsum::bigint::BigUint;
 
 
 fn main() {
     let mut adder = Adder::new();
-    adder.push(1337.to_biguint().unwrap());
-    adder.push(42.to_biguint().unwrap());
-    adder.push(8.to_biguint().unwrap());
-    adder.push(995.to_biguint().unwrap());
+    adder.push(BigUint::from(1234));
+    adder.push(BigUint::from(42));
+    adder.push(BigUint::from(8));
+    adder.push(BigUint::from(995));
 
     let result = adder.compute_par();
-    println!("result: {}", result);
+    println!("result: {:?}", result);
 }
