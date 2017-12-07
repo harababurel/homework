@@ -1,0 +1,7 @@
+[package]
+name = "pollard-rho"
+version = "0.1.0"
+authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
+
+[dependencies]
+num = "0.1"
