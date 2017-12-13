@@ -4,6 +4,10 @@ extern crate num;
 use num::bigint::BigInt;
 
 fn main() {
-    let n = "9007199254740991".parse::<BigInt>().unwrap();
+    let n = "563789213645".parse::<BigInt>().unwrap();
     pollard_rho::factorize(&n).iter().for_each(|factor| println!("factor: {}", factor));
+
+
+//    let n = "1392".parse::<BigInt>().unwrap();
+//    pollard_rho::factorize_but_slowly(&n).iter().for_each(|factor| println!("factor: {}", factor));
 }

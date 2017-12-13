@@ -5,3 +5,4 @@ authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
 
 [dependencies]
 num = "0.1"
+primal = "0.2"
