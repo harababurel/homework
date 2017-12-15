@@ -3,8 +3,9 @@ extern crate zenda;
 use zenda::Transformer;
 
 fn main() {
-    let transformer = Transformer::load("examples/mango.jpg")
+    let mut transformer = Transformer::load("examples/sheep.jpeg")
         .expect("Could not create transformer");
 
-    transformer.save("/tmp/mango.png").expect("Could not save image.");
+    transformer.find_edges();
+    transformer.save("/tmp/output.png").expect("Could not save image.");
 }

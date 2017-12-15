@@ -5,6 +5,7 @@ authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
 
 [dependencies]
 image = "*"
+rayon = "*"
 
 [[example]]
 name = "transformer"
