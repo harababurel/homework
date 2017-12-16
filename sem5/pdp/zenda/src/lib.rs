@@ -123,6 +123,10 @@ impl Transformer {
         }
     }
 
+    fn fit_in_range(x: i32, range: std::ops::Range<u32>) -> u32 {
+        cmp::max(range.start as i32, cmp::min(range.end as i32 - 1, x)) as u32
+    }
+
     fn apply_kernel(&mut self, kernel: &Vec<Vec<f64>>, factor: f64, bias: f64) {
         let mut new_image = self.img.clone();
         let kernel_delta = kernel.len() / 2;
@@ -133,18 +137,14 @@ impl Transformer {
                 let mut value = 0.0;
                 for kernel_i in 0..kernel.len() {
                     for kernel_j in 0..kernel.len() {
-                        let img_i = pixel.0 as i32 + kernel_i as i32 - kernel_delta as i32;
-                        let img_j = pixel.1 as i32 + kernel_j as i32 - kernel_delta as i32;
-
-                        if (0..self.img.width() as i32).contains(img_i) &&
-                            (0..self.img.height() as i32).contains(img_j) {
-                            let neighbor = self.img.get_pixel(img_i as u32, img_j as u32);
-                            value += kernel[kernel_i][kernel_j] * neighbor.data[channel] as f64;
-                        }
+                        let img_i = Transformer::fit_in_range(pixel.0 as i32 + kernel_i as i32 - kernel_delta as i32, 0..self.img.width());
+                        let img_j = Transformer::fit_in_range(pixel.1 as i32 + kernel_j as i32 - kernel_delta as i32, 0..self.img.height());
+                        let neighbor = self.img.get_pixel(img_i, img_j);
+                        value += kernel[kernel_i][kernel_j] * neighbor.data[channel] as f64;
                     }
                 }
 
-                cmp::max(0, cmp::min(255, (value * factor + bias) as i32)) as u8
+                Transformer::fit_in_range((value * factor + bias) as i32, (0..255)) as u8
             }).collect();
 
             (pixel.0, pixel.1, Rgba([new_values[0], new_values[1], new_values[2], pixel.2.data[3]]))
