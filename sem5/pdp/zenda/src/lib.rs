@@ -45,15 +45,16 @@ impl Transformer {
                           0.0);
     }
 
-    pub fn blur(&mut self, size: usize) {
+    pub fn blur(&mut self, amount: usize) {
         let mut kernel: Vec<Vec<f32>> = Vec::new();
-        kernel.resize(size, vec![1.0; size]);
+        kernel.resize(amount, vec![1.0; amount]);
 
 
-        self.apply_kernel(&kernel, 1.0 / (size * size) as f32, 0.0);
+        self.apply_kernel(&kernel, 1.0 / (amount * amount) as f32, 0.0);
     }
 
-    pub fn gaussian_blur(&mut self) {
+    pub fn gaussian_blur(&mut self, amount: usize) {
+        // TODO: use provided amount
         self.apply_kernel(&vec![vec![1.0, 4.0, 6.0, 4.0, 1.0],
                                 vec![4.0, 16.0, 24.0, 16.0, 4.0],
                                 vec![6.0, 24.0, 36.0, 24.0, 6.0],
@@ -63,16 +64,16 @@ impl Transformer {
                           0.0);
     }
 
-    pub fn motion_blur(&mut self, size: usize) {
+    pub fn motion_blur(&mut self, amount: usize) {
         let mut kernel: Vec<Vec<f32>> = Vec::new();
-        kernel.resize(size, vec![0.0; size]);
+        kernel.resize(amount, vec![0.0; amount]);
 
         for (i, line) in kernel.iter_mut().enumerate() {
             line[i] = 1.0;
         }
 
         self.apply_kernel(&kernel,
-                          1.0 / (size as f32),
+                          1.0 / (amount as f32),
                           0.0);
     }
 
