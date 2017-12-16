@@ -4,8 +4,10 @@ version = "0.1.0"
 authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
 
 [dependencies]
+clap = "2.29.0"
 image = "*"
 rayon = "*"
+
 
 [[example]]
 name = "transformer"
