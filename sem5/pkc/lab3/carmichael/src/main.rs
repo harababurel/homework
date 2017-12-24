@@ -1,13 +1,16 @@
 extern crate carmichael;
+extern crate rayon;
+use rayon::prelude::*;
 
 fn main() {
-    let n = 5;
+    let n = 100000;
 
-    let xs: Vec<u32> = (1u32..)
-        .filter(|x| carmichael::is_carmichael(*x))
-        .take(n)
-        .collect();
+    let xs: Vec<u64> = (1u64..n as u64).collect();
 
-    println!("{:?}", xs);
+    xs.par_iter()
+        .filter(|x| carmichael::is_carmichael(**x))
+        .for_each(|x| {
+            println!("{}", x);
+        });
 
 }

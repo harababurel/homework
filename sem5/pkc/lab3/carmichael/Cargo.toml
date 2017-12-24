@@ -6,3 +6,4 @@ authors = ["Sergiu Puscas <srg.pscs@gmail.com>"]
 [dependencies]
 num = "*"
 primal = "*"
+rayon = "*"
