@@ -12,7 +12,7 @@ def main():
     if args.log:
         logging.basicConfig(level=getattr(logging, args.log.upper()))
 
-    filename = 'data/1.json'
+    filename = 'data/constant.json'
     try:
         with open(filename, 'r') as f:
             encoding = f.read()
@@ -28,7 +28,7 @@ def main():
 
     logging.info("Automaton:\n%s", automaton)
 
-    sequence = "bababaaaaba"
+    sequence = "121"
     print(automaton.longest_accepted_prefix(sequence))
     print(automaton.accepts(sequence))
 

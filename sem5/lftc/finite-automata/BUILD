@@ -1,7 +1,7 @@
 py_binary(
     name = "main",
     srcs = ["main.py"],
-    data = ["data/1.json"],
+    data = glob(["data/*.json"]),
     deps = [
         ":dfa",
     ],
