@@ -1,6 +1,6 @@
-std::cin 2
-std::cout 3
-std::endl 38
+cin 2
+cout 3
+endl 38
 return 4
 if 5
 else 6

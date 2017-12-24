@@ -41,15 +41,17 @@ int main(int argc, char* argv[]) {
   load_reserved_words("reserved_words.csv", &reserved_words);
 
   lftc::Lexer lexer(reserved_words);
-  std::string code = load_code("data/gcd.cc");
+  std::string code = load_code("data/perimeter.cc");
 
-  lexer.Tokenize(code);
-  auto status = lexer.CreateSymbolTable();
+  lexer.TokenizeReloaded(code);
 
-  if (!status.ok()) {
-    std::cout << status.error_message() << "\n";
-    return 1;
-  }
+  /* lexer.Tokenize(code); */
+  /* auto status = lexer.CreateSymbolTable(); */
+
+  /* if (!status.ok()) { */
+  /*   std::cout << status.error_message() << "\n"; */
+  /*   return 1; */
+  /* } */
 
   lexer.CreatePIF();
 

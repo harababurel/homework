@@ -87,6 +87,76 @@ util::Status Lexer::CreateSymbolTable() {
   return util::OkStatus();
 }
 
+void Lexer::TokenizeReloaded(const std::string& code) {
+  std::string s = code;
+
+  enum TokenType { NOTHING, IDENTIFIER, CONSTANT, RESERVED_WORD };
+
+  while (!s.empty()) {
+    if (s[0] == ' ' || s[0] == '\n') {
+      s = s.substr(1);
+      continue;
+    }
+
+    std::string identifier = identifier_dfa_->LongestAcceptedPrefix(s);
+    std::string constant = constant_dfa_->LongestAcceptedPrefix(s);
+
+    TokenType type = NOTHING;
+    std::string token;
+
+    if (!identifier.empty()) {
+      if (reserved_words_.find(identifier) != reserved_words_.end()) {
+        token = identifier;
+        type = RESERVED_WORD;
+        /* std::cout << "reserved word: " << identifier << "\n"; */
+      } else {
+        if (identifier.size() <= 8) {
+          token = identifier;
+          type = IDENTIFIER;
+          std::cout << "identifier:    " << identifier << "\n";
+        } else {
+          std::cout << "Lexical error at <" << identifier << ">\n";
+          return;
+        }
+      }
+      s = s.substr(identifier.size());
+    } else if (!constant.empty()) {
+      token = constant;
+      type = CONSTANT;
+      s = s.substr(constant.size());
+      std::cout << "constant:      " << constant << "\n";
+    } else {
+      bool found = false;
+      for (auto entry : reserved_words_) {
+        auto word = entry.first;
+        if (s.substr(0, word.size()) == word) {
+          token = word;
+          type = RESERVED_WORD;
+          std::cout << "reserved word: " << word << "\n";
+          s = s.substr(word.size());
+          found = true;
+        }
+      }
+      if (!found) {
+        std::cout << "not found\n";
+        return;
+      }
+    }
+
+    if (type == CONSTANT) {
+      if (constant_table_.find(token) == constant_table_.end()) {
+        constant_table_[token] = constant_table_.size();
+      }
+    } else if (type == IDENTIFIER) {
+      if (identifier_table_.find(token) == identifier_table_.end()) {
+        identifier_table_[token] = identifier_table_.size();
+      }
+    }
+
+    tokens_.push_back(token);
+  }
+}
+
 util::Status Lexer::CreatePIF() {
   pif_.clear();
   pif_.reserve(tokens_.size());
@@ -106,41 +176,10 @@ util::Status Lexer::CreatePIF() {
 
 bool Lexer::IsConstant(const Symbol& symbol) {
   return constant_dfa_->Accepts(symbol);
-  /* if (symbol == "true" || symbol == "false") { */
-  /*   return true; */
-  /* } */
-
-  /* int dots = 0; */
-  /* for (const char& c : symbol) { */
-  /*   if (c == '.') { */
-  /*     dots++; */
-  /*   } else if (!('0' <= c && c <= '9')) { */
-  /*     return false; */
-  /*   } */
-  /* } */
-
-  /* if (dots > 1) { */
-  /*   return false; */
-  /* } */
-
-  /* return true; */
 }
 
 bool Lexer::IsIdentifier(const Symbol& symbol) {
   return identifier_dfa_->Accepts(symbol);
-  /* if (symbol.size() > 8) { */
-  /*   return false; */
-  /* } */
-
-  /* for (const char& c : symbol) { */
-  /*   if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')) { */
-  /*     continue; */
-  /*   } else { */
-  /*     return false; */
-  /*   } */
-  /* } */
-
-  /* return true; */
 }
 
 const std::string Lexer::SymbolTableStr(const std::string& table_name,

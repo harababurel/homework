@@ -7,8 +7,10 @@ int main() {
   a = 121;
   b = 33.2;
 
-  hello computer please compute my gcd asdsadalka;
+  hello computer please compute my gcd kljdslkfjdsasdsadalka;
 
-  std::cout << a;
+  €;
+
+  cout << a;
   return 0;
 }

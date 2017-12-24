@@ -71,7 +71,7 @@ class DeterministicFiniteAutomaton {
 
   std::string LongestAcceptedPrefix(const std::string& sequence) {
     State* state = initial_state_;
-    int best_i = 0;
+    int best_i = -1;
 
     for (int i = 0; i < int(sequence.size()); i++) {
       state = get_state(state->Next(sequence.substr(i, 1)));

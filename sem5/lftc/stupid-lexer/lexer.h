@@ -42,6 +42,7 @@ class Lexer {
   }
 
   util::Status Tokenize(const std::string& code);
+  void TokenizeReloaded(const std::string& code);
 
   util::Status CreateSymbolTable();
 

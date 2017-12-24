@@ -15,6 +15,6 @@ int main() {
     }
   }
 
-  std::cout << a;
+  cout << a;
   return 0;
 }
