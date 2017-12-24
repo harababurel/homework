@@ -76,3 +76,13 @@ cc_library(
         ":cipher",
     ],
 )
+
+cc_library(
+    name = "rsa",
+    srcs = ["rsa.cc"],
+    hdrs = ["rsa.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cipher",
+    ],
+)

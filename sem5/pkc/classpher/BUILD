@@ -6,6 +6,7 @@ cc_binary(
         "main.cc",
     ],
     deps = [
+        "//cipher:rsa",
         "//external:ntl",
         "//ui:cipher_widget",
         "//util:gcd",

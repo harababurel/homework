@@ -9,6 +9,7 @@
 #include <random>
 #include "cipher/caesar.h"
 #include "cipher/hill.h"
+#include "cipher/rsa.h"
 #include "ui/cipher_widget.h"
 #include "util/gcd.h"
 #include "util/status.h"
@@ -44,6 +45,11 @@ NTL::ZZ measure_time(const std::string& description,
 }
 
 int main(int argc, char* argv[]) {
+  cipher::rsa::RSACipher cipher;
+  cipher.GenerateKeys();
+
+  return 0;
+
   QApplication app(argc, argv);
   CipherWidget widget;
 
