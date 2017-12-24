@@ -10,7 +10,7 @@ use std::cmp;
 use rayon::prelude::*;
 
 pub struct Transformer {
-    pub img: DynamicImage
+    pub img: DynamicImage,
 }
 
 impl Transformer {
@@ -28,20 +28,25 @@ impl Transformer {
     pub fn save(&self, filepath: &str) -> Result<(), String> {
         File::create(&Path::new(filepath))
             .map_err(|err| err.to_string())
-            .and_then(|ref mut file|
-                self.img
-                    .save(file, image::PNG)
-                    .map_err(|err| err.to_string()))
+            .and_then(|ref mut file| {
+                self.img.save(file, image::PNG).map_err(
+                    |err| err.to_string(),
+                )
+            })
     }
 
     pub fn sharpen(&mut self) {
-        self.apply_kernel(&vec![vec![-1.0, -1.0, -1.0, -1.0, -1.0],
-                                vec![-1.0, 2.0, 2.0, 2.0, -1.0],
-                                vec![-1.0, 2.0, 8.0, 2.0, -1.0],
-                                vec![-1.0, 2.0, 2.0, 2.0, -1.0],
-                                vec![-1.0, -1.0, -1.0, -1.0, -1.0]],
-                          1.0 / 8.0,
-                          0.0);
+        self.apply_kernel(
+            &vec![
+                vec![-1.0, -1.0, -1.0, -1.0, -1.0],
+                vec![-1.0, 2.0, 2.0, 2.0, -1.0],
+                vec![-1.0, 2.0, 8.0, 2.0, -1.0],
+                vec![-1.0, 2.0, 2.0, 2.0, -1.0],
+                vec![-1.0, -1.0, -1.0, -1.0, -1.0],
+            ],
+            1.0 / 8.0,
+            0.0,
+        );
     }
 
     pub fn box_blur(&mut self, size: usize) {
@@ -62,7 +67,8 @@ impl Transformer {
                 let x_sq = (i as f64 - (size / 2) as f64).powi(2);
                 let y_sq = (j as f64 - (size / 2) as f64).powi(2);
 
-                kernel[i][j] = consts::E.powf(-(x_sq + y_sq) / (2.0 * sigma_sq)) / (2.0 * sigma_sq * consts::PI);
+                kernel[i][j] = consts::E.powf(-(x_sq + y_sq) / (2.0 * sigma_sq)) /
+                    (2.0 * sigma_sq * consts::PI);
                 sum += kernel[i][j];
             }
         }
@@ -73,9 +79,7 @@ impl Transformer {
             }
         }
 
-        self.apply_kernel(&kernel,
-                          1.0,
-                          0.0);
+        self.apply_kernel(&kernel, 1.0, 0.0);
     }
 
     pub fn motion_blur(&mut self, size: usize) {
@@ -86,17 +90,19 @@ impl Transformer {
             line[i] = 1.0;
         }
 
-        self.apply_kernel(&kernel,
-                          1.0 / (size as f64),
-                          0.0);
+        self.apply_kernel(&kernel, 1.0 / (size as f64), 0.0);
     }
 
     pub fn find_edges(&mut self) {
-        self.apply_kernel(&vec![vec![-1.0, -1.0, -1.0],
-                                vec![-1.0, 8.0, -1.0],
-                                vec![-1.0, -1.0, -1.0]],
-                          1.0,
-                          0.0);
+        self.apply_kernel(
+            &vec![
+                vec![-1.0, -1.0, -1.0],
+                vec![-1.0, 8.0, -1.0],
+                vec![-1.0, -1.0, -1.0],
+            ],
+            1.0,
+            0.0,
+        );
         self.img = self.img.grayscale();
     }
 
@@ -114,9 +120,7 @@ impl Transformer {
             }
         }
 
-        self.apply_kernel(&kernel,
-                          1.0,
-                          128.0);
+        self.apply_kernel(&kernel, 1.0, 128.0);
 
         if grayscale {
             self.img = self.img.grayscale();
@@ -132,29 +136,44 @@ impl Transformer {
         let kernel_delta = kernel.len() / 2;
 
         let pixels: Vec<_> = self.img.pixels().into_iter().collect();
-        let transformed_pixels: Vec<_> = pixels.into_par_iter().map(|pixel| {
-            let new_values: Vec<u8> = (0..3).map(|channel| {
-                let mut value = 0.0;
-                for kernel_i in 0..kernel.len() {
-                    for kernel_j in 0..kernel.len() {
-                        let img_i = Transformer::fit_in_range(pixel.0 as i32 + kernel_i as i32 - kernel_delta as i32, 0..self.img.width());
-                        let img_j = Transformer::fit_in_range(pixel.1 as i32 + kernel_j as i32 - kernel_delta as i32, 0..self.img.height());
-                        let neighbor = self.img.get_pixel(img_i, img_j);
-                        value += kernel[kernel_i][kernel_j] * neighbor.data[channel] as f64;
-                    }
-                }
+        let transformed_pixels: Vec<_> = pixels
+            .into_par_iter()
+            .map(|pixel| {
+                let new_values: Vec<u8> = (0..3)
+                    .map(|channel| {
+                        let mut value = 0.0;
+                        for kernel_i in 0..kernel.len() {
+                            for kernel_j in 0..kernel.len() {
+                                let img_i = Transformer::fit_in_range(
+                                    pixel.0 as i32 + kernel_i as i32 - kernel_delta as i32,
+                                    0..self.img.width(),
+                                );
+                                let img_j = Transformer::fit_in_range(
+                                    pixel.1 as i32 + kernel_j as i32 - kernel_delta as i32,
+                                    0..self.img.height(),
+                                );
+                                let neighbor = self.img.get_pixel(img_i, img_j);
+                                value += kernel[kernel_i][kernel_j] * neighbor.data[channel] as f64;
+                            }
+                        }
 
-                Transformer::fit_in_range((value * factor + bias) as i32, (0..255)) as u8
-            }).collect();
+                        Transformer::fit_in_range((value * factor + bias) as i32, (0..255)) as u8
+                    })
+                    .collect();
 
-            (pixel.0, pixel.1, Rgba([new_values[0], new_values[1], new_values[2], pixel.2.data[3]]))
-        }).collect();
+                (
+                    pixel.0,
+                    pixel.1,
+                    Rgba(
+                        [new_values[0], new_values[1], new_values[2], pixel.2.data[3]],
+                    ),
+                )
+            })
+            .collect();
 
-        transformed_pixels
-            .into_iter()
-            .for_each(|x| {
-                new_image.put_pixel(x.0, x.1, x.2);
-            });
+        transformed_pixels.into_iter().for_each(|x| {
+            new_image.put_pixel(x.0, x.1, x.2);
+        });
 
         self.img = new_image;
     }
