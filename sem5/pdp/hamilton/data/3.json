@@ -1,0 +1,84 @@
+{
+  "graph": {
+    "nodes": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      },
+      {
+        "id": "D"
+      },
+      {
+        "id": "E"
+      },
+      {
+        "id": "F"
+      },
+      {
+        "id": "G"
+      },
+      {
+        "id": "H"
+      }
+    ],
+    "edges": [
+      {
+        "source": "A",
+        "target": "B"
+      },
+      {
+        "source": "A",
+        "target": "H"
+      },
+      {
+        "source": "B",
+        "target": "G"
+      },
+      {
+        "source": "G",
+        "target": "F"
+      },
+      {
+        "source": "F",
+        "target": "A"
+      },
+      {
+        "source": "C",
+        "target": "B"
+      },
+      {
+        "source": "H",
+        "target": "C"
+      },
+      {
+        "source": "H",
+        "target": "E"
+      },
+      {
+        "source": "F",
+        "target": "E"
+      },
+      {
+        "source": "E",
+        "target": "F"
+      },
+      {
+        "source": "E",
+        "target": "C"
+      },
+      {
+        "source": "D",
+        "target": "F"
+      },
+      {
+        "source": "G",
+        "target": "D"
+      }
+    ]
+  }
+}

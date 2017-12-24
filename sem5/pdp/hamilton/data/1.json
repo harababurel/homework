@@ -1,29 +1,29 @@
 {
-    "graph": {
-        "nodes": [
-            {
-                "id": "A"
-            },
-            {
-                "id": "B"
-            },
-            {
-                "id": "C"
-            }
-        ],
-        "edges": [
-            {
-                "source": "A",
-                "target": "B"
-            },
-            {
-                "source": "B",
-                "target": "C"
-            },
-            {
-                "source": "C",
-                "target": "A"
-            }
-        ]
-    }
+  "graph": {
+    "nodes": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      }
+    ],
+    "edges": [
+      {
+        "source": "A",
+        "target": "B"
+      },
+      {
+        "source": "B",
+        "target": "C"
+      },
+      {
+        "source": "C",
+        "target": "A"
+      }
+    ]
+  }
 }
