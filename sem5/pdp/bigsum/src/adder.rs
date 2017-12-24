@@ -12,11 +12,17 @@ pub struct Adder {
 
 impl Adder {
     pub fn new() -> Adder {
-        Adder { xs: vec![], capacity: 1e3 as usize }
+        Adder {
+            xs: vec![],
+            capacity: 1e3 as usize,
+        }
     }
 
     pub fn with_capacity(capacity: usize) -> Adder {
-        Adder { xs: vec![], capacity }
+        Adder {
+            xs: vec![],
+            capacity,
+        }
     }
 
     pub fn push(&mut self, x: BigUint) {
@@ -69,10 +75,14 @@ impl Adder {
             let mid = _xs.len() / 2;
 
             let (producer_left, consumer_left) = bounded_spsc_queue::make(self.capacity);
-            scope.spawn(move || { self.compute_slice_par(&_xs[0..mid], producer_left); });
+            scope.spawn(move || {
+                self.compute_slice_par(&_xs[0..mid], producer_left);
+            });
 
             let (producer_right, consumer_right) = bounded_spsc_queue::make(self.capacity);
-            scope.spawn(move || { self.compute_slice_par(&_xs[mid..], producer_right); });
+            scope.spawn(move || {
+                self.compute_slice_par(&_xs[mid..], producer_right);
+            });
 
             scope.spawn(move || {
                 let mut carry = 0 as u64;

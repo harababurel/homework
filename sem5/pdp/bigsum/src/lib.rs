@@ -3,7 +3,6 @@ extern crate itertools;
 extern crate rand;
 extern crate lossyq;
 extern crate bounded_spsc_queue;
-extern crate cpuprofiler;
 
 #[cfg(test)]
 mod tests {
@@ -12,12 +11,11 @@ mod tests {
     use rand::Rng;
     use bigint::BigUint;
     use std::time::Instant;
-    use cpuprofiler::PROFILER;
 
 
     fn measure_runtime<F>(f: F) -> BigUint
-        where
-            F: FnOnce() -> BigUint,
+    where
+        F: FnOnce() -> BigUint,
     {
         let now = Instant::now();
         let product = f();
@@ -32,8 +30,8 @@ mod tests {
 
     #[test]
     fn test_recursive_addition() {
-        let n_digits = 1000000;
-        let n_values = 4;
+        let n_digits = 100;
+        let n_values = 4000;
 
         let mut rng = rand::thread_rng();
         let mut adder = Adder::with_capacity(n_digits + 10);
@@ -50,9 +48,7 @@ mod tests {
 
         assert_eq!(expected_sum, measure_runtime(|| adder.compute()));
         assert_eq!(expected_sum, measure_runtime(|| adder.compute_rec()));
-//        PROFILER.lock().unwrap().start("./parallel-sum.profile").expect("Couldn't start");
         assert_eq!(expected_sum, measure_runtime(|| adder.compute_par()));
-//        PROFILER.lock().unwrap().stop().expect("Couldn't stop");
     }
 }
 
