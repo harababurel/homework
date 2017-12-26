@@ -46,6 +46,11 @@ NTL::ZZ measure_time(const std::string& description,
 
 int main(int argc, char* argv[]) {
   cipher::rsa::RSACipher cipher;
+
+  std::string code;
+  cipher.Encode("algebra", cipher.public_key_, &code);
+  std::cout << "Code is \"" << code << "\"\n";
+
   return 0;
 
   QApplication app(argc, argv);

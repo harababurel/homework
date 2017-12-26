@@ -1,5 +1,6 @@
 #include "rsa.h"
 #include <NTL/ZZ.h>
+#include <algorithm>
 #include <numeric>
 #include <sstream>
 
@@ -13,7 +14,16 @@ RSACipher::RSACipher() {
 
 util::Status RSACipher::Encode(const std::string& message, const PublicKey& key,
                                std::string* code) {
-  return util::UnimplementedStatus();
+  std::vector<Block> blocks;
+  SplitMessageIntoBlocks(message, k_plaintext_block_size_, &blocks);
+
+  code->clear();
+  for (auto block : blocks) {
+    Block cipher_block = NTL::PowerMod(block, key.second, key.first);
+    (*code) += BlockToString(cipher_block, k_plaintext_block_size_);
+  }
+
+  return util::OkStatus();
 }
 
 util::Status RSACipher::Decode(const std::string& code, const PublicKey& key,
@@ -63,6 +73,47 @@ util::Status RSACipher::ComputeBlockSizes() {
   }
 
   return util::OkStatus();
+}
+
+util::Status RSACipher::SplitMessageIntoBlocks(const std::string& message,
+                                               const size_t block_size,
+                                               std::vector<Block>* blocks) {
+  size_t block_count = message.size() / block_size;
+  if (message.size() % block_size) {
+    block_count++;
+  }
+
+  blocks->clear();
+  blocks->reserve(block_count);
+
+  for (size_t i = 0; i < block_count; i++) {
+    const std::string s = message.substr(i * block_size, block_size);
+    blocks->push_back(StringToBlock(s, block_size));
+  }
+
+  return util::OkStatus();
+}
+
+Block RSACipher::StringToBlock(const std::string& s, const size_t block_size) {
+  Block ret(0);
+  for (size_t i = 0; i < block_size; i++) {
+    ret = ret * alphabet_.size() + (i < s.size() ? alphabet_.find(s[i]) : 0);
+  }
+
+  return ret;
+}
+
+std::string RSACipher::BlockToString(const Block& block,
+                                     const size_t block_size) {
+  std::string ret;
+  Block x = block;
+  for (size_t i = 0; i <= block_size; i++) {
+    ret += alphabet_[x % alphabet_.size()];
+    x /= alphabet_.size();
+  }
+
+  std::reverse(ret.begin(), ret.end());
+  return ret;
 }
 
 }  // namespace rsa

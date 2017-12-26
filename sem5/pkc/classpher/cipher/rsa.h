@@ -9,6 +9,7 @@ namespace rsa {
 
 using PublicKey = std::pair<NTL::ZZ, NTL::ZZ>;
 using PrivateKey = NTL::ZZ;
+using Block = NTL::ZZ;
 
 class RSACipher final : public Cipher<PublicKey> {
  public:
@@ -19,15 +20,21 @@ class RSACipher final : public Cipher<PublicKey> {
   util::Status Decode(const std::string& code, const PublicKey& key,
                       std::string* message) override;
 
+  PublicKey public_key_;
+
  private:
   util::Status GenerateKeys();
   util::Status ComputeBlockSizes();
+  Block StringToBlock(const std::string& s, const size_t block_size);
+  std::string BlockToString(const Block& block, const size_t block_size);
+  util::Status SplitMessageIntoBlocks(const std::string& message,
+                                      const size_t block_size,
+                                      std::vector<Block>* blocks);
 
-  PublicKey public_key_;
   PrivateKey private_key_;
-  unsigned int k_plaintext_block_size_;
-  unsigned int k_ciphertext_block_size_;
-  const unsigned int k_factor_size_ = 10;
+  size_t k_plaintext_block_size_;
+  size_t k_ciphertext_block_size_;
+  const size_t k_factor_size_ = 10;
 };
 
 }  // namespace rsa
