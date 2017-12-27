@@ -2,6 +2,7 @@
 #include <NTL/ZZ.h>
 #include <algorithm>
 #include <numeric>
+#include <optional>
 #include <sstream>
 
 namespace cipher {
@@ -12,23 +13,33 @@ RSACipher::RSACipher() {
   ComputeBlockSizes();
 }
 
-util::Status RSACipher::Encode(const std::string& message, const PublicKey& key,
-                               std::string* code) {
+util::Status RSACipher::Encode(const std::string& message,
+                               const PublicKey& public_key, std::string* code) {
   std::vector<Block> blocks;
   SplitMessageIntoBlocks(message, k_plaintext_block_size_, &blocks);
 
   code->clear();
   for (auto block : blocks) {
-    Block cipher_block = NTL::PowerMod(block, key.second, key.first);
-    (*code) += BlockToString(cipher_block, k_plaintext_block_size_);
+    Block cipher_block = NTL::PowerMod(block, public_key.e, public_key.n);
+    (*code) += BlockToString(cipher_block, k_ciphertext_block_size_);
   }
 
   return util::OkStatus();
 }
 
-util::Status RSACipher::Decode(const std::string& code, const PublicKey& key,
+util::Status RSACipher::Decode(const std::string& code,
+                               const PrivateKey& private_key,
                                std::string* message) {
-  return util::UnimplementedStatus();
+  std::vector<Block> blocks;
+  SplitMessageIntoBlocks(code, k_ciphertext_block_size_, &blocks);
+
+  message->clear();
+  for (auto block : blocks) {
+    Block message_block = NTL::PowerMod(block, private_key, public_key_.n);
+    (*message) += BlockToString(message_block, k_plaintext_block_size_);
+  }
+
+  return util::OkStatus();
 }
 
 util::Status RSACipher::GenerateKeys() {
@@ -45,20 +56,23 @@ util::Status RSACipher::GenerateKeys() {
 
   d = NTL::InvMod(e, phi_n);
 
+  /* Lecture example: */
+  /* n = 1643; */
+  /* e = 67; */
+  /* d = 163; */
+
   public_key_ = {n, e};
   private_key_ = d;
 
-  std::cerr << "public key: {" << public_key_.first << ", "
-            << public_key_.second << "}\n";
-  std::cerr << "private key: " << private_key_ << "\n";
+  std::cerr << "public key = { n: " << public_key_.n << ", e: " << public_key_.e
+            << " }\nprivate key = { d: " << private_key_ << " }\n";
 
   return util::OkStatus();
 }
 
 util::Status RSACipher::ComputeBlockSizes() {
-  auto n = public_key_.first;
-  k_plaintext_block_size_ = floor(log(n) / log(alphabet_.size()));
-  k_ciphertext_block_size_ = ceil(log(n) / log(alphabet_.size()));
+  k_plaintext_block_size_ = floor(log(public_key_.n) / log(alphabet_.size()));
+  k_ciphertext_block_size_ = ceil(log(public_key_.n) / log(alphabet_.size()));
 
   std::cerr << "Plaintext will be split into blocks of "
             << k_plaintext_block_size_ << " characters.\n";
@@ -78,11 +92,7 @@ util::Status RSACipher::ComputeBlockSizes() {
 util::Status RSACipher::SplitMessageIntoBlocks(const std::string& message,
                                                const size_t block_size,
                                                std::vector<Block>* blocks) {
-  size_t block_count = message.size() / block_size;
-  if (message.size() % block_size) {
-    block_count++;
-  }
-
+  size_t block_count = ceil(1.0 * message.size() / block_size);
   blocks->clear();
   blocks->reserve(block_count);
 
@@ -104,10 +114,11 @@ Block RSACipher::StringToBlock(const std::string& s, const size_t block_size) {
 }
 
 std::string RSACipher::BlockToString(const Block& block,
-                                     const size_t block_size) {
+                                     const std::optional<size_t> block_size) {
   std::string ret;
   Block x = block;
-  for (size_t i = 0; i <= block_size; i++) {
+
+  for (size_t i = 0; block_size.has_value() ? i < block_size : x > 0; i++) {
     ret += alphabet_[x % alphabet_.size()];
     x /= alphabet_.size();
   }

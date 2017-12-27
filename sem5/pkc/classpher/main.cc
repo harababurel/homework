@@ -48,8 +48,13 @@ int main(int argc, char* argv[]) {
   cipher::rsa::RSACipher cipher;
 
   std::string code;
-  cipher.Encode("algebra", cipher.public_key_, &code);
+  cipher.Encode("the quick brown fox jumps over the lazy dog",
+                cipher.public_key_, &code);
   std::cout << "Code is \"" << code << "\"\n";
+
+  std::string message;
+  cipher.Decode(code, cipher.private_key_, &message);
+  std::cout << "Original message was \"" << message << "\"\n";
 
   return 0;
 

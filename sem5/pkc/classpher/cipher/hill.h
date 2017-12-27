@@ -2,7 +2,7 @@
 #include <Eigen/Dense>
 #include <string>
 #include <vector>
-#include "cipher.h"
+#include "classical_cipher.h"
 #include "util/status.h"
 
 namespace cipher {
@@ -12,10 +12,10 @@ using Block = Eigen::VectorXi;
 using MatrixKey = Eigen::MatrixXi;
 using StringKey = std::string;
 
-class HillCipher final : public Cipher<StringKey> {
+class HillCipher final : public ClassicalCipher<StringKey> {
  public:
   HillCipher() = default;
-  HillCipher(const std::string& alphabet) : Cipher(alphabet) {}
+  HillCipher(const std::string& alphabet) : ClassicalCipher(alphabet) {}
 
   util::Status Encode(const std::string& message, const StringKey& key,
                       std::string* code) override;

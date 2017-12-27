@@ -8,10 +8,10 @@
 namespace cipher {
 
 template <class KeyT>
-class Cipher : public ICipher {
+class ClassicalCipher : public ICipher {
  public:
-  Cipher() : ICipher() {}
-  Cipher(const std::string& alphabet) : ICipher(alphabet) {}
+  ClassicalCipher() : ICipher() {}
+  ClassicalCipher(const std::string& alphabet) : ICipher(alphabet) {}
 
   virtual util::Status Encode(const std::string& message, const KeyT& key,
                               std::string* code) = 0;

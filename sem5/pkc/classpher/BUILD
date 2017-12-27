@@ -5,6 +5,7 @@ cc_binary(
     srcs = [
         "main.cc",
     ],
+    copts = ["-std=c++17"],
     deps = [
         "//cipher:rsa",
         "//external:ntl",

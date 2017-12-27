@@ -1,9 +1,26 @@
 cc_library(
-    name = "cipher",
+    name = "classical_cipher",
     hdrs = [
-        "cipher.h",
+        "classical_cipher.h",
         "icipher.h",
     ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//util:status",
+        "@boost//:detail",
+        "@boost//:static_assert",
+        "@boost//:type_index",
+        "@boost//:type_traits",
+    ],
+)
+
+cc_library(
+    name = "public_key_cipher",
+    hdrs = [
+        "icipher.h",
+        "public_key_cipher.h",
+    ],
+    copts = ["-std=c++17"],
     visibility = ["//visibility:public"],
     deps = [
         "//util:status",
@@ -20,7 +37,7 @@ cc_library(
     hdrs = ["caesar.h"],
     visibility = ["//visibility:public"],
     deps = [
-        ":cipher",
+        ":classical_cipher",
     ],
 )
 
@@ -30,7 +47,7 @@ cc_library(
     hdrs = ["hill.h"],
     visibility = ["//visibility:public"],
     deps = [
-        ":cipher",
+        ":classical_cipher",
         "@eigen//:eigen",
     ],
 )
@@ -41,7 +58,7 @@ cc_library(
     hdrs = ["vigenere.h"],
     visibility = ["//visibility:public"],
     deps = [
-        ":cipher",
+        ":classical_cipher",
     ],
 )
 
@@ -52,7 +69,7 @@ cc_library(
     copts = ["-std=c++17"],
     visibility = ["//visibility:public"],
     deps = [
-        ":cipher",
+        ":classical_cipher",
         "//external:ntl",
     ],
 )
@@ -63,7 +80,7 @@ cc_library(
     hdrs = ["substitution.h"],
     visibility = ["//visibility:public"],
     deps = [
-        ":cipher",
+        ":classical_cipher",
     ],
 )
 
@@ -73,7 +90,7 @@ cc_library(
     hdrs = ["permutation.h"],
     visibility = ["//visibility:public"],
     deps = [
-        ":cipher",
+        ":classical_cipher",
     ],
 )
 
@@ -81,8 +98,9 @@ cc_library(
     name = "rsa",
     srcs = ["rsa.cc"],
     hdrs = ["rsa.h"],
+    copts = ["-std=c++17"],
     visibility = ["//visibility:public"],
     deps = [
-        ":cipher",
+        ":public_key_cipher",
     ],
 )

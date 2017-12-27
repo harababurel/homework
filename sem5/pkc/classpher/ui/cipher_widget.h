@@ -5,7 +5,7 @@
 
 #include "cipher/affine.h"
 #include "cipher/caesar.h"
-#include "cipher/cipher.h"
+#include "cipher/classical_cipher.h"
 #include "cipher/hill.h"
 #include "cipher/permutation.h"
 #include "cipher/substitution.h"
