@@ -5,7 +5,7 @@ qt_cc_library(
     src = "cipher_widget.cc",
     copts = [
         "-fpic",
-        "--std=c++14",
+        "--std=c++17",
     ],
     hdr = "cipher_widget.h",
     ui = "cipher_widget.ui",
@@ -19,6 +19,7 @@ qt_cc_library(
         "//cipher:classical_cipher",
         "//cipher:hill",
         "//cipher:permutation",
+        "//cipher:rsa",
         "//cipher:substitution",
         "//cipher:vigenere",
         "@qt//:qt_core",

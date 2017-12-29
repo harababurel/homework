@@ -1,9 +1,19 @@
 #pragma once
+#include <NTL/ZZ.h>
 #include <vector>
 #include "util/status.h"
 
 namespace cipher {
 
+namespace rsa {
+using PrivateKey = NTL::ZZ;
+struct PublicKey {
+  NTL::ZZ n;
+  NTL::ZZ e;
+};
+}  // namespace rsa
+
+// TODO: maybe find an alternative solution to this hack
 class ICipher {
  public:
   ICipher() : alphabet_(" abcdefghijklmnopqrstuvwxyz"){};
@@ -48,6 +58,18 @@ class ICipher {
 
   virtual util::Status Decode(const std::string& code,
                               const std::vector<int>& key,
+                              std::string* message) {
+    return util::UnimplementedStatus();
+  }
+
+  virtual util::Status Encode(const std::string& message,
+                              const cipher::rsa::PublicKey& key,
+                              std::string* code) {
+    return util::UnimplementedStatus();
+  }
+
+  virtual util::Status Decode(const std::string& code,
+                              const cipher::rsa::PrivateKey& key,
                               std::string* message) {
     return util::UnimplementedStatus();
   }

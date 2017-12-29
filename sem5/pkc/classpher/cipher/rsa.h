@@ -9,11 +9,6 @@ namespace cipher {
 namespace rsa {
 
 using Block = NTL::ZZ;
-using PrivateKey = NTL::ZZ;
-struct PublicKey {
-  NTL::ZZ n;
-  NTL::ZZ e;
-};
 
 class RSACipher final : public PublicKeyCipher<PublicKey, PrivateKey> {
  public:

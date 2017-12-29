@@ -15,6 +15,7 @@ CipherWidget::CipherWidget(QWidget* parent)
   ciphers_["Substitution"] =
       std::make_unique<cipher::substitution::SubstitutionCipher>();
   ciphers_["Vigenère"] = std::make_unique<cipher::vigenere::VigenereCipher>();
+  ciphers_["RSA"] = std::make_unique<cipher::rsa::RSACipher>();
 
   ui_->setupUi(this);
 

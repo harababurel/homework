@@ -8,6 +8,7 @@
 #include "cipher/classical_cipher.h"
 #include "cipher/hill.h"
 #include "cipher/permutation.h"
+#include "cipher/rsa.h"
 #include "cipher/substitution.h"
 #include "cipher/vigenere.h"
 #include "ui/ui_cipher_widget.h"

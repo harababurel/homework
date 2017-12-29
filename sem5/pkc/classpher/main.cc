@@ -56,8 +56,6 @@ int main(int argc, char* argv[]) {
   cipher.Decode(code, cipher.private_key_, &message);
   std::cout << "Original message was \"" << message << "\"\n";
 
-  return 0;
-
   QApplication app(argc, argv);
   CipherWidget widget;
 

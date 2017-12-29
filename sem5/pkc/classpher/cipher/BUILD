@@ -1,11 +1,21 @@
 cc_library(
+    name = "icipher",
+    hdrs = [
+        "icipher.h",
+    ],
+    deps = [
+        "//external:ntl",
+    ],
+)
+
+cc_library(
     name = "classical_cipher",
     hdrs = [
         "classical_cipher.h",
-        "icipher.h",
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "icipher",
         "//util:status",
         "@boost//:detail",
         "@boost//:static_assert",
@@ -17,12 +27,12 @@ cc_library(
 cc_library(
     name = "public_key_cipher",
     hdrs = [
-        "icipher.h",
         "public_key_cipher.h",
     ],
     copts = ["-std=c++17"],
     visibility = ["//visibility:public"],
     deps = [
+        "icipher",
         "//util:status",
         "@boost//:detail",
         "@boost//:static_assert",
