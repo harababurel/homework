@@ -24,6 +24,12 @@ class PublicKeyCipher : public ICipher {
            ", " +
            std::string(boost::typeindex::type_id<PublicKeyT>().pretty_name());
   }
+
+  PrivateKeyT private_key() const { return private_key_; }
+  PublicKeyT public_key() const { return public_key_; }
+
+  PrivateKeyT private_key_;
+  PublicKeyT public_key_;
 };
 
 }  // namespace cipher

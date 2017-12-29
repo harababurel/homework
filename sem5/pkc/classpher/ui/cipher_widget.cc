@@ -26,6 +26,7 @@ CipherWidget::CipherWidget(QWidget* parent)
   ui_->key_line_edit->hide();
   ui_->key_spin_box->hide();
   ui_->permutation_container->hide();
+  ui_->rsa_container->hide();
   ui_->alphabet_line_edit->setText(
       QString::fromStdString(CurrentCipher().alphabet()));
 
@@ -100,6 +101,9 @@ void CipherWidget::UpdateCodeText() {
       key.push_back(key_widget->item(i)->text().toInt());
     }
     status = CurrentCipher().Encode(message, key, &code);
+  } else if (CurrentCipherName() == "RSA") {
+    auto cipher = dynamic_cast<cipher::rsa::RSACipher*>(&CurrentCipher());
+    status = cipher->Encode(message, cipher->public_key(), &code);
   }
 
   if (!status.ok()) {
@@ -145,6 +149,10 @@ void CipherWidget::UpdateMessageText() {
       key.push_back(key_widget->item(i)->text().toInt());
     }
     status = CurrentCipher().Decode(code, key, &message);
+  } else if (CurrentCipherName() == "RSA") {
+    // TODO: RSA decoding crashes for invalid codes; make it not do that
+    auto cipher = dynamic_cast<cipher::rsa::RSACipher*>(&CurrentCipher());
+    status = cipher->Decode(code, cipher->private_key(), &message);
   }
 
   if (!status.ok()) {
@@ -198,6 +206,7 @@ void CipherWidget::on_cipher_combo_box_currentTextChanged(
   /*                          tr(CurrentCipher().TypeName().c_str())); */
   UpdateCodeText();
 
+  // TODO: clean this up
   if (CurrentCipher().TypeName() == "int") {
     ui_->key_spin_box->show();
     ui_->key_line_edit->hide();
@@ -220,11 +229,27 @@ void CipherWidget::on_cipher_combo_box_currentTextChanged(
     ui_->affine_widget->hide();
     ui_->permutation_container->hide();
   }
-
   if (CurrentCipherName() == "Substitution") {
     std::string key = " abcdefghijklmnopqrstuvwxyz";
     std::random_shuffle(key.begin(), key.end());
     ui_->key_line_edit->setText(QString::fromStdString(key));
+  }
+  if (CurrentCipherName() == "RSA") {
+    ui_->rsa_container->show();
+    ui_->key_line_edit->hide();
+    ui_->affine_widget->hide();
+    ui_->permutation_container->hide();
+
+    // TODO: maybe provide a way of setting the public/private key
+    auto cipher = dynamic_cast<cipher::rsa::RSACipher*>(&CurrentCipher());
+    ui_->rsa_container->findChild<QSpinBox*>(QString("public_key_n_spin_box"))
+        ->setValue(NTL::conv<int>(cipher->public_key().n));
+    ui_->rsa_container->findChild<QSpinBox*>(QString("public_key_e_spin_box"))
+        ->setValue(NTL::conv<int>(cipher->public_key().e));
+    ui_->rsa_container->findChild<QSpinBox*>(QString("private_key_spin_box"))
+        ->setValue(NTL::conv<int>(cipher->private_key()));
+  } else {
+    ui_->rsa_container->hide();
   }
 }
 

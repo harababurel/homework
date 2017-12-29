@@ -19,9 +19,6 @@ class RSACipher final : public PublicKeyCipher<PublicKey, PrivateKey> {
   util::Status Decode(const std::string& code, const PrivateKey& private_key,
                       std::string* message) override;
 
-  PublicKey public_key_;
-  PrivateKey private_key_;
-
  private:
   util::Status GenerateKeys();
   util::Status ComputeBlockSizes();
