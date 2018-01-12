@@ -35,7 +35,8 @@ util::Status RSACipher::Decode(const std::string& code,
 
   message->clear();
   for (auto block : blocks) {
-    Block message_block = NTL::PowerMod(block, private_key, public_key_.n);
+    Block message_block =
+        NTL::PowerMod(block % public_key_.n, private_key, public_key_.n);
     (*message) += BlockToString(message_block, k_plaintext_block_size_);
   }
 
@@ -57,9 +58,9 @@ util::Status RSACipher::GenerateKeys() {
   d = NTL::InvMod(e, phi_n);
 
   /* Lecture example: */
-  /* n = 1643; */
-  /* e = 67; */
-  /* d = 163; */
+  n = 1643;
+  e = 67;
+  d = 163;
 
   public_key_ = {n, e};
   private_key_ = d;
