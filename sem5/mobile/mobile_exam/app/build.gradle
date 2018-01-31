@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:design:26.1.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

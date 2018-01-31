@@ -1,5 +1,7 @@
 package ml.sergiu.mobile_exam;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +16,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.TRANSPARENT;
 
 public class MainActivity extends AppCompatActivity implements GetCarsListener, AddCarListener {
     CarAdapter adapter;
@@ -37,12 +36,13 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
         }
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        adapter = new CarAdapter(client);
+        adapter = new CarAdapter(this, client);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         client.getCars(this);
     }
+
 
     @Override
     public void processGet(List<Car> cars) {
@@ -67,10 +67,12 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
     private static class CarAdapter extends RecyclerView.Adapter<CarViewHolder> implements RemoveCarListener {
         private List<Car> cars;
         private CarClient client;
+        private Activity sourceActivity;
 
-        CarAdapter(CarClient client) {
+        CarAdapter(Activity sourceActivity, CarClient client) {
             cars = new ArrayList<>();
             this.client = client;
+            this.sourceActivity = sourceActivity;
         }
 
         public void setCars(List<Car> cars) {
@@ -88,10 +90,11 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
         public void onBindViewHolder(CarViewHolder holder, int position) {
             TextView name_label = (TextView) holder.itemView.findViewById(R.id.name_label);
             name_label.setText(cars.get(position).name);
-            name_label.setBackgroundColor(TRANSPARENT);
+//            name_label.setBackgroundColor(TRANSPARENT);
 
             name_label.setOnClickListener(view -> {
-                view.setBackgroundColor(GREEN);
+                Intent intent = new Intent(sourceActivity, AddOrEditCarActivity.class);
+                sourceActivity.startActivity(intent);
             });
 
             name_label.setOnLongClickListener(view -> {
@@ -99,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
                 return true;
             });
         }
-
 
         @Override
         public int getItemCount() {
