@@ -1,7 +1,11 @@
 package ml.sergiu.mobile_exam;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +37,32 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
     @Override
     protected void onStart() {
         super.onStart();
-        CarClient.getCars(this);
+//        CarClient.getCars(this);
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onResume() {
         super.onResume();
-        CarClient.getCars(this);
+
+        if (isNetworkConnected()) {
+            CarClient.getCars(this);
+        } else {
+            new AsyncTask<Void, Void, List<Car>>() {
+                protected List<Car> doInBackground(Void... unused) {
+                    return AppDatabase.getAppDatabase(getApplicationContext()).carDao().getAll();
+                }
+
+                protected void onPostExecute(List<Car> cars) {
+                    adapter.setCars(cars);
+                }
+            }.execute();
+        }
     }
 
     public void startAddOrEditCarActivity(View view) {
@@ -50,11 +71,23 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
         startActivity(intent);
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void processGet(List<Car> cars) {
         Log.d("BOBS", "Got " + cars.size() + " cars.");
-        adapter.setCars(cars);
+        for (Car car : cars) {
+            Log.d("BOBS", "Car id: " + car.id);
+        }
 
+        new AsyncTask<List<Car>, Void, Void>() {
+            protected Void doInBackground(List<Car>[] cars) {
+                AppDatabase.getAppDatabase(getApplicationContext()).carDao().deleteAll();
+                AppDatabase.getAppDatabase(getApplicationContext()).carDao().insertAll(cars[0]);
+                return null;
+            }
+        }.execute(cars);
+
+        adapter.setCars(cars);
     }
 
     @Override
@@ -74,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
         private List<Car> cars;
         private Activity sourceActivity;
 
-        CarAdapter(Activity sourceActivity ) {
+        CarAdapter(Activity sourceActivity) {
             cars = new ArrayList<>();
             this.sourceActivity = sourceActivity;
         }

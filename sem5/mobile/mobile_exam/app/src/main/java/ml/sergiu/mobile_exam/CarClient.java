@@ -98,6 +98,11 @@ public class CarClient {
         });
     }
 
+
+    public static void editCar(final Optional<AddCarListener> listener, final Car car) {
+        // not implemented
+    }
+
     public static void removeCar(final RemoveCarListener listener, final Car car) {
         RequestParams params = new RequestParams();
         params.put("id", car.id);

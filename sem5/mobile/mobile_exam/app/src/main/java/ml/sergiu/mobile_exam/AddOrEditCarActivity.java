@@ -75,7 +75,7 @@ public class AddOrEditCarActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("operation").equals("add")) {
             CarClient.addCar(Optional.empty(), car);
         } else {
-            CarClient
+            CarClient.editCar(Optional.empty(), car);
             // edit car
         }
 
