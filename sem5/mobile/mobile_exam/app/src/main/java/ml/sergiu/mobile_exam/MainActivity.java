@@ -19,30 +19,36 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GetCarsListener, AddCarListener {
     CarAdapter adapter;
-    CarClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        client = null;
-        try {
-            URI base_url = new URI("http://192.168.0.171:4000");
-            client = new CarClient(base_url);
-            Log.i("BOBS", "Created client");
-        } catch (URISyntaxException e) {
-            Log.e("BOBS", "malformed uri: " + e);
-        }
-
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        adapter = new CarAdapter(this, client);
+        adapter = new CarAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        client.getCars(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        CarClient.getCars(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CarClient.getCars(this);
+    }
+
+    public void startAddOrEditCarActivity(View view) {
+        Intent intent = new Intent(this, AddOrEditCarActivity.class);
+        intent.putExtra("operation", "add");
+        startActivity(intent);
+    }
 
     @Override
     public void processGet(List<Car> cars) {
@@ -66,12 +72,10 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
 
     private static class CarAdapter extends RecyclerView.Adapter<CarViewHolder> implements RemoveCarListener {
         private List<Car> cars;
-        private CarClient client;
         private Activity sourceActivity;
 
-        CarAdapter(Activity sourceActivity, CarClient client) {
+        CarAdapter(Activity sourceActivity ) {
             cars = new ArrayList<>();
-            this.client = client;
             this.sourceActivity = sourceActivity;
         }
 
@@ -94,11 +98,13 @@ public class MainActivity extends AppCompatActivity implements GetCarsListener, 
 
             name_label.setOnClickListener(view -> {
                 Intent intent = new Intent(sourceActivity, AddOrEditCarActivity.class);
+                intent.putExtra("car", cars.get(position));
+                intent.putExtra("operation", "edit");
                 sourceActivity.startActivity(intent);
             });
 
             name_label.setOnLongClickListener(view -> {
-                client.removeCar(this, cars.get(position));
+                CarClient.removeCar(this, cars.get(position));
                 return true;
             });
         }

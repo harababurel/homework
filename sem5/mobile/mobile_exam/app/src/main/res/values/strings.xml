@@ -1,7 +1,4 @@
 <resources>
-    <string name="app_name">mobile_exam</string>
-    <string name="title_activity_add_or_edit_car">AddOrEditCarActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Here in my garage</string>
+    <string name="title_activity_add_or_edit_car">Add or edit car</string>
 </resources>
