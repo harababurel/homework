@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddOrEditCarActivity"
-            android:label="@string/title_activity_add_or_edit_car"
+            android:name=".AddOrEditSeatActivity"
+            android:label="@string/title_activity_add_or_edit_seat"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -1,0 +1,23 @@
+{
+  "name": "ex0202a",
+  "version": "1.0.0",
+  "description": "Exam 0202a",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "backpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "backpack-core": "0.5.0",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-cors": "^0.0.16",
+    "koa-router": "^7.3.0",
+    "phaser": "^2.6.2",
+    "ws": "^4.0.0"
+  }
+}

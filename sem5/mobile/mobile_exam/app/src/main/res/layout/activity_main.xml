@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="ml.sergiu.mobile_exam.MainActivity">
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="startAddOrEditSeatActivity"
+        android:text="Add new seat" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="deleteAllSeats"
+        android:text="Delete all seats" />
+
+    <Button
+        android:id="@+id/mark_available_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="makeAllSeatsAvailable"
+        android:text="Make all seats available" />
+
+    <Button
+        android:id="@+id/confirmed_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getConfirmedSeats"
+        android:text="Get confirmed seats" />
+
+    <Button
+        android:id="@+id/purchased_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getPurchasedSeats"
+        android:text="Get purchased seats" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -13,12 +47,5 @@
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
-
-    <Button
-        android:id="@+id/add_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="startAddOrEditCarActivity"
-        android:text="Add new car" />
 
 </LinearLayout>

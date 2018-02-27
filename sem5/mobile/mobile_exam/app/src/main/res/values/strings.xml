@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Here in my garage</string>
-    <string name="title_activity_add_or_edit_car">Add or edit car</string>
+    <string name="app_name">Here in my cinema</string>
+    <string name="title_activity_add_or_edit_seat">Add or edit seat</string>
 </resources>

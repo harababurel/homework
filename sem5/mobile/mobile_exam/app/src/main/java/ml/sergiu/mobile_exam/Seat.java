@@ -9,34 +9,26 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 @Entity
-public class Car implements Serializable {
+public class Seat implements Serializable {
     @PrimaryKey
     public int id;
     public String name;
-    public int quantity;
     public String type;
     public String status;
 
-    public Car() {
+    public Seat() {
     }
 
-    public Car(JSONObject json) throws JSONException {
+    public Seat(JSONObject json) throws JSONException {
         id = json.getInt("id");
         name = json.getString("name");
-        quantity = json.getInt("quantity");
         status = json.getString("status");
         type = json.getString("type");
     }
 
     @Override
     public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return name + " (" + type + ") - " + status;
     }
 
     public int getId() {
@@ -53,14 +45,6 @@ public class Car implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public String getType() {

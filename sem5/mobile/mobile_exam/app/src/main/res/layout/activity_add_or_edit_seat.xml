@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ml.sergiu.mobile_exam.AddOrEditCarActivity">
+    tools:context="ml.sergiu.mobile_exam.AddOrEditSeatActivity">
 
     <EditText
         android:id="@+id/id_edit_text"
@@ -40,12 +40,6 @@
         android:ems="10"
         android:hint="Status"
         android:inputType="textPersonName" />
-
-    <NumberPicker
-        android:id="@+id/quantity_picker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="blocksDescendants" />
 
     <Button
         android:id="@+id/confirm_button"
