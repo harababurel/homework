@@ -1,0 +1,7 @@
+Chosen theme: a Wayland compositor implemented in Rust
+Scientific coordinator: Gabriel Mircea + supervisor
+Domain: UNIX/Operating Systems
+Bibliographic resources:
+  1. Wayland Architecture (https://wayland.freedesktop.org/architecture.html)
+  2. Rust bindings for the Wayland compositor library (https://github.com/way-cooler/rust-wlc)
+  3. "Hello Wayland, Goodbye X11" (https://www.youtube.com/watch?v=Zsz7Shbnb9c, https://2017.fossasia.org/)
