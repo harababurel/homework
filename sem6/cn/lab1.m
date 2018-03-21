@@ -52,8 +52,6 @@ xs = [0:0.01:1];
 plot(xs, f(xs), '-*r');
 
 
-
-fx = @(t, a, b) (a+b)*cos(t) - b*cos((a/b + 1)*t)
 fy = @(t, a, b) (a+b)*sin(t) - b*sin((a/b + 1)*t)
 
 xs = [0:0.1:10*pi];
